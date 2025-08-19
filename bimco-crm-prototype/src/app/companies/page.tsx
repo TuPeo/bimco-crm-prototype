@@ -38,7 +38,7 @@ export default function Companies() {
       if (storedFavorites) {
         const favoritesData = JSON.parse(storedFavorites);
         const companyIds = new Set<string>(
-          (favoritesData.companies || []).map((c: any) => String(c.id))
+          (favoritesData.companies || []).map((c: { id: string }) => String(c.id))
         );
         setFavorites(companyIds);
       }
@@ -65,11 +65,11 @@ export default function Companies() {
     // Update localStorage
     try {
       const storedFavorites = localStorage.getItem('bimco-crm-favorites');
-      let favoritesData = storedFavorites ? JSON.parse(storedFavorites) : { companies: [], contacts: [] };
+      const favoritesData = storedFavorites ? JSON.parse(storedFavorites) : { companies: [], contacts: [] };
       
       if (isCurrentlyFavorite) {
         // Remove from stored favorites
-        favoritesData.companies = favoritesData.companies.filter((c: any) => c.id !== company.id);
+        favoritesData.companies = favoritesData.companies.filter((c: { id: string }) => c.id !== company.id);
       } else {
         // Add to stored favorites
         const favoriteCompany = {
@@ -82,7 +82,7 @@ export default function Companies() {
         };
         
         // Remove if already exists to avoid duplicates
-        favoritesData.companies = favoritesData.companies.filter((c: any) => c.id !== company.id);
+        favoritesData.companies = favoritesData.companies.filter((c: { id: string }) => c.id !== company.id);
         favoritesData.companies.push(favoriteCompany);
       }
       

@@ -6,13 +6,12 @@ import Link from 'next/link';
 import Layout from '@/components/Layout';
 import CompanyModal from '@/components/CompanyModal';
 import { mockCompanies, mockContacts } from '@/data/mockData';
-import { Company, Contact } from '@/types';
+import { Company } from '@/types';
 import { 
   PencilIcon,
   ArrowLeftIcon,
   BuildingOfficeIcon,
   MapPinIcon,
-  EnvelopeIcon,
   UsersIcon,
   CalendarIcon
 } from '@heroicons/react/24/outline';

@@ -8,6 +8,7 @@ import CompanyDistributionChart from '@/components/charts/CompanyDistributionCha
 import ContactRoleChart from '@/components/charts/ContactRoleChart';
 import EventTrendChart from '@/components/charts/EventTrendChart';
 import MembershipStatusChart from '@/components/charts/MembershipStatusChart';
+import { Company, Contact } from '@/types';
 import {
   mockDashboardStats,
   companyDistributionData,
@@ -24,9 +25,7 @@ import {
   ArrowUpIcon,
   ArrowDownIcon,
   ClockIcon,
-  EyeIcon,
   ChevronRightIcon,
-  StarIcon,
   HeartIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -37,13 +36,31 @@ export default function Dashboard() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   
   // Favorites state
-  const [favorites, setFavorites] = useState({
-    companies: [] as any[],
-    contacts: [] as any[]
+  const [favorites, setFavorites] = useState<{
+    companies: Array<{
+      id: string;
+      name: string;
+      type: string;
+      accessCount: number;
+      lastAccessed: string;
+      addedAt: string;
+    }>;
+    contacts: Array<{
+      id: string;
+      name: string;
+      company: string;
+      role: string;
+      accessCount: number;
+      lastAccessed: string;
+      addedAt: string;
+    }>;
+  }>({
+    companies: [],
+    contacts: []
   });
 
   // Helper function to safely format dates
-  const formatLastAccessed = (lastAccessed: any) => {
+  const formatLastAccessed = (lastAccessed: string | undefined) => {
     if (!lastAccessed) return 'Never';
     
     // If it's already a string like "Just now", return as is
@@ -57,7 +74,7 @@ export default function Dashboard() {
         return 'Never';
       }
       return date.toLocaleDateString();
-    } catch (error) {
+    } catch {
       return 'Never';
     }
   };
@@ -166,12 +183,12 @@ export default function Dashboard() {
     window.location.href = '/courses';
   };
 
-  const handleSaveCompany = (companyData: any) => {
+  const handleSaveCompany = (companyData: Company) => {
     console.log('Company saved:', companyData);
     alert('Company created successfully!');
   };
 
-  const handleSaveContact = (contactData: any) => {
+  const handleSaveContact = (contactData: Contact | Omit<Contact, 'id'>) => {
     console.log('Contact saved:', contactData);
     alert('Contact created successfully!');
   };

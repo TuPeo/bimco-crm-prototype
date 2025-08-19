@@ -6,7 +6,7 @@ import { XMarkIcon, CalendarIcon, ClockIcon, UserIcon } from '@heroicons/react/2
 interface CreateEventModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (event: any) => void;
+  onSave: (eventData: { title: string; [key: string]: unknown }) => void;
   segmentName?: string;
 }
 

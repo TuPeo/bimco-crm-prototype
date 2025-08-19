@@ -6,7 +6,7 @@ import { XMarkIcon, ChatBubbleLeftRightIcon, PhoneIcon, EnvelopeIcon } from '@he
 interface CreateInteractionModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (interaction: any) => void;
+  onSave: (interactionData: { subject: string; [key: string]: unknown }) => void;
   segmentName?: string;
 }
 

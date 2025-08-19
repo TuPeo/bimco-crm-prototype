@@ -20,7 +20,6 @@ import {
   FunnelIcon,
   MagnifyingGlassIcon,
   CalendarIcon,
-  ExclamationCircleIcon,
   CheckCircleIcon
 } from '@heroicons/react/24/outline';
 
@@ -220,13 +219,13 @@ export default function SegmentsPage() {
     }
   };
 
-  const handleSaveEvent = (eventData: any) => {
+  const handleSaveEvent = (eventData: { title: string; [key: string]: unknown }) => {
     console.log('Event created:', eventData);
     alert(`Event "${eventData.title}" created successfully for segment "${activeSegmentForAction?.name}"`);
     setActiveSegmentForAction(null);
   };
 
-  const handleSaveInteraction = (interactionData: any) => {
+  const handleSaveInteraction = (interactionData: { subject: string; [key: string]: unknown }) => {
     console.log('Interaction created:', interactionData);
     alert(`Interaction "${interactionData.subject}" created successfully for segment "${activeSegmentForAction?.name}"`);
     setActiveSegmentForAction(null);
