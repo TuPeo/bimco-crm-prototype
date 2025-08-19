@@ -290,10 +290,10 @@ export const mockCourses: Course[] = [
   {
     id: '1',
     title: 'BIMCO Laytime Definitions for Chartering',
-    category: 'Training',
-    group: '15+15',
-    startDate: '2024-09-15',
-    endDate: '2024-09-17',
+    category: 'Maritime Training',
+    group: 'BIMCO',
+    startDate: '2025-09-15T09:00:00Z',
+    endDate: '2025-09-17T17:00:00Z',
     location: 'Copenhagen, Denmark',
     status: 'Upcoming',
     maxParticipants: 25,
@@ -304,24 +304,24 @@ export const mockCourses: Course[] = [
         contactName: 'John Hansen',
         email: 'john.hansen@maersk.com',
         role: 'Attendee',
-        registrationDate: '2024-08-01'
+        registrationDate: '2025-08-01'
       },
       {
         contactId: '2',
         contactName: 'Maria Rodriguez',
         email: 'maria.rodriguez@msc.com',
         role: 'Attendee',
-        registrationDate: '2024-08-03'
+        registrationDate: '2025-08-03'
       }
     ]
   },
   {
     id: '2',
     title: 'Digital Maritime Technologies Webinar',
-    category: 'Webinar',
-    group: 'GM',
-    startDate: '2024-08-25',
-    endDate: '2024-08-25',
+    category: 'Technology',
+    group: 'BIMCO',
+    startDate: '2025-08-25T14:00:00Z',
+    endDate: '2025-08-25T16:00:00Z',
     location: 'Online',
     status: 'Ongoing',
     maxParticipants: 100,
@@ -332,24 +332,24 @@ export const mockCourses: Course[] = [
         contactName: 'Pierre Dubois',
         email: 'pierre.dubois@cma-cgm.com',
         role: 'Attendee',
-        registrationDate: '2024-08-05'
+        registrationDate: '2025-08-05'
       },
       {
         contactId: '4',
         contactName: 'Li Wei',
         email: 'li.wei@cosco.com.cn',
         role: 'Speaker',
-        registrationDate: '2024-07-20'
+        registrationDate: '2025-07-20'
       }
     ]
   },
   {
     id: '3',
     title: 'Maritime Law and Compliance Workshop',
-    category: 'Workshop',
-    group: 'EVENT',
-    startDate: '2024-07-10',
-    endDate: '2024-07-12',
+    category: 'Legal & Regulatory',
+    group: 'BIMCO',
+    startDate: '2025-07-10T09:00:00Z',
+    endDate: '2025-07-12T17:00:00Z',
     location: 'Hamburg, Germany',
     status: 'Completed',
     maxParticipants: 50,
@@ -360,16 +360,99 @@ export const mockCourses: Course[] = [
         contactName: 'John Hansen',
         email: 'john.hansen@maersk.com',
         role: 'Attendee',
-        registrationDate: '2024-06-15'
+        registrationDate: '2025-06-15'
       },
       {
         contactId: '5',
         contactName: 'Klaus Mueller',
         email: 'klaus.mueller@hapag-lloyd.com',
         role: 'Organizer',
-        registrationDate: '2024-06-10'
+        registrationDate: '2025-06-10'
       }
     ]
+  },
+  {
+    id: '4',
+    title: 'Safety & Security Certification Course',
+    category: 'Safety & Security',
+    group: 'BIMCO',
+    startDate: '2025-08-20T10:00:00Z',
+    endDate: '2025-08-22T16:00:00Z',
+    location: 'Singapore',
+    status: 'Upcoming',
+    maxParticipants: 30,
+    description: 'Comprehensive course covering maritime safety and security protocols.',
+    participants: [
+      {
+        contactId: '2',
+        contactName: 'Maria Rodriguez',
+        email: 'maria.rodriguez@msc.com',
+        role: 'Attendee',
+        registrationDate: '2025-08-01'
+      }
+    ]
+  },
+  {
+    id: '5',
+    title: 'Environmental Compliance Conference',
+    category: 'Environmental',
+    group: 'BIMCO',
+    startDate: '2025-09-05T08:00:00Z',
+    endDate: '2025-09-06T18:00:00Z',
+    location: 'Rotterdam, Netherlands',
+    status: 'Upcoming',
+    maxParticipants: 200,
+    description: 'Annual conference on environmental regulations and compliance in maritime industry.',
+    participants: [
+      {
+        contactId: '3',
+        contactName: 'Pierre Dubois',
+        email: 'pierre.dubois@cma-cgm.com',
+        role: 'Speaker',
+        registrationDate: '2025-07-15'
+      },
+      {
+        contactId: '4',
+        contactName: 'Li Wei',
+        email: 'li.wei@cosco.com.cn',
+        role: 'Attendee',
+        registrationDate: '2025-07-20'
+      }
+    ]
+  },
+  {
+    id: '6',
+    title: 'Leadership in Maritime Industry',
+    category: 'Leadership',
+    group: 'BIMCO',
+    startDate: '2025-08-28T09:00:00Z',
+    endDate: '2025-08-30T17:00:00Z',
+    location: 'London, UK',
+    status: 'Upcoming',
+    maxParticipants: 40,
+    description: 'Executive leadership program for maritime industry professionals.',
+    participants: [
+      {
+        contactId: '5',
+        contactName: 'Klaus Mueller',
+        email: 'klaus.mueller@hapag-lloyd.com',
+        role: 'Attendee',
+        registrationDate: '2025-08-01'
+      }
+    ]
+  },
+  {
+    id: '7',
+    title: 'Port Operations Optimization',
+    category: 'Technical',
+    group: 'BIMCO',
+    startDate: '2025-08-22T10:00:00Z',
+    endDate: '2025-08-22T16:00:00Z',
+    location: 'Dubai, UAE',
+    status: 'Upcoming',
+    maxParticipants: 60,
+    description: 'One-day intensive workshop on optimizing port operations and logistics.',
+    participants: []
   }
 ];
 
