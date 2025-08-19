@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
 import ContactModal from '@/components/ContactModal';
@@ -12,6 +12,9 @@ import {
   PencilIcon,
   EyeIcon
 } from '@heroicons/react/24/outline';
+import { 
+  HeartIcon,
+} from '@heroicons/react/24/solid';
 
 export default function Contacts() {
   const [contacts, setContacts] = useState<Contact[]>(mockContacts);
@@ -25,6 +28,74 @@ export default function Contacts() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
+
+  // Favorites state
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
+
+  // Load favorites from localStorage on component mount
+  useEffect(() => {
+    try {
+      const storedFavorites = localStorage.getItem('bimco-crm-favorites');
+      if (storedFavorites) {
+        const favoritesData = JSON.parse(storedFavorites);
+        const contactIds = new Set<string>(
+          (favoritesData.contacts || []).map((c: any) => String(c.id))
+        );
+        setFavorites(contactIds);
+      }
+    } catch (error) {
+      console.error('Error loading favorites:', error);
+    }
+  }, []);
+
+  // Toggle favorite status
+  const toggleFavorite = (contact: Contact) => {
+    const isCurrentlyFavorite = favorites.has(contact.id);
+    const newFavorites = new Set(favorites);
+    
+    if (isCurrentlyFavorite) {
+      // Remove from favorites
+      newFavorites.delete(contact.id);
+    } else {
+      // Add to favorites
+      newFavorites.add(contact.id);
+    }
+    
+    setFavorites(newFavorites);
+    
+    // Update localStorage
+    try {
+      const storedFavorites = localStorage.getItem('bimco-crm-favorites');
+      let favoritesData = storedFavorites ? JSON.parse(storedFavorites) : { companies: [], contacts: [] };
+      
+      if (isCurrentlyFavorite) {
+        // Remove from stored favorites
+        favoritesData.contacts = favoritesData.contacts.filter((c: any) => c.id !== contact.id);
+      } else {
+        // Add to stored favorites
+        const favoriteContact = {
+          id: contact.id,
+          name: `${contact.firstName} ${contact.lastName}`,
+          company: contact.companyName,
+          role: contact.role || 'N/A',
+          accessCount: 1,
+          addedAt: new Date().toISOString(),
+          lastAccessed: 'Just now'
+        };
+        
+        // Remove if already exists to avoid duplicates
+        favoritesData.contacts = favoritesData.contacts.filter((c: any) => c.id !== contact.id);
+        favoritesData.contacts.push(favoriteContact);
+      }
+      
+      localStorage.setItem('bimco-crm-favorites', JSON.stringify(favoritesData));
+      
+      // Dispatch event for dashboard to update
+      window.dispatchEvent(new CustomEvent('favoritesChanged'));
+    } catch (error) {
+      console.error('Error updating favorites:', error);
+    }
+  };
 
   // Get unique companies for filter
   const uniqueCompanies = Array.from(new Set(contacts.map(c => c.companyName)));
@@ -171,6 +242,9 @@ export default function Contacts() {
             <table className="bimco-table">
               <thead className="bg-gray-50">
                 <tr>
+                  <th scope="col" className="w-12">
+                    Favorite
+                  </th>
                   <th 
                     scope="col" 
                     className="cursor-pointer hover:bg-gray-100"
@@ -211,6 +285,23 @@ export default function Contacts() {
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredContacts.map((contact) => (
                   <tr key={contact.id} className="hover:bg-gray-50">
+                    <td className="text-center">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          toggleFavorite(contact);
+                        }}
+                        className={`p-1 rounded-full transition-colors ${
+                          favorites.has(contact.id)
+                            ? 'text-red-500 hover:text-red-600'
+                            : 'text-gray-300 hover:text-red-400'
+                        }`}
+                        title={favorites.has(contact.id) ? 'Remove from favorites' : 'Add to favorites'}
+                      >
+                        <HeartIcon className="h-5 w-5" />
+                      </button>
+                    </td>
                     <td className="font-medium text-blue-600">
                       <Link href={`/contacts/${contact.id}`}>
                         {contact.contactNumber}

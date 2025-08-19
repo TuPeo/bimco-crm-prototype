@@ -48,26 +48,26 @@ export default function EventTrendChart({ data }: EventTrendChartProps) {
           <Line 
             type="monotone" 
             dataKey="courses" 
-            stroke="var(--bimco-light-blue-600)" 
+            stroke="#0586ab" 
             strokeWidth={3}
-            dot={{ fill: 'var(--bimco-light-blue-600)', strokeWidth: 2, r: 4 }}
+            dot={{ fill: '#0586ab', strokeWidth: 2, r: 4 }}
             name="Courses"
           />
           <Line 
             type="monotone" 
             dataKey="events" 
-            stroke="var(--bimco-dark-blue-600)" 
+            stroke="#d97706" 
             strokeWidth={3}
-            dot={{ fill: 'var(--bimco-dark-blue-600)', strokeWidth: 2, r: 4 }}
+            dot={{ fill: '#d97706', strokeWidth: 2, r: 4 }}
             name="Events"
           />
           <Line 
             type="monotone" 
             dataKey="participants" 
-            stroke="var(--bimco-cta-blip)" 
+            stroke="#059669" 
             strokeWidth={2}
             strokeDasharray="5 5"
-            dot={{ fill: 'var(--bimco-cta-blip)', strokeWidth: 2, r: 3 }}
+            dot={{ fill: '#059669', strokeWidth: 2, r: 3 }}
             name="Total Participants"
           />
         </LineChart>

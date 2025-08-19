@@ -11,13 +11,18 @@ interface CompanyDistributionChartProps {
 }
 
 export default function CompanyDistributionChart({ data }: CompanyDistributionChartProps) {
+  // Diverse colors for better visibility - inspired by MembershipStatusChart
   const COLORS = [
-    'var(--bimco-light-blue-600)',
-    'var(--bimco-dark-blue-600)', 
-    'var(--bimco-light-blue-400)',
-    'var(--bimco-dark-blue-400)',
-    'var(--bimco-light-blue-800)',
-    'var(--bimco-cta-blip)'
+    '#0586ab', // BIMCO Light Blue
+    '#059669', // Green
+    '#d97706', // Orange 
+    '#dc2626', // Red
+    '#7c3aed', // Purple
+    '#0891b2', // Cyan
+    '#be185d', // Pink
+    '#65a30d', // Lime
+    '#ea580c', // Orange Red
+    '#1d4ed8'  // Blue
   ];
 
   const renderCustomizedLabel = ({ 

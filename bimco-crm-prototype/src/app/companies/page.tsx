@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
 import CompanyModal from '@/components/CompanyModal';
@@ -12,6 +12,9 @@ import {
   PencilIcon,
   EyeIcon
 } from '@heroicons/react/24/outline';
+import { 
+  HeartIcon,
+} from '@heroicons/react/24/solid';
 
 export default function Companies() {
   const [companies, setCompanies] = useState<Company[]>(mockCompanies);
@@ -24,6 +27,73 @@ export default function Companies() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState<Company | undefined>(undefined);
   const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
+
+  // Favorites state
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
+
+  // Load favorites from localStorage on component mount
+  useEffect(() => {
+    try {
+      const storedFavorites = localStorage.getItem('bimco-crm-favorites');
+      if (storedFavorites) {
+        const favoritesData = JSON.parse(storedFavorites);
+        const companyIds = new Set<string>(
+          (favoritesData.companies || []).map((c: any) => String(c.id))
+        );
+        setFavorites(companyIds);
+      }
+    } catch (error) {
+      console.error('Error loading favorites:', error);
+    }
+  }, []);
+
+  // Toggle favorite status
+  const toggleFavorite = (company: Company) => {
+    const isCurrentlyFavorite = favorites.has(company.id);
+    const newFavorites = new Set(favorites);
+    
+    if (isCurrentlyFavorite) {
+      // Remove from favorites
+      newFavorites.delete(company.id);
+    } else {
+      // Add to favorites
+      newFavorites.add(company.id);
+    }
+    
+    setFavorites(newFavorites);
+    
+    // Update localStorage
+    try {
+      const storedFavorites = localStorage.getItem('bimco-crm-favorites');
+      let favoritesData = storedFavorites ? JSON.parse(storedFavorites) : { companies: [], contacts: [] };
+      
+      if (isCurrentlyFavorite) {
+        // Remove from stored favorites
+        favoritesData.companies = favoritesData.companies.filter((c: any) => c.id !== company.id);
+      } else {
+        // Add to stored favorites
+        const favoriteCompany = {
+          id: company.id,
+          name: company.name,
+          type: company.type,
+          accessCount: 1,
+          addedAt: new Date().toISOString(),
+          lastAccessed: new Date().toISOString()
+        };
+        
+        // Remove if already exists to avoid duplicates
+        favoritesData.companies = favoritesData.companies.filter((c: any) => c.id !== company.id);
+        favoritesData.companies.push(favoriteCompany);
+      }
+      
+      localStorage.setItem('bimco-crm-favorites', JSON.stringify(favoritesData));
+      
+      // Dispatch event for dashboard to update
+      window.dispatchEvent(new CustomEvent('favoritesChanged'));
+    } catch (error) {
+      console.error('Error updating favorites:', error);
+    }
+  };
 
   // Filter companies based on search and status
   const filteredCompanies = companies
@@ -149,6 +219,9 @@ export default function Companies() {
             <table className="bimco-table">
               <thead className="bg-gray-50">
                 <tr>
+                  <th scope="col" className="w-12">
+                    Favorite
+                  </th>
                   <th 
                     scope="col" 
                     className="cursor-pointer hover:bg-gray-100"
@@ -179,6 +252,23 @@ export default function Companies() {
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredCompanies.map((company) => (
                   <tr key={company.id} className="hover:bg-gray-50">
+                    <td className="text-center">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          toggleFavorite(company);
+                        }}
+                        className={`p-1 rounded-full transition-colors ${
+                          favorites.has(company.id)
+                            ? 'text-red-500 hover:text-red-600'
+                            : 'text-gray-300 hover:text-red-400'
+                        }`}
+                        title={favorites.has(company.id) ? 'Remove from favorites' : 'Add to favorites'}
+                      >
+                        <HeartIcon className="h-5 w-5" />
+                      </button>
+                    </td>
                     <td className="font-medium text-blue-600">
                       <Link href={`/companies/${company.id}`}>
                         {company.registrationNumber}

@@ -49,14 +49,14 @@ export default function ContactRoleChart({ data }: ContactRoleChartProps) {
           <Bar 
             dataKey="active" 
             stackId="a" 
-            fill="var(--bimco-light-blue-600)" 
+            fill="#059669" 
             name="Active"
             radius={[0, 0, 0, 0]}
           />
           <Bar 
             dataKey="inactive" 
             stackId="a" 
-            fill="var(--bimco-dark-blue-400)" 
+            fill="#dc2626" 
             name="Inactive"
             radius={[4, 4, 0, 0]}
           />
