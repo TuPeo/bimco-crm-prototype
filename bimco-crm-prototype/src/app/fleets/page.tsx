@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import Layout from '@/components/Layout';
 import Link from 'next/link';
+import FleetModal from '@/components/FleetModal';
+import CertificatesModal from '@/components/CertificatesModal';
+import MaintenanceModal from '@/components/MaintenanceModal';
 import { mockFleets } from '@/data/mockData';
 import { Fleet } from '@/types';
 import {
@@ -16,9 +19,18 @@ import {
 } from '@heroicons/react/24/outline';
 
 export default function FleetsPage() {
-  const [fleets] = useState<Fleet[]>(mockFleets);
+  const [fleets, setFleets] = useState<Fleet[]>(mockFleets);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+
+  // Modal states
+  const [isFleetModalOpen, setIsFleetModalOpen] = useState(false);
+  const [fleetModalMode, setFleetModalMode] = useState<'add' | 'edit'>('add');
+  const [selectedFleet, setSelectedFleet] = useState<Fleet | null>(null);
+  
+  const [isCertificatesModalOpen, setIsCertificatesModalOpen] = useState(false);
+  const [isMaintenanceModalOpen, setIsMaintenanceModalOpen] = useState(false);
+  const [modalFleet, setModalFleet] = useState<Fleet | null>(null);
 
   const filteredFleets = fleets.filter(fleet => {
     const matchesSearch = fleet.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -42,6 +54,60 @@ export default function FleetsPage() {
     return num ? num.toLocaleString() : 'N/A';
   };
 
+  // Modal handlers
+  const openAddFleetModal = () => {
+    setFleetModalMode('add');
+    setSelectedFleet(null);
+    setIsFleetModalOpen(true);
+  };
+
+  const openEditFleetModal = (fleet: Fleet) => {
+    setFleetModalMode('edit');
+    setSelectedFleet(fleet);
+    setIsFleetModalOpen(true);
+  };
+
+  const closeFleetModal = () => {
+    setIsFleetModalOpen(false);
+    setSelectedFleet(null);
+  };
+
+  const handleSaveFleet = (fleetData: Omit<Fleet, 'id'> | Fleet) => {
+    if (fleetModalMode === 'add') {
+      const newFleet: Fleet = {
+        ...fleetData as Omit<Fleet, 'id'>,
+        id: `fleet-${Date.now()}`,
+      };
+      setFleets(prev => [newFleet, ...prev]);
+    } else if (fleetModalMode === 'edit' && 'id' in fleetData) {
+      setFleets(prev => 
+        prev.map(fleet => 
+          fleet.id === fleetData.id ? fleetData as Fleet : fleet
+        )
+      );
+    }
+  };
+
+  const openCertificatesModal = (fleet: Fleet) => {
+    setModalFleet(fleet);
+    setIsCertificatesModalOpen(true);
+  };
+
+  const openMaintenanceModal = (fleet: Fleet) => {
+    setModalFleet(fleet);
+    setIsMaintenanceModalOpen(true);
+  };
+
+  const closeCertificatesModal = () => {
+    setIsCertificatesModalOpen(false);
+    setModalFleet(null);
+  };
+
+  const closeMaintenanceModal = () => {
+    setIsMaintenanceModalOpen(false);
+    setModalFleet(null);
+  };
+
   return (
     <Layout>
       <div className="space-y-8">
@@ -56,13 +122,13 @@ export default function FleetsPage() {
             </p>
           </div>
           <div className="mt-4 sm:mt-0">
-            <Link
-              href="/fleets/new"
+            <button
+              onClick={openAddFleetModal}
               className="bimco-btn-primary"
             >
               <PlusIcon className="h-4 w-4 mr-2" />
               Add New Vessel
-            </Link>
+            </button>
           </div>
         </div>
 
@@ -147,6 +213,7 @@ export default function FleetsPage() {
                     <div className="flex items-center gap-2">
                       {/* Quick Actions */}
                       <button
+                        onClick={() => openCertificatesModal(fleet)}
                         type="button"
                         className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
                         title="View Certificates"
@@ -154,6 +221,7 @@ export default function FleetsPage() {
                         <DocumentTextIcon className="h-4 w-4" />
                       </button>
                       <button
+                        onClick={() => openMaintenanceModal(fleet)}
                         type="button"
                         className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
                         title="Maintenance Records"
@@ -167,7 +235,13 @@ export default function FleetsPage() {
                       >
                         <EyeIcon className="h-4 w-4" />
                       </Link>
-                      <ChevronRightIcon className="h-4 w-4 text-gray-400" />
+                      <button
+                        onClick={() => openEditFleetModal(fleet)}
+                        className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
+                        title="Edit Vessel"
+                      >
+                        <ChevronRightIcon className="h-4 w-4" />
+                      </button>
                     </div>
                   </div>
 
@@ -264,6 +338,33 @@ export default function FleetsPage() {
           </div>
         </div>
       </div>
+
+      {/* Fleet Modal */}
+      <FleetModal
+        isOpen={isFleetModalOpen}
+        onClose={closeFleetModal}
+        onSave={handleSaveFleet}
+        fleet={selectedFleet}
+        mode={fleetModalMode}
+      />
+
+      {/* Certificates Modal */}
+      {modalFleet && (
+        <CertificatesModal
+          isOpen={isCertificatesModalOpen}
+          onClose={closeCertificatesModal}
+          fleet={modalFleet}
+        />
+      )}
+
+      {/* Maintenance Modal */}
+      {modalFleet && (
+        <MaintenanceModal
+          isOpen={isMaintenanceModalOpen}
+          onClose={closeMaintenanceModal}
+          fleet={modalFleet}
+        />
+      )}
     </Layout>
   );
 }
