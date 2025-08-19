@@ -1,9 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Layout from '@/components/Layout';
+import SegmentModal from '@/components/SegmentModal';
+import CreateEventModal from '@/components/CreateEventModal';
+import CreateInteractionModal from '@/components/CreateInteractionModal';
 import Link from 'next/link';
-import { mockSegments } from '@/data/mockData';
 import { Segment } from '@/types';
 import {
   RectangleGroupIcon,
@@ -22,15 +24,104 @@ import {
   CheckCircleIcon
 } from '@heroicons/react/24/outline';
 
+// Mock data - replace with actual API calls
+const initialSegments: Segment[] = [
+  {
+    id: '1',
+    name: 'High Value Customers',
+    description: 'Customers with purchases over $10,000',
+    criteria: {
+      companies: {
+        statuses: ['M1'],
+        types: ['A1', 'A2']
+      }
+    },
+    memberCount: 156,
+    status: 'Active',
+    createdBy: 'John Smith',
+    dateCreated: '2024-01-15',
+    lastUpdated: '2024-02-10',
+    onHold: false,
+    readyForInvoice: true
+  },
+  {
+    id: '2',
+    name: 'New Members',
+    description: 'Members joined in the last 30 days',
+    criteria: {
+      companies: {
+        statuses: ['M0']
+      },
+      contacts: {
+        roles: ['Manager', 'Director']
+      }
+    },
+    memberCount: 87,
+    status: 'Active',
+    createdBy: 'Sarah Johnson',
+    dateCreated: '2024-02-01',
+    lastUpdated: '2024-02-20',
+    onHold: false,
+    readyForInvoice: false
+  },
+  {
+    id: '3',
+    name: 'Training Prospects',
+    description: 'Companies interested in maritime training',
+    criteria: {
+      courses: {
+        categories: ['Maritime Training', 'Safety & Security']
+      },
+      companies: {
+        types: ['B1', 'B2']
+      }
+    },
+    memberCount: 234,
+    status: 'Draft',
+    createdBy: 'Mike Davis',
+    dateCreated: '2024-01-20',
+    lastUpdated: '2024-02-15',
+    onHold: true,
+    readyForInvoice: false
+  },
+  {
+    id: '4',
+    name: 'European Members',
+    description: 'Companies based in European countries',
+    criteria: {
+      companies: {
+        countries: ['Denmark', 'Germany', 'Norway', 'Sweden']
+      }
+    },
+    memberCount: 432,
+    status: 'Active',
+    createdBy: 'Anna Nielsen',
+    dateCreated: '2024-01-10',
+    lastUpdated: '2024-02-18',
+    onHold: false,
+    readyForInvoice: true
+  }
+];
+
 export default function SegmentsPage() {
-  const [segments] = useState<Segment[]>(mockSegments);
+  const [segments, setSegments] = useState<Segment[]>(initialSegments);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  
+  // Modal states
+  const [isSegmentModalOpen, setIsSegmentModalOpen] = useState(false);
+  const [isEventModalOpen, setIsEventModalOpen] = useState(false);
+  const [isInteractionModalOpen, setIsInteractionModalOpen] = useState(false);
+  const [editingSegment, setEditingSegment] = useState<Segment | null>(null);
+  const [segmentModalMode, setSegmentModalMode] = useState<'add' | 'edit'>('add');
+  const [activeSegmentForAction, setActiveSegmentForAction] = useState<Segment | null>(null);
 
   const filteredSegments = segments.filter(segment => {
     const matchesSearch = segment.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         segment.description?.toLowerCase().includes(searchQuery.toLowerCase());
+                         segment.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         segment.createdBy.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = statusFilter === 'all' || segment.status === statusFilter;
+    
     return matchesSearch && matchesStatus;
   });
 
@@ -52,23 +143,93 @@ export default function SegmentsPage() {
   };
 
   const handleCreateEvent = (segmentId: string) => {
-    console.log('Creating event for segment:', segmentId);
-    // Navigate to event creation with pre-filled segment data
+    const segment = segments.find(s => s.id === segmentId);
+    if (segment) {
+      setActiveSegmentForAction(segment);
+      setIsEventModalOpen(true);
+    }
   };
 
   const handleCreateInteraction = (segmentId: string) => {
-    console.log('Creating interaction for segment:', segmentId);
-    // Navigate to interaction creation with pre-filled segment data
+    const segment = segments.find(s => s.id === segmentId);
+    if (segment) {
+      setActiveSegmentForAction(segment);
+      setIsInteractionModalOpen(true);
+    }
   };
 
   const handleRemoveHold = (segmentId: string) => {
-    console.log('Removing hold for segment:', segmentId);
-    // API call to remove hold status
+    if (confirm('Are you sure you want to remove hold status from this segment?')) {
+      const updatedSegments = segments.map(segment =>
+        segment.id === segmentId
+          ? { ...segment, onHold: false, lastUpdated: new Date().toISOString() }
+          : segment
+      );
+      setSegments(updatedSegments);
+      alert('Hold status removed successfully');
+    }
   };
 
   const handleSetReadyForInvoice = (segmentId: string) => {
-    console.log('Setting ready for invoice for segment:', segmentId);
-    // API call to set ready for invoice
+    if (confirm('Are you sure you want to set this segment as ready for invoice?')) {
+      const updatedSegments = segments.map(segment =>
+        segment.id === segmentId
+          ? { ...segment, readyForInvoice: true, lastUpdated: new Date().toISOString() }
+          : segment
+      );
+      setSegments(updatedSegments);
+      alert('Segment set as ready for invoice');
+    }
+  };
+
+  const handleAddSegment = () => {
+    setSegmentModalMode('add');
+    setEditingSegment(null);
+    setIsSegmentModalOpen(true);
+  };
+
+  const handleEditSegment = (segmentId: string) => {
+    const segment = segments.find(s => s.id === segmentId);
+    if (segment) {
+      setSegmentModalMode('edit');
+      setEditingSegment(segment);
+      setIsSegmentModalOpen(true);
+    }
+  };
+
+  const handleDeleteSegment = (segmentId: string) => {
+    if (confirm('Are you sure you want to delete this segment? This action cannot be undone.')) {
+      setSegments(segments.filter(s => s.id !== segmentId));
+      alert('Segment deleted successfully');
+    }
+  };
+
+  const handleSaveSegment = (segmentData: Omit<Segment, 'id'> | Segment) => {
+    if (segmentModalMode === 'add') {
+      const newSegment: Segment = {
+        ...(segmentData as Omit<Segment, 'id'>),
+        id: (Math.max(...segments.map(s => parseInt(s.id)), 0) + 1).toString()
+      };
+      setSegments([...segments, newSegment]);
+      alert('Segment created successfully');
+    } else if (segmentModalMode === 'edit' && 'id' in segmentData) {
+      setSegments(segments.map(s => 
+        s.id === segmentData.id ? segmentData as Segment : s
+      ));
+      alert('Segment updated successfully');
+    }
+  };
+
+  const handleSaveEvent = (eventData: any) => {
+    console.log('Event created:', eventData);
+    alert(`Event "${eventData.title}" created successfully for segment "${activeSegmentForAction?.name}"`);
+    setActiveSegmentForAction(null);
+  };
+
+  const handleSaveInteraction = (interactionData: any) => {
+    console.log('Interaction created:', interactionData);
+    alert(`Interaction "${interactionData.subject}" created successfully for segment "${activeSegmentForAction?.name}"`);
+    setActiveSegmentForAction(null);
   };
 
   return (
@@ -85,13 +246,13 @@ export default function SegmentsPage() {
             </p>
           </div>
           <div className="mt-4 sm:mt-0">
-            <Link
-              href="/segments/new"
+            <button
+              onClick={handleAddSegment}
               className="bimco-btn-primary"
             >
               <PlusIcon className="h-4 w-4 mr-2" />
               Create New Segment
-            </Link>
+            </button>
           </div>
         </div>
 
@@ -105,7 +266,7 @@ export default function SegmentsPage() {
                   <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <input
                     type="text"
-                    placeholder="Search segments by name or description..."
+                    placeholder="Search segments by name, description, or creator..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-10 w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -138,9 +299,12 @@ export default function SegmentsPage() {
                 <div className="text-gray-400 text-sm">
                   No segments found matching your criteria.
                 </div>
-                <Link href="/segments/new" className="text-blue-600 hover:text-blue-500 mt-2 inline-block">
+                <button
+                  onClick={handleAddSegment}
+                  className="text-blue-600 hover:text-blue-500 mt-2 inline-block"
+                >
                   Create your first segment
-                </Link>
+                </button>
               </div>
             ) : (
               filteredSegments.map((segment) => (
@@ -151,12 +315,9 @@ export default function SegmentsPage() {
                   <div className="flex items-start justify-between">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-2">
-                        <Link
-                          href={`/segments/${segment.id}`}
-                          className="text-lg font-medium text-gray-900 hover:text-blue-600 transition-colors"
-                        >
+                        <h3 className="text-lg font-medium text-gray-900">
                           {segment.name}
-                        </Link>
+                        </h3>
                         <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusBadge(segment.status)}`}>
                           {segment.status}
                         </span>
@@ -257,14 +418,15 @@ export default function SegmentsPage() {
                       >
                         <EyeIcon className="h-4 w-4" />
                       </Link>
-                      <Link
-                        href={`/segments/${segment.id}/edit`}
+                      <button
+                        onClick={() => handleEditSegment(segment.id)}
                         className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
                         title="Edit Segment"
                       >
                         <PencilIcon className="h-4 w-4" />
-                      </Link>
+                      </button>
                       <button
+                        onClick={() => handleDeleteSegment(segment.id)}
                         className="p-2 text-gray-400 hover:text-red-600 transition-colors"
                         title="Delete Segment"
                       >
@@ -302,24 +464,6 @@ export default function SegmentsPage() {
             <div className="px-4 py-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <UsersIcon className="h-5 w-5 text-blue-600" />
-                  </div>
-                </div>
-                <div className="ml-5">
-                  <p className="text-sm font-medium text-gray-500">Total Members</p>
-                  <p className="text-2xl font-semibold text-gray-900">
-                    {segments.reduce((sum, segment) => sum + segment.memberCount, 0).toLocaleString()}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bimco-stat-card">
-            <div className="px-4 py-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
                   <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
                     <PauseIcon className="h-5 w-5 text-yellow-600" />
                   </div>
@@ -338,8 +482,8 @@ export default function SegmentsPage() {
             <div className="px-4 py-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                    <CurrencyDollarIcon className="h-5 w-5 text-purple-600" />
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                    <CurrencyDollarIcon className="h-5 w-5 text-blue-600" />
                   </div>
                 </div>
                 <div className="ml-5">
@@ -351,35 +495,55 @@ export default function SegmentsPage() {
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Management Actions */}
-        <div className="bimco-card">
-          <div className="bimco-card-header">
-            <h3 className="text-lg font-medium text-gray-900">Segment Management Actions</h3>
-          </div>
-          <div className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <button className="bimco-btn-secondary justify-start">
-                <CalendarIcon className="h-4 w-4 mr-2" />
-                Create Event
-              </button>
-              <button className="bimco-btn-secondary justify-start">
-                <PlayIcon className="h-4 w-4 mr-2" />
-                Create Interaction
-              </button>
-              <button className="bimco-btn-secondary justify-start">
-                <PlayIcon className="h-4 w-4 mr-2" />
-                Remove on Hold
-              </button>
-              <button className="bimco-btn-secondary justify-start">
-                <CurrencyDollarIcon className="h-4 w-4 mr-2" />
-                Set Ready for Invoice
-              </button>
+          <div className="bimco-stat-card">
+            <div className="px-4 py-5">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                    <UsersIcon className="h-5 w-5 text-purple-600" />
+                  </div>
+                </div>
+                <div className="ml-5">
+                  <p className="text-sm font-medium text-gray-500">Total Members</p>
+                  <p className="text-2xl font-semibold text-gray-900">
+                    {segments.reduce((sum, s) => sum + s.memberCount, 0).toLocaleString()}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Modals */}
+      <SegmentModal
+        isOpen={isSegmentModalOpen}
+        onClose={() => setIsSegmentModalOpen(false)}
+        onSave={handleSaveSegment}
+        segment={editingSegment}
+        mode={segmentModalMode}
+      />
+
+      <CreateEventModal
+        isOpen={isEventModalOpen}
+        onClose={() => {
+          setIsEventModalOpen(false);
+          setActiveSegmentForAction(null);
+        }}
+        onSave={handleSaveEvent}
+        segmentName={activeSegmentForAction?.name}
+      />
+
+      <CreateInteractionModal
+        isOpen={isInteractionModalOpen}
+        onClose={() => {
+          setIsInteractionModalOpen(false);
+          setActiveSegmentForAction(null);
+        }}
+        onSave={handleSaveInteraction}
+        segmentName={activeSegmentForAction?.name}
+      />
     </Layout>
   );
 }
