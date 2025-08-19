@@ -1,4 +1,4 @@
-import { Company, Contact, Course, DashboardStats } from '@/types';
+import { Company, Contact, Course, DashboardStats, Fleet, SearchResult, SavedSearch, Segment } from '@/types';
 
 // Dashboard Statistics Mock Data
 export const mockDashboardStats: DashboardStats = {
@@ -407,5 +407,269 @@ export const mockNotifications = [
     createdAt: '2024-08-17T09:00:00Z',
     relatedEntity: 'system',
     relatedId: 'maintenance'
+  }
+];
+
+// Fleet Management Mock Data
+export const mockFleets: Fleet[] = [
+  {
+    id: '1',
+    name: 'Emma Maersk',
+    type: 'Container Ship',
+    capacity: 15000,
+    registration: 'IMO9321483',
+    operationalStatus: 'Active',
+    companyId: '1',
+    companyName: 'Maersk Line',
+    ihsNumber: '9321483',
+    yearBuilt: 2006,
+    flag: 'Denmark',
+    grossTonnage: 170794,
+    deadweight: 156907,
+    length: 397,
+    beam: 56,
+    draft: 16,
+    enginePower: 80080,
+    fuelType: 'Marine Gas Oil',
+    certificates: [
+      {
+        id: '1',
+        type: 'Safety Certificate',
+        issuer: 'Danish Maritime Authority',
+        issuedDate: '2023-01-15',
+        expiryDate: '2024-01-15'
+      },
+      {
+        id: '2',
+        type: 'Environmental Certificate',
+        issuer: 'IMO',
+        issuedDate: '2023-03-10',
+        expiryDate: '2025-03-10'
+      }
+    ],
+    maintenanceRecords: [
+      {
+        id: '1',
+        type: 'Engine Overhaul',
+        description: 'Complete engine maintenance and inspection',
+        scheduledDate: '2024-09-15',
+        status: 'Scheduled',
+        cost: 250000,
+        vendor: 'MAN Energy Solutions'
+      }
+    ],
+    dateCreated: '2006-08-12T00:00:00Z',
+    lastUpdated: '2024-08-15T14:30:00Z'
+  },
+  {
+    id: '2',
+    name: 'Nordic Star',
+    type: 'Bulk Carrier',
+    capacity: 85000,
+    registration: 'IMO9156742',
+    operationalStatus: 'Active',
+    companyId: '2',
+    companyName: 'Norden A/S',
+    ihsNumber: '9156742',
+    yearBuilt: 2018,
+    flag: 'Singapore',
+    grossTonnage: 47500,
+    deadweight: 85000,
+    length: 229,
+    beam: 38,
+    draft: 14,
+    enginePower: 12600,
+    fuelType: 'Heavy Fuel Oil',
+    certificates: [
+      {
+        id: '3',
+        type: 'Load Line Certificate',
+        issuer: 'Singapore Maritime Authority',
+        issuedDate: '2023-06-01',
+        expiryDate: '2028-06-01'
+      }
+    ],
+    maintenanceRecords: [
+      {
+        id: '2',
+        type: 'Hull Inspection',
+        description: 'Annual hull and structure inspection',
+        scheduledDate: '2024-08-25',
+        completedDate: '2024-08-20',
+        status: 'Completed',
+        cost: 15000,
+        vendor: 'Lloyd\'s Register'
+      }
+    ],
+    dateCreated: '2018-03-22T00:00:00Z',
+    lastUpdated: '2024-08-20T10:15:00Z'
+  },
+  {
+    id: '3',
+    name: 'Viking Explorer',
+    type: 'Tanker',
+    capacity: 115000,
+    registration: 'IMO9287634',
+    operationalStatus: 'Maintenance',
+    companyId: '3',
+    companyName: 'Frontline Management AS',
+    ihsNumber: '9287634',
+    yearBuilt: 2015,
+    flag: 'Norway',
+    grossTonnage: 62000,
+    deadweight: 115000,
+    length: 274,
+    beam: 48,
+    draft: 16.5,
+    enginePower: 21600,
+    fuelType: 'Marine Gas Oil',
+    certificates: [
+      {
+        id: '4',
+        type: 'Safety Certificate',
+        issuer: 'Norwegian Maritime Authority',
+        issuedDate: '2023-12-01',
+        expiryDate: '2024-12-01'
+      }
+    ],
+    maintenanceRecords: [
+      {
+        id: '3',
+        type: 'Dry Dock',
+        description: 'Scheduled dry dock maintenance',
+        scheduledDate: '2024-08-01',
+        status: 'In Progress',
+        cost: 850000,
+        vendor: 'Damen Shipyards'
+      }
+    ],
+    dateCreated: '2015-11-10T00:00:00Z',
+    lastUpdated: '2024-08-19T08:45:00Z'
+  }
+];
+
+// Search Management Mock Data
+export const mockSearchResults: SearchResult[] = [
+  {
+    id: '1',
+    type: 'company',
+    title: 'Maersk Line',
+    subtitle: 'Container Shipping • Denmark',
+    description: 'Leading global container shipping company',
+    url: '/companies/1',
+    relevanceScore: 0.95,
+    matchedFields: ['name', 'industry', 'country']
+  },
+  {
+    id: '2',
+    type: 'contact',
+    title: 'Lars Nielsen',
+    subtitle: 'CEO • Maersk Line',
+    description: 'Chief Executive Officer at Maersk Line',
+    url: '/contacts/1',
+    relevanceScore: 0.87,
+    matchedFields: ['name', 'role', 'company']
+  },
+  {
+    id: '3',
+    type: 'fleet',
+    title: 'Emma Maersk',
+    subtitle: 'Container Ship • IMO9321483',
+    description: '15,000 TEU capacity container vessel',
+    url: '/fleets/1',
+    relevanceScore: 0.82,
+    matchedFields: ['name', 'type', 'registration']
+  }
+];
+
+export const mockSavedSearches: SavedSearch[] = [
+  {
+    id: '1',
+    name: 'Active Danish Companies',
+    description: 'All active companies based in Denmark',
+    searchQuery: 'status:active AND country:Denmark',
+    filters: { status: ['active'], country: ['Denmark'] },
+    entityTypes: ['company'],
+    userId: 'user1',
+    isPublic: false,
+    dateCreated: '2024-07-15T10:00:00Z',
+    lastUsed: '2024-08-18T14:30:00Z'
+  },
+  {
+    id: '2',
+    name: 'Upcoming Maritime Courses',
+    description: 'All upcoming courses in maritime categories',
+    searchQuery: 'category:maritime AND status:upcoming',
+    filters: { category: ['maritime'], status: ['upcoming'] },
+    entityTypes: ['course'],
+    userId: 'user1',
+    isPublic: true,
+    dateCreated: '2024-06-20T09:15:00Z',
+    lastUsed: '2024-08-19T08:00:00Z'
+  }
+];
+
+// Segment Management Mock Data
+export const mockSegments: Segment[] = [
+  {
+    id: '1',
+    name: 'Nordic Shipping Companies',
+    description: 'Active shipping companies in Nordic countries',
+    criteria: {
+      companies: {
+        statuses: ['Active', 'M1'],
+        types: ['Member'],
+        countries: ['Denmark', 'Norway', 'Sweden', 'Finland'],
+        registrationDateRange: { start: '2020-01-01', end: '2024-12-31' }
+      }
+    },
+    memberCount: 156,
+    status: 'Active',
+    createdBy: 'admin@bimco.org',
+    dateCreated: '2024-06-01T10:00:00Z',
+    lastUpdated: '2024-08-15T14:30:00Z',
+    onHold: false,
+    readyForInvoice: true
+  },
+  {
+    id: '2',
+    name: 'Maritime Training Prospects',
+    description: 'Contacts interested in maritime training courses',
+    criteria: {
+      contacts: {
+        classifications: ['BI-BD', 'BI-BS'],
+        roles: ['Fleet Manager', 'Technical Director'],
+        statuses: ['Active']
+      },
+      courses: {
+        categories: ['Maritime Training', 'Safety'],
+        dateRange: { start: '2024-01-01', end: '2024-12-31' }
+      }
+    },
+    memberCount: 234,
+    status: 'Active',
+    createdBy: 'training@bimco.org',
+    dateCreated: '2024-07-10T09:00:00Z',
+    lastUpdated: '2024-08-18T16:45:00Z',
+    onHold: false,
+    readyForInvoice: false
+  },
+  {
+    id: '3',
+    name: 'Asia-Pacific Fleet Owners',
+    description: 'Companies with fleet operations in Asia-Pacific',
+    criteria: {
+      companies: {
+        statuses: ['Active'],
+        countries: ['Singapore', 'Hong Kong', 'Japan', 'South Korea']
+      }
+    },
+    memberCount: 89,
+    status: 'Draft',
+    createdBy: 'regional@bimco.org',
+    dateCreated: '2024-08-01T11:30:00Z',
+    lastUpdated: '2024-08-19T10:15:00Z',
+    onHold: true,
+    readyForInvoice: false
   }
 ];

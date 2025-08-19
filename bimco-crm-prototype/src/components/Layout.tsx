@@ -11,7 +11,9 @@ import {
   AcademicCapIcon,
   BellIcon,
   MagnifyingGlassIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  TruckIcon,
+  RectangleGroupIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -24,7 +26,10 @@ const navigation = [
   { name: 'Dashboard', href: '/', icon: HomeIcon },
   { name: 'Companies', href: '/companies', icon: BuildingOfficeIcon },
   { name: 'Contacts', href: '/contacts', icon: UsersIcon },
+  { name: 'Fleets', href: '/fleets', icon: TruckIcon },
   { name: 'Courses & Events', href: '/courses', icon: AcademicCapIcon },
+  { name: 'Search', href: '/search', icon: MagnifyingGlassIcon },
+  { name: 'Segments', href: '/segments', icon: RectangleGroupIcon },
   { name: 'Notifications', href: '/notifications', icon: BellIcon },
 ];
 

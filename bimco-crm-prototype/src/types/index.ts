@@ -70,8 +70,109 @@ export interface Fleet {
   type: string;
   capacity: number;
   registration: string;
-  operationalStatus: string;
+  operationalStatus: 'Active' | 'Inactive' | 'Maintenance' | 'Decommissioned';
   companyId: string;
+  companyName: string;
+  ihsNumber?: string;
+  yearBuilt?: number;
+  flag: string;
+  grossTonnage?: number;
+  deadweight?: number;
+  length?: number;
+  beam?: number;
+  draft?: number;
+  enginePower?: number;
+  fuelType?: string;
+  certificates: FleetCertificate[];
+  maintenanceRecords: MaintenanceRecord[];
+  dateCreated: string;
+  lastUpdated: string;
+}
+
+export interface FleetCertificate {
+  id: string;
+  type: string;
+  issuer: string;
+  issuedDate: string;
+  expiryDate: string;
+  documentUrl?: string;
+}
+
+export interface MaintenanceRecord {
+  id: string;
+  type: string;
+  description: string;
+  scheduledDate: string;
+  completedDate?: string;
+  status: 'Scheduled' | 'In Progress' | 'Completed' | 'Overdue';
+  cost?: number;
+  vendor?: string;
+  notes?: string;
+}
+
+export interface SearchResult {
+  id: string;
+  type: 'company' | 'contact' | 'course' | 'fleet';
+  title: string;
+  subtitle: string;
+  description?: string;
+  url: string;
+  relevanceScore: number;
+  matchedFields: string[];
+}
+
+export interface SavedSearch {
+  id: string;
+  name: string;
+  description?: string;
+  searchQuery: string;
+  filters: Record<string, string | string[] | boolean | number>;
+  entityTypes: string[];
+  userId: string;
+  isPublic: boolean;
+  dateCreated: string;
+  lastUsed: string;
+}
+
+export interface Segment {
+  id: string;
+  name: string;
+  description?: string;
+  criteria: SegmentCriteria;
+  memberCount: number;
+  status: 'Active' | 'Draft' | 'Archived';
+  createdBy: string;
+  dateCreated: string;
+  lastUpdated: string;
+  onHold: boolean;
+  readyForInvoice: boolean;
+}
+
+export interface SegmentCriteria {
+  companies?: {
+    statuses?: string[];
+    types?: string[];
+    countries?: string[];
+    registrationDateRange?: { start: string; end: string };
+  };
+  contacts?: {
+    classifications?: string[];
+    roles?: string[];
+    statuses?: string[];
+  };
+  courses?: {
+    categories?: string[];
+    dateRange?: { start: string; end: string };
+  };
+}
+
+export interface SegmentMember {
+  id: string;
+  segmentId: string;
+  entityType: 'company' | 'contact' | 'course';
+  entityId: string;
+  entityName: string;
+  dateAdded: string;
 }
 
 export interface DashboardStats {
