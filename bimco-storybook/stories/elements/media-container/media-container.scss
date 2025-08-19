@@ -1,0 +1,17 @@
+@import "../../abstracts";
+
+.media-container {
+  display: block;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @each $image-crop, $aspect-ratio in $image-crop-aspect-ratios {
+    &--#{$image-crop} {
+      aspect-ratio: $aspect-ratio;
+    }
+  }
+}

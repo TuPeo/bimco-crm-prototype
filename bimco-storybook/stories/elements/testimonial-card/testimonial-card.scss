@@ -1,0 +1,198 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.testimonial-card {
+  $block: &;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: $rem-size-400;
+
+  &__image-wrapper {
+    position: relative;
+    width: 100%;
+    height: $rem-size-64;
+    border-radius: 50%;
+  }
+
+  &__image {
+    position: relative;
+    z-index: 5;
+    width: $rem-size-80;
+    height: $rem-size-80;
+    margin-top: $rem-size-16;
+    margin-left: $rem-size-8;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  &__image-shape {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+
+    &::before,
+    &::after {
+      position: absolute;
+      width: 100%;
+      height: $rem-size-32;
+      margin-top: $rem-size-48;
+      content: "";
+    }
+
+    &::before {
+      clip-path: polygon(100% 0, 50% 50%, 100% 100%);
+    }
+
+    &::after {
+      clip-path: polygon(0 0, 50% 50%, 0 100%);
+      mix-blend-mode: multiply;
+    }
+  }
+
+  &__content {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    min-height: calc($rem-size-400 - $rem-size-64);
+    padding: $rem-size-40 $rem-size-18 $rem-size-36;
+    text-align: left;
+  }
+
+  &__quote {
+    @extend %card-title-1-style;
+    color: $bimco-cream-100;
+  }
+
+  &__details {
+    margin-top: $rem-size-32;
+  }
+
+  &__name, &__company {
+    display: block;
+  }
+  
+  &__name {
+    @extend %body-style;
+    font-weight: var(--font-weight-bold);
+    color: $bimco-cream-300;
+  }
+
+  &__company {
+    @extend %body-small-style;
+    margin-top: $rem-size-4;
+    color: $bimco-cream-300;
+    opacity: 0.7;
+  }
+
+  @mixin set-theme($background, $shape-before, $shape-after, $content) {
+    background-color: $background;
+
+    & #{$block}__image-shape {
+      &::before {
+        background-color: $shape-before;
+      }
+
+      &::after {
+        background-color: $shape-after;
+      }
+    }
+
+    & #{$block}__content {
+      background-color: $content;
+    }
+  }
+
+  // Theme variations
+  &, &--light-blue {
+    @include set-theme(
+      $bimco-light-blue-200,
+      $bimco-light-blue-1000,
+      $bimco-light-blue-500,
+      $bimco-light-blue-800
+    );
+  }
+  
+  &--blue {
+    @include set-theme(
+      $bimco-dark-blue-200,
+      $bimco-dark-blue-800,
+      $bimco-dark-blue-500,
+      $bimco-dark-blue-600
+    );
+  }
+
+  &--orange {
+    @include set-theme(
+      $bimco-orange-200,
+      $bimco-orange-1000,
+      $bimco-orange-400,
+      $bimco-orange-800
+    );
+  }
+
+  &--cyan {
+    @include set-theme(
+      $bimco-cyan-200,
+      $bimco-cyan-1000,
+      $bimco-cyan-500,
+      $bimco-cyan-900
+    );
+  }
+
+  @include media-breakpoint-up(md) {
+    min-height: $rem-size-530;
+
+    &__content {
+      min-height: calc($rem-size-530 - $rem-size-120);
+      padding: $rem-size-56 $rem-size-32 $rem-size-36;
+    }
+
+    &__image {
+      width: $rem-size-120;
+      height: $rem-size-120;
+      margin-top: $rem-size-32;
+      margin-left: $rem-size-32;
+    }
+
+    &__image-wrapper {
+      height: $rem-size-120;
+    }
+
+    &__image-shape {
+      &::before,
+      &::after {
+        height: $rem-size-64;
+        margin-top: $rem-size-88;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    min-height: $rem-size-544;
+
+    &__content {
+      width: 100%;
+      min-height: calc($rem-size-544 - $rem-size-120);
+      padding: $rem-size-48;
+    }
+
+    &__image-wrapper {
+      height: $rem-size-120;
+    }
+
+    &__image-shape {
+      &::before,
+      &::after {
+        height: $rem-size-64;
+        margin-top: $rem-size-88;
+      }
+    }
+  }
+}

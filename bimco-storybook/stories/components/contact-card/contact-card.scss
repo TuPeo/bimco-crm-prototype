@@ -1,0 +1,84 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+
+.contact-card {
+  position: relative;
+  display: flex;
+  width: 100%;
+  background-color: var(--cards-fill);
+  container-type: inline-size;
+
+  &__image-col {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  &__row {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    max-width: 100%;
+  }
+
+  &__content-col {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    row-gap: $rem-size-32;
+    justify-content: space-between;
+    padding: $rem-size-24;
+  }
+
+  &__name {
+    @extend %card-title-1-style;
+  }
+
+  &__headline {
+    @extend %eyebrow-small-style;
+    margin-bottom: $rem-size-8;
+
+    color: var(--theme-primary-light);
+  }
+
+  &__links {
+    display: flex;
+    gap: $rem-size-16;
+    align-items: center;
+  }
+
+  $container-min-width: 460px;
+
+  @container (min-width: #{$container-min-width}) {
+    &__row {
+      flex-direction: row;
+    }
+
+    &__image-col {
+      flex: 1;
+    }
+
+    &__image {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &__content-col {
+      padding: $rem-size-32 $rem-size-36;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    @container (min-width: #{$container-min-width}) {
+      &__content-col {
+        padding: $rem-size-64 $rem-size-112;
+      }
+    }
+  }
+}

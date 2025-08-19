@@ -1,0 +1,87 @@
+@use "../../base/placeholders/typography";
+@import '../../abstracts/';
+
+.form-control {
+  $block: &;
+
+  &.rating {
+    padding-bottom: $rem-size-4;
+
+    #{$block}__wrapper {
+      display: flex;
+      flex-direction: row;
+      gap: $rem-size-2;
+    }
+
+    #{$block}__label {
+      position: relative;
+      padding: $rem-size-10 $rem-size-16 $rem-size-8 0;
+      font-size: var(--bimco-body-label-font-size);
+      color: var(--typography-body-content);
+
+      &::after {
+        display: none;
+      }
+    }
+
+    #{$block}__input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: $rem-size-40;
+      min-width: $rem-size-40;
+      height: $rem-size-40;
+      min-height: $rem-size-40;
+      padding: 0;
+      margin: 0;
+      color: var(--typography-rating-icon);
+      appearance: none;
+      cursor: pointer;
+      background-color: var(--btn-icon-subtle-fill);
+      background-image: none;
+      border: var(--btn-icon-subtle-outline);
+      transition: background-color 0.2s linear;
+
+      &-name {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $rem-size-40;
+        height: $rem-size-40;
+        font-weight: $font-weight-semibold;
+        pointer-events: none;
+      }
+
+      &-wrapper {
+        position: relative;
+        width: $rem-size-40;
+        height: $rem-size-40;
+      }
+
+      &:checked, &:hover {
+        background-color: var(--theme-primary);
+
+        +.form-control__input-name {
+          color: $bimco-cream-100;
+        }
+      }
+    }
+
+    +#{$block}__message {
+      padding-left: 8px;
+    }
+
+    &.error {
+      border-bottom: 2px solid var(--form-input-error-icon);
+    }
+
+    &.disabled {
+      #{$block}__label {
+        color: $bimco-grey-400;
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+@import "../../abstracts/";
+
+.navigation-swiper {
+  $block: &;
+
+  &__pagination {
+    --swiper-pagination-bottom: 0;
+
+    position: relative;
+    display: flex;
+    gap: 5px;
+  }
+
+  &__pagination-item {
+    flex-basis: 100%;
+    color: var(--theme-pagination-text-color);
+    cursor: pointer;
+
+    &--active {
+      color: var(--theme-pagination-text-color-active);
+
+      #{$block}__pip {
+        background: var(--theme-pagination-pip-color-active);
+      }
+    }
+  }
+
+  &__pip {
+    display: inline-block;
+    width: 100%;
+    height: 2px;
+    background: var(--theme-pagination-pip-color);
+  }
+
+  &__index {
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+  }
+
+  @include media-breakpoint-up(md) {
+    &__pagination {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,55 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.small-image-and-text {
+  $block: &;
+
+  position: relative;
+
+  --text-font-size: var(--bimco-headline-5-font-size);
+  --image-width: 20%;
+
+  &__content {
+    padding: var(--bimco-section-spacer-default) 0;
+  }
+
+  &__image-wrapper {
+    display: inline-block;
+    width: var(--image-width);
+    margin-right: 2%;
+    vertical-align: baseline;
+
+    .parallax-bg-block & {
+      margin-top: calc(var(--image-width) * -1);
+    }
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 5/6;
+    object-fit: cover;
+  }
+
+  &__text {
+    @extend %headline-5-style;
+  
+    display: inline;
+    font-size: var(--text-font-size);
+    font-weight: $font-weight-normal;
+    letter-spacing: -0.02em;
+    vertical-align: bottom;
+  }
+
+  @include media-breakpoint-up(sm) {
+    --text-font-size: var(--bimco-headline-4-font-size);
+  }
+
+  @include media-breakpoint-up(md) {
+    --image-width: 15%;
+  }
+
+  @include media-breakpoint-up(lg) {
+    --text-font-size: var(--bimco-headline-3-font-size);
+  }
+}

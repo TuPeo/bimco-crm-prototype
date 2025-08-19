@@ -1,0 +1,184 @@
+@import "../../abstracts";
+
+/* stylelint-disable custom-property-pattern */
+.umb-block-grid {
+  $block: &;
+
+  &__layout-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(var(--umb-block-grid--grid-columns, 1), minmax(0, 1fr));
+    grid-auto-rows: minmax(50px, min-content);
+    grid-auto-flow: row;
+    gap: var(--umb-block-grid--row-gap, var(--bimco-section-spacer-tighter)) var(--umb-block-grid--column-gap, var(--bs-gutter-x));
+  }
+
+  &__layout-item {
+    position: relative;
+    grid-row: span var(--umb-block-grid--item-row-span, 1);
+
+    // For small devices we scale columnSpan by three, to make everything bigger than 1/3 take full width:
+    grid-column-end: span min(calc(var(--umb-block-grid--item-column-span, 1) * 3), var(--umb-block-grid--grid-columns));
+
+    // Make everything full width for image media grid item type
+    &[data-content-element-type-alias="imageMediaGridItem"] {
+      grid-column-end: span var(--umb-block-grid--grid-columns);
+    }
+  }
+
+  &__area-container, 
+  &__block--view::part(area-container) {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(var(--umb-block-grid--area-grid-columns, var(--umb-block-grid--grid-columns, 1)), minmax(0, 1fr));
+    grid-auto-rows: minmax(50px, min-content);
+    grid-auto-flow: row;
+    gap: var(--umb-block-grid--areas-row-gap, var(--bimco-section-spacer-tight)) var(--umb-block-grid--areas-column-gap, var(--bs-gutter-x));
+  }
+
+  &__area {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    grid-row: span var(--umb-block-grid--area-row-span, 1);
+
+    // For small devices we scale columnSpan by three, to make everything bigger than 1/3 take full width:
+    grid-column-end: span min(calc(var(--umb-block-grid--area-column-span, 1) * 3), var(--umb-block-grid--area-grid-columns));
+    height: 100%;
+  }
+
+  @include media-breakpoint-up(sm) {
+    &__layout-item {
+      // Use configured column spans for image media grid item type
+      &[data-content-element-type-alias="imageMediaGridItem"] {
+        grid-column-end: span min(var(--umb-block-grid--item-column-span, 1), var(--umb-block-grid--grid-columns));
+      }
+    }
+  }
+
+  @include media-breakpoint-between(md, lg) {
+    &__area-container {
+      &[data-layout-alias="relatedContentGrid3Cols"] {
+          > {
+            :nth-child(1), :nth-child(2) {
+              grid-column-end: span calc(var(--umb-block-grid--item-column-span) / 2);
+            }
+  
+            :nth-child(3) {
+              grid-column-end: span var(--umb-block-grid--item-column-span);
+            }
+          }
+
+      }
+    }
+  }
+
+  @include media-breakpoint-only(md) {
+    &__layout-item {
+      // Use configured column spans for these item types
+      &[data-content-element-type-alias="insetCtaBlock"],
+      &[data-content-element-type-alias="relatedContact"],
+      &[data-content-element-type-alias="articleAbstractBlock"],
+      &[data-content-element-type-alias="articleBodyTextBlock"],
+      &[data-content-element-type-alias="explanatoryNotesTextBlock"] {
+        grid-column-end: span min(var(--umb-block-grid--item-column-span, 1), var(--umb-block-grid--grid-columns));
+
+        // Align right when defined as 8 cols wide
+        &[data-col-span="8"] {
+          grid-column-start: 5;
+        }
+      }
+    }
+
+    &__area {
+      // Override configured column spans for this area type and/or items within this area type
+      &[data-area-alias="additional"] {
+        &[data-area-col-span="6"] {
+          grid-column: 5 / span 8;
+
+          #{$block}__layout-item {
+            &[data-col-span="3"] {
+              grid-column-end: span 3;
+            }
+          }
+        }
+
+        &[data-area-col-span="9"] {
+          #{$block}__layout-item {
+            &[data-col-span="3"] {
+              grid-column-end: span 3;
+            }
+
+            &[data-col-span="6"] {
+              grid-column-end: span 6;
+            }
+          }
+        }
+
+        &[data-area-col-span="12"] {
+          #{$block}__layout-item {
+            &[data-col-span="3"],
+            &[data-col-span="6"] {
+              grid-column-end: span 6;
+            }
+
+            &[data-col-span="4"] {
+              grid-column-end: span 4;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    &__layout-item {
+      // Use configured column spans for all item types
+      grid-column-end: span min(var(--umb-block-grid--item-column-span, 1), var(--umb-block-grid--grid-columns));
+    }
+
+    &__area {
+      // Use configured column spans for all area types
+      grid-column-end: span min(var(--umb-block-grid--area-column-span, 1), var(--umb-block-grid--area-grid-columns));
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__layout-item {
+      // Centre align specific item types when defined as 8 cols wide
+      &[data-col-span="8"] {
+        &[data-content-element-type-alias="relatedContact"],
+        &[data-content-element-type-alias="articleAbstractBlock"],
+        &[data-content-element-type-alias="articleBodyTextBlock"],
+        &[data-content-element-type-alias="explanatoryNotesTextBlock"]
+        {
+          grid-column-start: 3;
+        }
+      }
+
+      &[data-content-element-type-alias="insetCtaBlock"] {
+        .content-grid-block--article & {
+          // padding-right: calc(var(--bimco-container-padding-x) - var(--umb-block-grid--column-gap, var(--bs-gutter-x)));
+          padding-right: $rem-size-32;
+        }
+      }
+    }
+
+    &__area {
+      // Shift additional 9 col area to right of grid
+      &[data-area-alias="additional"][data-area-col-span="9"] {
+        grid-column-start: 4;
+      }
+    }
+  }
+  
+  @include media-breakpoint-up(xxxl) {
+    &__area {
+      // Shift additional 9 col area 1 less col to right of grid
+      &[data-area-alias="additional"][data-area-col-span="9"] {
+        grid-column-start: 3;
+      }
+    }
+  }
+}
+/* stylelint-enable custom-property-pattern */

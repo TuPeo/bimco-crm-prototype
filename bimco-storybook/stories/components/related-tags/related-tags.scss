@@ -1,0 +1,40 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.related-tags {
+  &__heading {
+    @extend %navigation-eyebrow-style;
+
+    margin-bottom: $rem-size-8;
+    color: var(--typography-eyebrow);
+  }
+
+  &__row {
+    row-gap: $rem-size-40;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $rem-size-8;
+  }
+
+  &__item.category-tag {
+    display: inline-block;
+    width: $rem-size-180;
+    padding: $rem-size-10 $rem-size-16;
+    overflow: hidden;
+    font-size: $rem-size-15;
+    color: $bimco-cream-100;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: var(--theme-primary-dark);
+    border-radius: $rem-size-2;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: var(--theme-primary-dark-hover);
+    }
+  }
+}

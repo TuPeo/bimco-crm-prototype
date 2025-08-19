@@ -1,0 +1,54 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.footnote {
+  display: block;
+  width: 100%;
+  padding: $rem-size-18;
+
+  &__fa-circle-info {
+    font-size: $rem-size-24;
+    color: $bimco-grey-400;
+  }
+
+  &__container {
+    padding: $rem-size-18;
+    padding-top: $rem-size-16;
+    background-color: $bimco-grey-100;
+    border-radius: $rem-size-4;
+  }
+
+  &__row {
+    display: flex;
+    gap: $rem-size-10;
+    align-items: flex-start;
+  }
+
+  &__header {
+    margin-bottom: $rem-size-8;
+    font-family: var(--bimco-display-font-family);
+    font-size: var(--bimco-form-input-font-size);
+    font-weight: bold;
+    line-height: $line-height-sm;
+    color: $bimco-dark-blue-1000;
+  }
+
+  &__content {
+    @extend %body-style;
+    line-height: 1.5;
+
+    p {
+      margin-bottom: $rem-size-16;
+    }
+
+    a {
+      color: var(--theme-link-colour);
+      text-decoration: underline;
+
+      &:hover {
+        color: var(--theme-link-hover-colour);
+        text-decoration: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,239 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.article-hero-banner {
+  $block: &;
+
+  --content-overflow-amount: 64px;
+  --image-gradient-multiplier: 2.5;
+
+  &__container {
+    position: relative;
+    padding-top: var(--bimco-section-spacer-tighter);
+    padding-bottom: var(--bimco-section-spacer-tighter);
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+    row-gap: $rem-size-32;
+  }
+
+  &__image-wrapper {
+    position: relative;
+
+    &::before {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background: linear-gradient(180deg, rgb(0 0 0 / 50%) 7.5%, rgb(0 0 0 / 10%) 70%, rgb(0 0 0 / 5%) 97.5%);
+    }
+  }
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  &__content-col {
+    padding: 0 var(--bimco-container-padding-x);
+  }
+
+  &__title {
+    @extend %headline-2-style;
+  }
+
+  &__topic {
+    @extend %eyebrow-style;
+
+    display: inline-block;
+    margin-bottom: $rem-size-10;
+  }
+
+  &__key-details{
+    display: flex;
+    flex-direction: column;
+    gap: $rem-size-16;
+    margin-top: $rem-size-32;
+    margin-bottom: 0;
+  }
+
+  &__key-detail {
+    display: flex;
+    flex-direction: column;
+    min-width: 208px;
+    max-width: 100%;
+    padding-right: $rem-size-16;
+  }
+
+  &__key-detail-label {
+    @extend %navigation-eyebrow-style;
+    margin-bottom: $rem-size-8;
+
+    color: var(--typography-eyebrow);
+  }
+
+  &__key-detail-value {
+    @extend %body-large-style;
+
+    margin-bottom: 0;
+  }
+
+  &__breadcrumbs-wrapper {
+    position: absolute;
+    top: $rem-size-36;
+    left: 0;
+    width: 100%;
+
+    &.theme-zone {
+      background-color: transparent;
+    }
+  }
+
+  &__content-breadcrumbs {
+    margin-bottom: $rem-size-28;
+  }
+
+  &--fullscreen {
+    #{$block}__image-wrapper {
+      &::after {
+        position: absolute;
+        inset: 0 0 -1px;
+        content: "";
+        background: linear-gradient(transparent calc(100% - (var(--content-overflow-amount) * var(--image-gradient-multiplier))), var(--theme-surface-color) 97.5%);
+      }
+    }
+
+    #{$block}__container {
+      padding-top: 0;
+      margin-top: calc(-1 * var(--content-overflow-amount));
+    }
+  }
+
+  &--image-left,
+  &--container {
+    #{$block}__image {
+      aspect-ratio: 16/9;
+    }
+  }
+
+  &:not(#{$block}--no-image) {
+    #{$block}__content-breadcrumbs {
+      display: none;
+    }
+  }
+
+  @include media-breakpoint-up(sm) {
+    --image-gradient-multiplier: 5;
+
+    &__image {
+      aspect-ratio: 4/3;
+    }
+
+    &__key-details {
+      flex-flow: row wrap;
+    }
+
+    &--image-left,
+    &--container {
+      #{$block}__image {
+        aspect-ratio: 16/9;
+      }
+    }
+
+    &--image-left-square {
+      #{$block}__image {
+        aspect-ratio: 1;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    &__breadcrumbs-wrapper {
+      top: $rem-size-56;
+    }
+
+    &__key-details{
+      margin-top: $rem-size-48;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    --image-gradient-multiplier: 4;
+
+    &__row {
+      row-gap: $rem-size-48;
+    }
+
+    &__content-col {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--bs-gutter-x);
+    }
+
+    &__content {
+      grid-column: 3 / span 8;
+    }
+  
+    &__image {
+      aspect-ratio: 16/9;
+    }
+
+    &--fullscreen {
+      #{$block}__image {
+        aspect-ratio: 21/9;
+      }
+
+      #{$block}__breadcrumbs-wrapper {
+        top: $rem-size-92;
+      }
+    }
+
+    &--image-left,
+    &--image-left-square {
+      #{$block}__container {
+        padding-right: calc(var(--bimco-container-padding-x) * 2);
+        padding-left: calc(var(--bimco-container-padding-x) * 2);
+      }
+
+      #{$block}__row {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        column-gap: var(--bs-gutter-x);
+        align-items: end;
+      }
+
+      #{$block}__image-col {
+        grid-column: 1 / span 6;
+        padding-right: $rem-size-32;
+      }
+
+      #{$block}__image-wrapper::before {
+        display: none;
+      }
+
+      #{$block}__breadcrumbs-wrapper {
+        display: none;
+      }
+
+      #{$block}__content-col {
+        display: block;
+        grid-column: 7 / span 6;
+        padding: 0;
+      }
+
+      &:not(#{$block}--no-image) {
+        #{$block}__content-breadcrumbs {
+          display: flex;
+        }
+      }
+    }
+
+    &--image-left-square {
+      #{$block}__image {
+        aspect-ratio: 1;
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.schedule-card {
+  $block: &;
+
+  position: relative;
+  display: flex;
+  gap: $rem-size-4;
+  width: 100%;
+  padding: $rem-size-8;
+  text-decoration: none;
+  background: var(--theme-navigation-card-background);
+  
+  &__date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $rem-size-8;
+    color: var(--typography-headlines);
+    background: var(--theme-navigation-card-accent-color);
+  }
+
+  &__month {
+    @extend %body-small-style;
+  }
+
+  &__day {
+    @extend %eyebrow-style;
+
+    color: var(--typography-headlines);
+  }
+
+  &__event-info {
+    display: flex;
+    flex-direction: column;
+    gap: $rem-size-8;
+    padding: $rem-size-8 $rem-size-12;
+    color: var(--typography-body-description);
+  }
+
+  &__title {
+    @extend %body-large-style;
+    
+    font-weight: $font-weight-medium;
+    color: var(--typography-headlines);
+  }
+
+  @include media-breakpoint-up(md) {
+    &__date {
+      width: 84px;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &:hover {
+      background: var(--theme-navigation-card-background-hover);
+
+      #{$block}__date {
+        background: var(--theme-navigation-card-accent-color-hover);
+      }
+    }
+  }
+}

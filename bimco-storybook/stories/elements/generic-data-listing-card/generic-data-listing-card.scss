@@ -1,0 +1,123 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.generic-data-listing-card {
+  $block: &;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $rem-size-12 $rem-size-16;
+  padding: $rem-size-14 $rem-size-48 $rem-size-14 0;
+  border-top: 1px solid $bimco-grey-300;
+  scroll-margin-top: calc(var(--bimco-header-height) + 1rem);
+  
+  &:hover {
+    background: linear-gradient(
+      90deg,
+      rgba($bimco-dark-blue-200, 0) 0%,
+      rgba($bimco-dark-blue-200, 100) 13%,
+      rgba($bimco-dark-blue-200, 0) 80%
+    );
+  }
+
+  &__title {
+    @extend %body-style;
+    @include line-clamp(3);
+
+    margin-bottom: $rem-size-8;
+
+    &-link {
+      color: var(--typography-body-content);
+      text-decoration: none;
+    }
+  }
+
+  &__desc {
+    opacity: 0.7;
+
+    #{$block}:hover & {
+      opacity: 1;
+    }
+
+    &,
+    > *:first-child {
+      @extend %body-small-style;
+      @include line-clamp(3);
+
+      margin-bottom: 0;
+      font-size: $rem-size-14;
+      line-height: 1.25;
+    }
+
+    > *:not(:first-child) {
+      display: none;
+    }
+
+    a {
+      @extend %text-link-style;
+    }
+  }
+
+  td {
+    &.date-col,
+    &.taxo-col,
+    &.link-col {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $rem-size-8;
+    }
+
+    &.date-col {
+      align-items: center;
+    }
+
+    &.taxo-col,
+    &.link-col {
+      align-items: flex-start;
+    }
+  }
+
+  &__date {
+    @extend %body-style;
+  }
+
+  &__date-info {
+    display: flex;
+    gap: $rem-size-4;
+    align-items: center;
+    color: $bimco-success-500;
+
+    &-icon {
+      width: $rem-size-24;
+      height: $rem-size-24;
+    }
+
+    &-text {
+      @extend %body-small-style;
+
+      font-weight: $font-weight-medium;
+      color: inherit;
+    }
+  }
+
+  &__modal-body {
+    display: none;
+  }
+
+  @include media-breakpoint-up(md) {
+    flex-direction: row;
+    padding: $rem-size-48 0;
+
+    td {
+      &.date-col {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      &.link-col {
+        justify-content: center;
+      }
+    }
+  }
+}

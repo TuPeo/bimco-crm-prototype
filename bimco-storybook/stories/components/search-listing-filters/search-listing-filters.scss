@@ -1,0 +1,172 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts";
+
+.search-listing-filters {
+  $block: &;
+
+  &__row {
+    flex-direction: row-reverse;
+    row-gap: $rem-size-24;
+    align-items: center;
+  }
+
+  &__term-input-col {
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    gap: $rem-size-4;
+
+    &.theme-zone {
+      background-color: transparent;
+    }
+
+    #{$block}__footer & {
+      flex: 1;
+    }
+  }
+
+  &__controls-col {
+    display: flex;
+    flex-direction: column;
+    gap: $rem-size-12;
+
+    &.theme-zone {
+      background-color: transparent;
+    }
+  }
+
+  &__results-heading {
+    @extend %body-style;
+
+    margin-bottom: 0;
+
+    &-term {
+      font-weight: $font-weight-medium;
+    }
+  }
+
+  &__offcanvas {
+    row-gap: $rem-size-40;
+    padding: $rem-size-40;
+  }
+
+  &__selected-values {
+    &--hidden {
+      display: none;
+    }
+  }
+
+  &__selected-values-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $rem-size-12;
+  }
+
+  &__selected-values-clear-btn {
+    margin-top: $rem-size-20;
+  }
+
+  @include media-breakpoint-down(sm) {
+    &__term-input-submit {
+      display: none;
+    }
+  }
+
+  @include media-breakpoint-up(sm) {
+    @container (max-width: 360px) {
+      &__term-input-submit {
+        display: none;
+      }
+    }
+
+    &__term-input-col {
+      flex-direction: row;
+    }
+
+    &__term-input {
+      flex: 1;
+    }
+
+    &__controls-col {
+      flex-direction: row;
+
+      > * {
+        flex: 1 1 50%;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    &__controls-col {
+      width: auto;
+
+      > * {
+        flex: auto;
+      }
+    }
+
+    &__results-heading {
+      width: auto;
+      padding-right: $rem-size-16;
+      margin-right: auto;
+    }
+
+    &--content-listing {
+      #{$block}__controls-col {
+        margin-right: auto;
+      }
+
+      #{$block}__results-heading {
+        width: 100%;
+      }
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    &__selected-values-clear-btn {
+      display: none;
+    }
+
+    &--data-listing {
+      #{$block}__term-input-col {
+        display: none;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    @container (max-width: 540px) {
+      &__term-input-submit {
+        display: none;
+      }
+    }
+
+    &--content-listing {
+      #{$block}__term-input-col {
+        @include make-col(4);
+      }
+
+      #{$block}__controls-col {
+        margin-right: auto;
+      }
+
+      #{$block}__results-heading {
+        width: 100%;
+      }
+    }
+
+    &__offcanvas {
+      padding: $rem-size-56 $rem-size-40;
+
+      &.offcanvas-lg {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+
+        #{$block}__apply-btn {
+          display: none;
+        }
+      }
+    }
+  }
+}

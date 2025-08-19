@@ -1,0 +1,99 @@
+@use '../../base/placeholders/typography';
+@import '../../abstracts';
+
+.bimco-modal {
+  $block: &;
+
+  --bs-modal-width: 100%;
+  --bs-modal-bg: #{$bimco-cream-100};
+  --bs-modal-border-color: #{$bimco-grey-200};
+  --bs-modal-border-radius: 0;
+  --bimco-modal-header-padding: #{$rem-size-28 $rem-size-80 $rem-size-24 $rem-size-12};
+  --bimco-modal-body-padding: #{$rem-size-48 $rem-size-20 $rem-size-56 $rem-size-12};
+  --bimco-modal-footer-padding: #{$rem-size-16 $rem-size-12};
+
+  .modal-dialog {
+    @include bimco-container;
+
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: var(--bs-gutter-x);
+    align-items: center;
+    min-height: calc(100% - var(--bs-modal-margin) * 2);
+  }
+  
+  .modal-content {
+    grid-column: 1 / span 12;
+    box-shadow: 0 2px 14px 0 rgba($bimco-black, 0.07);
+  }
+
+  .modal-header {
+    min-height: $rem-size-88;
+    padding: var(--bimco-modal-header-padding);
+  }
+
+  .modal-body {
+    padding: var(--bimco-modal-body-padding);
+  }
+
+  .modal-footer {
+    padding: var(--bimco-modal-footer-padding);
+  }
+
+  &__close {
+    position: absolute;
+    top: $rem-size-16;
+    right: $rem-size-16;
+    z-index: 1;
+  }
+
+  &__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 40vh;
+  }
+
+  &__heading {
+    @extend %headline-5-style;
+
+    margin-bottom: 0;
+  }
+
+  @include media-breakpoint-up(md) {
+    --bimco-modal-header-padding: #{$rem-size-28 $rem-size-80 $rem-size-24 $rem-size-32};
+    --bimco-modal-body-padding: #{$rem-size-48 $rem-size-80 $rem-size-56 $rem-size-32};
+    --bimco-modal-footer-padding: #{$rem-size-16 $rem-size-32};
+
+    .modal-content {
+      grid-column: 2 / span 10;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    --bimco-modal-header-padding: #{$rem-size-28 $rem-size-80 $rem-size-24 $rem-size-48};
+    --bimco-modal-body-padding: #{$rem-size-48 $rem-size-80 $rem-size-56 $rem-size-48};
+
+    .modal-content {
+      grid-column: 3 / span 8;
+    }
+  }
+
+  @include media-breakpoint-up(xl) {
+    .modal-content {
+      grid-column: 4 / span 6;
+    }
+  }
+
+  &--accordion {
+    --bs-modal-border-radius: 0;
+    --bs-modal-border-width: 0;
+    --bs-modal-padding: 0;
+    --bs-modal-margin: 28px;
+
+    #{$block}__close {
+      display: none;
+    }
+  }
+}

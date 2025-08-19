@@ -1,0 +1,93 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.navigation-link {
+  @include button-large-style;
+
+  $block: &;
+  position: relative;
+
+  display: inline-flex;
+  gap: $rem-size-12;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+  padding: $rem-size-12;
+  color: var(--theme-navigation-link-color);
+  text-decoration: none;
+  background-color: var(--theme-navigation-link-background);
+  transition: background-color 0.3s;
+
+  &__chevron {
+    font-size: $rem-size-12;
+    font-weight: 900;
+    color: var(--theme-primary-light);
+  }
+
+  &:hover,
+  &:focus {
+    background-color: var(--theme-navigation-link-background-hover);
+  }
+
+  &--full-width {
+    width: 100%;
+  }
+
+  &--sub-page {
+    @include body-style;
+
+    background: none;
+
+    #{$block}__chevron {
+      font-size: $rem-size-10;
+      color: inherit;
+    }
+
+    &#{$block}--related {
+      background-color: var(--cards-fill);
+
+      &:hover,
+      &:focus {
+        background-color: var(--cards-hover-gradient-color-1);
+      }
+    }
+  }
+
+  &--root-link {
+    @include button-large-style;
+
+    width: 100%;
+    background: var(--theme-header-top-link-background);
+  }
+
+  @include media-breakpoint-up(lg) {
+    gap: $rem-size-20;
+    padding: $rem-size-10 $rem-size-12;
+
+    &__chevron {
+      display: none;
+    }
+
+    &--sub-page {
+      padding: $rem-size-10 $rem-size-20;
+    }
+    
+    &::after {
+      position: relative;
+      width: $rem-size-8;
+      height: $rem-size-8;
+      aspect-ratio: 1;
+      content: '';
+      background-color: var(--theme-primary-light);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    &:hover {
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+}

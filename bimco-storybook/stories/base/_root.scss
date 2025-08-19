@@ -1,0 +1,30 @@
+@import "../abstracts";
+
+:root {
+  --viewport-width: 100vw;
+  --viewport-height: 100vh;
+  --bimco-header-height: 66px;
+  --bimco-section-spacer-default: #{$rem-size-64};
+  --bimco-section-spacer-tight: #{$rem-size-48};
+  --bimco-section-spacer-tighter: #{$rem-size-32};
+  --bimco-section-divider-spacer: #{$rem-size-16};
+
+  @include media-breakpoint-up(md) {
+    --bimco-header-height: 80px;
+    --bimco-section-spacer-default: #{$rem-size-80};
+    --bimco-section-spacer-tight: #{$rem-size-64};
+    --bimco-section-spacer-tighter: #{$rem-size-48};
+  }
+
+  @include media-breakpoint-up(lg) {
+    --bimco-header-height: 124px;
+    --bimco-section-spacer-default: #{$rem-size-128};
+    --bimco-section-spacer-tight: #{$rem-size-80};
+    --bimco-section-spacer-tighter: #{$rem-size-64};
+    --bimco-section-divider-spacer: #{$rem-size-32};
+  }
+
+  @include media-breakpoint-up(xxxl) {
+    --bimco-section-divider-spacer: #{$rem-size-64};
+  }
+}

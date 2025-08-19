@@ -1,0 +1,39 @@
+@import '../../abstracts/';
+
+.text-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--text-box-row-gap);
+  align-items: flex-start;
+  max-width: 32rem;
+  padding-top: var(--text-box-padding-top);
+  padding-left: var(--text-box-padding-left);
+
+  --text-box-row-gap: #{$rem-size-36};
+  --text-box-padding-top: #{$rem-size-14};
+  --text-box-padding-left: #{$rem-size-20};
+  --text-box-pip-size: #{$rem-size-10};
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--text-box-pip-size);
+    height: var(--text-box-pip-size);
+    content: '';
+    background-color: var(--theme-primary-light);
+  }
+
+  @include media-breakpoint-up(md) {
+    --text-box-padding-top: 0;
+    --text-box-padding-left: #{$rem-size-28};
+    --text-box-pip-size: #{$rem-size-12};
+  }
+
+  @include media-breakpoint-up(lg) {
+    --text-box-row-gap: #{$rem-size-72};
+    --text-box-padding-left: #{$rem-size-32};
+    --text-box-pip-size: #{$rem-size-14};
+  }
+}

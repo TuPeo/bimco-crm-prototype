@@ -1,0 +1,54 @@
+@mixin bimco-container() {
+  @include make-container;
+
+  --bimco-container-padding-x: #{map.get($bimco-container-padding-x, xs)};
+
+  padding-right: var(--bimco-container-padding-x);
+  padding-left: var(--bimco-container-padding-x);
+
+  &,
+  .row {
+    --bs-gutter-x: 8px;
+  }
+
+  @include media-breakpoint-up(sm) {
+    --bimco-container-padding-x: #{map.get($bimco-container-padding-x, sm)};
+  }
+
+  @include media-breakpoint-up(md) {
+    --bimco-container-padding-x: #{map.get($bimco-container-padding-x, md)};
+
+    &,
+    .row {
+      --bs-gutter-x: 16px;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    --bimco-container-padding-x: #{map.get($bimco-container-padding-x, lg)};
+  }
+
+  @include media-breakpoint-up(xl) {
+    --bimco-container-padding-x: #{map.get($bimco-container-padding-x, xl)};
+  
+    max-width: #{map.get($container-max-widths, xl)};
+  }
+
+  @include media-breakpoint-up(xxl) {
+    --bimco-container-padding-x: #{map.get($bimco-container-padding-x, xxl)};
+  
+    max-width: #{map.get($container-max-widths, xxl)};
+  }
+
+  @include media-breakpoint-up(xxxl) {
+    --bimco-container-padding-x: #{map.get($bimco-container-padding-x, xxxl)};
+  
+    max-width: #{map.get($container-max-widths, xxxl)};
+
+    // Apply this to inset container content-box width to equivalent of 10/12 cols
+    &--inset-xxxl {
+      padding-right: calc(var(--bimco-container-padding-x) * 2);
+      padding-left: calc(var(--bimco-container-padding-x) * 2);
+    }
+  }
+}

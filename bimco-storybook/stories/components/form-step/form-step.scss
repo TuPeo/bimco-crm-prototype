@@ -1,0 +1,87 @@
+@use "../../base/placeholders/typography";
+@import '../../abstracts';
+
+.form-step {
+  padding: var(--form-step-spacer-y) var(--form-step-padding-x) 0;
+
+  --form-step-padding-x: #{$rem-size-24};
+  --form-step-spacer-y: #{$rem-size-32};
+
+  &--no-padding {
+    padding: 0;
+  }
+
+  &__header {
+    margin-bottom: var(--form-step-spacer-y);
+  }
+
+  &__progress {
+    display: flex;
+    flex-direction: column;
+    gap: $rem-size-10;
+    padding: $rem-size-20 0 $rem-size-12 0;
+  }
+
+  &__step-number {
+    @extend %eyebrow-style;
+    padding-bottom: $rem-size-6;
+    font-size: $rem-size-12;
+    font-weight: $font-weight-semibold;
+    color: $bimco-grey-500;
+  }
+
+  &__step-name {
+    font-weight: $font-weight-semibold;
+    color: $bimco-grey-800;
+  }
+
+  &__navigation {
+    display: flex;
+    flex-direction: column;
+    gap: $rem-size-12;
+    padding: $rem-size-16;
+    margin: 0 calc(var(--form-step-padding-x) * -1);
+    border-top: 1px solid $bimco-grey-200;
+    box-shadow: 0 0 30px 0 rgba($bimco-dark-blue-1000, 3%);
+  }
+
+  &__row {
+    --bs-gutter-x: 24px;
+  }
+ 
+  .alert,
+  .form-control {
+    margin-bottom: var(--form-step-spacer-y);
+  }
+
+  @include media-breakpoint-up(sm) {
+    &__navigation {
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      padding: $rem-size-18 $rem-size-24;
+    }
+  }
+  
+  @include media-breakpoint-up(md) {
+    padding-top: calc(var(--form-step-spacer-y) * 1.5);
+
+    --form-step-padding-x: #{$rem-size-48};
+
+    &--no-padding {
+      padding-top: 0;
+    }
+
+    &__navigation {
+      padding: $rem-size-18 $rem-size-32;
+    }
+  }
+  
+  @include media-breakpoint-up(lg) {
+    --form-step-padding-x: #{$rem-size-64};
+    --form-step-spacer-y: #{$rem-size-36};
+
+    &__navigation {
+      padding: $rem-size-24 $rem-size-32;
+    }
+  }
+}

@@ -1,0 +1,175 @@
+// Theme Colors
+$bimco-white: #fff;
+$bimco-black: #000;
+$bimco-light-blue-100: #dcf6fe;
+$bimco-light-blue-200: #b9ecfb;
+$bimco-light-blue-300: #6ed2ef;
+$bimco-light-blue-400: #37b7dc;
+$bimco-light-blue-500: #04a1ce;
+$bimco-light-blue-600: #0092bc;
+$bimco-light-blue-700: #0586ab;
+$bimco-light-blue-800: #037798;
+$bimco-light-blue-900: #02647f;
+$bimco-light-blue-1000: #014254;
+$bimco-dark-blue-100: #ddf0f8;
+$bimco-dark-blue-200: #c8e7f4;
+$bimco-dark-blue-300: #71b9e2;
+$bimco-dark-blue-400: #55a9d8;
+$bimco-dark-blue-500: #0980ae;
+$bimco-dark-blue-600: #00557e;
+$bimco-dark-blue-700: #004f6f;
+$bimco-dark-blue-800: #004460;
+$bimco-dark-blue-900: #00384e;
+$bimco-dark-blue-1000: #002737;
+$bimco-blue-cta-blip: #04486a;
+$bimco-cream-100: #fefdfb;
+$bimco-cream-200: #faf8f2;
+$bimco-cream-300: #f6f3ec;
+$bimco-cream-400: #f0ece3;
+$bimco-cream-500: #e5dfd2;
+$bimco-cream-600: #ddd6c7;
+$bimco-cream-700: #d3cab6;
+$bimco-cream-800: #bcb29d;
+$bimco-cream-900: #aa9d82;
+$bimco-cream-1000: #645c49;
+$bimco-grey-100: #f2f4f5;
+$bimco-grey-200: #e4e7eb;
+$bimco-grey-300: #c6cdd5;
+$bimco-grey-400: #a1afbc;
+$bimco-grey-500: #768998;
+$bimco-grey-600: #596d7d;
+$bimco-grey-700: #37515d;
+$bimco-grey-800: #2d434d;
+$bimco-grey-900: #24353d;
+$bimco-orange-100: #feefd7;
+$bimco-orange-200: #fddfb5;
+$bimco-orange-300: #f08320;
+$bimco-orange-400: #fbb060;
+$bimco-orange-500: #f78a28;
+$bimco-orange-600: #f08320;
+$bimco-orange-700: #e5740e;
+$bimco-orange-800: #cd5c09;
+$bimco-orange-900: #b54e04;
+$bimco-orange-1000: #913e03;
+$bimco-green-100: #e9fce8;
+$bimco-green-200: #d7fad4;
+$bimco-green-300: #b1f0bb;
+$bimco-green-400: #6ecf96;
+$bimco-green-500: #48bb78;
+$bimco-green-600: #38a169;
+$bimco-green-700: #2f8559;
+$bimco-green-800: #266545;
+$bimco-pink-600: #ce0058;
+$bimco-red-100: #fff5f5;
+$bimco-red-200: #fed7d7;
+$bimco-red-300: #e53e3e;
+$bimco-red-400: #c53030;
+$bimco-red-500: #f56565;
+$bimco-red-600: #e53e3e;
+$bimco-red-700: #c53030;
+$bimco-cyan-200: #ccf9f2;
+$bimco-cyan-500: #62d3c1;
+$bimco-cyan-700: #31ab97;
+$bimco-cyan-900: #139485;
+$bimco-cyan-1000: #056e62;
+
+$bimco-success-300: $bimco-green-600;
+$bimco-success-400: $bimco-green-700;
+$bimco-success-500: $bimco-green-800;
+
+// Unqiue Colors
+$bimco-logo-dark-color: #00587c;
+
+// Sizes
+$rem-size-1: 0.0625rem;
+$rem-size-2: 0.125rem;
+$rem-size-3: 0.1875rem;
+$rem-size-4: 0.25rem;
+$rem-size-6: 0.375rem;
+$rem-size-8: 0.5rem;
+$rem-size-10: 0.625rem;
+$rem-size-12: 0.75rem;
+$rem-size-14: 0.875rem;
+$rem-size-15: 0.9375rem;
+$rem-size-16: 1rem;
+$rem-size-17: 1.0625rem;
+$rem-size-18: 1.125rem;
+$rem-size-20: 1.25rem;
+$rem-size-22: 1.375rem;
+$rem-size-24: 1.5rem;
+$rem-size-26: 1.625rem;
+$rem-size-28: 1.75rem;
+$rem-size-30: 1.875rem;
+$rem-size-32: 2rem;
+$rem-size-36: 2.25rem;
+$rem-size-40: 2.5rem;
+$rem-size-42: 2.625rem;
+$rem-size-44: 2.75rem;
+$rem-size-48: 3rem;
+$rem-size-52: 3.25rem;
+$rem-size-56: 3.5rem;
+$rem-size-60: 3.75rem;
+$rem-size-64: 4rem;
+$rem-size-72: 4.5rem;
+$rem-size-80: 5rem;
+$rem-size-88: 5.5rem;
+$rem-size-92: 5.75rem;
+$rem-size-96: 6rem;
+$rem-size-104: 6.5rem;
+$rem-size-112: 7rem;
+$rem-size-120: 7.5rem;
+$rem-size-128: 8rem;
+$rem-size-136: 8.5rem;
+$rem-size-144: 9rem;
+$rem-size-160: 10rem;
+$rem-size-180: 11.25rem;
+$rem-size-192: 12rem;
+$rem-size-200: 12.5rem;
+$rem-size-240: 15rem;
+$rem-size-250: 15.625rem;
+$rem-size-272: 17rem;
+$rem-size-284: 17.75rem;
+$rem-size-364: 22.75rem;
+$rem-size-400: 25rem;
+$rem-size-430: 26.875rem;
+$rem-size-432: 27rem;
+$rem-size-500: 31.25rem;
+$rem-size-515: 32.1875rem;
+$rem-size-516: 32.25rem;
+$rem-size-530: 33.125rem;
+$rem-size-544: 34rem;
+$rem-size-600: 37.5rem;
+$rem-size-650: 40.625rem;
+$rem-size-1528: 95.5rem;
+
+// Bimco container padding sizes
+$bimco-container-padding-x: (
+  xs: 18px,
+  sm: 28px,
+  md: 32px,
+  lg: 64px,
+  xl: 96px,
+  xxl: 120px,
+  xxxl: 154px
+);
+
+// Animation
+$slow-transition-timing-function: cubic-bezier(0.23, 0.03, 0.13, 0.99);
+
+// Divider colors
+$divider-default: #c6cdd5;
+$divider-subtle: #ddd6c7;
+
+// Image crop aspect ratios
+$image-crop-aspect-ratios: (
+  square: 1,
+  portrait-12: 0.5,
+  portrait-23: math.div(2, 3),
+  portrait-34: 0.75,
+  landscape-21: 2,
+  landscape-32: 1.5,
+  landscape-43: math.div(4, 3),
+  landscape-85: 1.6,
+  widescreen-169: math.div(16, 9),
+  ultrawide-219: math.div(7, 3)
+);

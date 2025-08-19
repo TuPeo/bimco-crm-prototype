@@ -1,0 +1,18 @@
+@import "../../abstracts/";
+
+.related-content-grid {
+  /* stylelint-disable custom-property-pattern */
+  --umb-block-grid--row-gap: #{$rem-size-48};
+  --umb-block-grid--areas-row-gap: var(--bimco-section-spacer-tighter);
+  /* stylelint-enable custom-property-pattern */
+
+  @include media-breakpoint-up(lg) {
+    .umb-block-grid__layout-item {
+      &[data-content-element-type-alias="relatedContentText"],
+      &[data-content-element-type-alias="relatedContentListing"],
+      &[data-content-element-type-alias="relatedContentLinks"] {
+        padding-right: $rem-size-24;
+      }
+    }
+  }
+}

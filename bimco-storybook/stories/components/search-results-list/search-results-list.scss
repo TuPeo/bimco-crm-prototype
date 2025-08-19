@@ -1,0 +1,18 @@
+@import "../../abstracts";
+
+.search-results-list {
+  padding-top: var(--bimco-section-spacer-tight);
+  padding-bottom: var(--bimco-section-spacer-default);
+
+  &__search {
+    position: relative;
+    row-gap: $rem-size-80;
+    justify-content: center;
+    min-height: 60vh;
+    scroll-margin-top: calc(var(--bimco-header-height) + var(--bimco-section-spacer-tight));
+  }
+
+  &__results-container {
+    margin-top: $rem-size-24 * -1;
+  }
+}

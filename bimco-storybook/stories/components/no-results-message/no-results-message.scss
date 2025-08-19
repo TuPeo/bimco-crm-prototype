@@ -1,0 +1,16 @@
+@import '../../abstracts';
+
+.no-results-message {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  &--static {
+    position: static;
+    min-height: 20rem;
+  }
+}

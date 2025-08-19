@@ -1,0 +1,14 @@
+@import "../../abstracts";
+
+.event-key-details-map {
+  &__row {
+    row-gap: $rem-size-18;
+    justify-content: flex-end;
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__row {
+      justify-content: center;
+    }
+  }
+}

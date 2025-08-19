@@ -1,0 +1,7 @@
+@import '../../abstracts';
+
+.navigation-menu-text {
+  @include media-breakpoint-up(lg) {
+    padding: $rem-size-24 $rem-size-48;
+  }
+}

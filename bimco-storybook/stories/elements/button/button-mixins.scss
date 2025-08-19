@@ -1,0 +1,108 @@
+@import "../../abstracts";
+
+@mixin btn-theme($type: primary) {
+  --bimco-btn-fill: var(--btn-#{$type}-fill);
+  --bimco-btn-outline: var(--btn-#{$type}-outline);
+  --bimco-btn-text: var(--btn-#{$type}-text);
+  --bimco-btn-icon: var(--btn-#{$type}-icon);
+  --bimco-btn-fill-hover: var(--btn-#{$type}-fill-hover);
+  --bimco-btn-outline-hover: var(--btn-#{$type}-outline-hover);
+  --bimco-btn-text-hover: var(--btn-#{$type}-text-hover);
+  --bimco-btn-icon-hover: var(--btn-#{$type}-icon-hover);
+  --bimco-btn-focus-color: var(--btn-#{$type}-focus-color, var(--btn-focus-color));
+}
+
+@mixin btn-primary-animation($block: &, $transition-speed, $middle-color: $bimco-light-blue-600) {
+  & {
+    position: relative;
+  }
+
+  #{$block}__content {
+    opacity: 1;
+    transition: all $transition-speed $slow-transition-timing-function;
+
+    &--initial {
+      &::before {
+        position: absolute;
+        top: 100%;
+        left: -1px;
+        width: calc(100% + 2px);
+        height: 100%;
+        content: "";
+        background-color: inherit;
+      }
+    }
+
+    &--hover {
+      position: absolute;
+      top: calc(150%);
+      left: 0;
+      height: auto;
+      background: var(--bimco-btn-fill-hover);
+      border: 1px solid var(--bimco-btn-fill-hover);
+      opacity: 0.1;
+
+      &::before,
+      &::after {
+        position: absolute;
+        width: calc(100% + 2px);
+        height: 50%;
+        content: "";
+      }
+
+      &::before {
+        position: absolute;
+        bottom: 50%;
+        left: 0;
+        clip-path: polygon(0 80%, 100% 0, 100% 100%, 0% 100%);
+        background: var(--bimco-btn-fill-hover);
+        border: 1px solid var(--bimco-btn-fill-hover);
+        transition: all calc($transition-speed) $slow-transition-timing-function;
+      }
+
+      &::after {
+        position: absolute;
+        bottom: 50%;
+        z-index: -1;
+        clip-path: polygon(0 0, 100% 80%, 100% 100%, 0% 100%);
+        background: $middle-color;
+        border: 1px solid $middle-color;
+        opacity: 0.1;
+        transition: all calc($transition-speed * 1.5) $slow-transition-timing-function;
+      }
+    }
+  }
+
+  &:hover {
+    #{$block}__content {
+      background: var(--bimco-btn-fill);
+      transform: translateY(calc(-150%));
+
+      &--initial {
+        border-color: var(--bimco-btn-fill);
+        opacity: 0.1;
+      }
+
+      &--hover {
+        background: var(--bimco-btn-fill-hover);
+        opacity: 1;
+
+        &::before {
+          opacity: 1;
+          transition: all calc($transition-speed * 1.5) $slow-transition-timing-function;
+          transform: translateY(-125%) scale(1.5);
+        }
+
+        &::after {
+          opacity: 1;
+          transition: all $transition-speed $slow-transition-timing-function;
+          transform: translateY(-125%) scale(1.5);
+        }
+
+        #{$block}__icon {
+          color: var(--bimco-btn-icon-hover);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+@import '../../abstracts/';
+
+.progress {
+  $block: &;
+
+  &--stepped {
+    position: relative;
+
+    --bar-width: 4px;
+
+    #{$block}__steps {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+    }
+
+    #{$block}__step {
+      position: relative;
+      flex: 1 0 0;
+      margin-right: var(--bar-width);
+      text-align: center;
+      border: var(--bar-width) solid var(--theme-progress-incomplete-step);
+
+      &.completed {
+        border-color: var(--theme-progress-complete-step);
+      }
+    }
+
+    #{$block}__ball {
+      position: absolute;
+      top: calc(0px - var(--bar-width));
+      left: calc(0px - var(--bar-width));
+      width: 0;
+      height: 0;
+      border: var(--bar-width) solid var(--theme-progress-active-step);
+    }
+  }
+}

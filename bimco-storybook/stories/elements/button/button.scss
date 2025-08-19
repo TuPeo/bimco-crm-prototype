@@ -1,0 +1,348 @@
+@use "sass:math";
+@import "./button-mixins";
+
+@keyframes btn-toggle-activate {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    color: var(--bimco-btn-icon-hover);
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.btn {
+  $block: &;
+  $transition-speed: 0.65s;
+
+  --bimco-btn-font-size: #{$rem-size-16};
+  --bimco-btn-font-family: var(--bimco-functional-font-family);
+  --bimco-btn-line-height: #{math.div(22, 16)};
+  --bimco-btn-padding-y: #{$rem-size-16};
+  --bimco-btn-padding-x: #{$rem-size-28};
+
+  display: inline-block;
+  width: 100%;
+  max-height: 100%;
+  padding: 0;
+  overflow: hidden;
+  font-family: var(--bimco-btn-font-family);
+  font-size: var(--bimco-btn-font-size);
+  font-weight: $font-weight-semibold;
+  line-height: var(--bimco-btn-line-height);
+  color: var(--bimco-btn-text);
+  letter-spacing: normal;
+  background: none;
+  border: none;
+  transition: transform $transition-speed $slow-transition-timing-function;
+
+  &__content {
+    position: relative;
+    display: inline-flex;
+    gap: $rem-size-8;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: var(--bimco-btn-padding-y) var(--bimco-btn-padding-x);
+    text-align: center;
+    background: var(--bimco-btn-fill);
+    border: 1px solid var(--bimco-btn-outline);
+    transition: all $transition-speed $slow-transition-timing-function;
+  }
+
+  &__icon {
+    color: var(--bimco-btn-icon);
+    transition: all $transition-speed $slow-transition-timing-function;
+  }
+
+  &:hover,
+  &:focus-visible {
+    #{$block}__content {
+      color: var(--bimco-btn-text-hover);
+      background: var(--bimco-btn-fill-hover);
+      border-color: var(--bimco-btn-outline-hover);
+
+      &__icon {
+        color: var(--bimco-btn-icon);
+      }
+    }
+  }
+
+  &:focus,
+  &:active {
+    outline: 2px solid var(--bimco-btn-focus-color);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.2;
+  }
+
+  &-primary {
+    @include btn-theme(primary);
+    @include btn-primary-animation(
+      $block: $block,
+      $transition-speed: $transition-speed,
+      $middle-color: $bimco-light-blue-600
+    );
+  }
+
+  &-secondary {
+    @include btn-theme(secondary);
+
+    #{$block}__content {
+      border-style: solid;
+      border-width: 1px;
+      border-image: var(--bimco-btn-outline);
+
+      &::after {
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        width: calc(100% + 2px);
+        height: calc(100% + 2px);
+        content: "";
+        border: 2px solid var(--bimco-btn-outline-hover);
+        opacity: 0;
+        transition: opacity $transition-speed $slow-transition-timing-function;
+      }
+    }
+
+    &:hover,
+    &:focus-visible {
+      #{$block}__content {
+        &::after {
+          opacity: 1;
+        }
+      }
+
+      #{$block}__icon {
+        transform: translateX(2px);
+      }
+    }
+
+    &#{$block}--highlighted {
+      #{$block}__content {
+        color: var(--btn-primary-text-hover);
+        background-color: var(--btn-primary-fill-hover);
+        border-color: var(--btn-primary-fill-hover);
+      }
+    }
+  }
+
+  &-success {
+    @include btn-theme(success);
+    @include btn-primary-animation(
+      $block: $block,
+      $transition-speed: $transition-speed,
+      $middle-color: $bimco-green-500
+    );
+  }
+
+  &-danger {
+    @include btn-theme(danger);
+    @include btn-primary-animation(
+      $block: $block,
+      $transition-speed: $transition-speed,
+      $middle-color: $bimco-red-500
+    );
+  }
+
+  &-icon-full {
+    @include btn-theme(icon-full);
+  }
+
+  &-icon-subtle {
+    @include btn-theme(icon-subtle);
+  }
+
+  &-icon-tag {
+    @include btn-theme(icon-tag);
+  }
+
+  &-icon-full,
+  &-icon-subtle {
+    width: auto;
+    max-width: 100%;
+    height: $rem-size-56;
+
+    &,
+    &#{$block}--small,
+    &#{$block}--large {
+      --bimco-btn-padding-x: 0;
+    }
+
+    &,
+    #{$block}__icon {
+      aspect-ratio: 1;
+    }
+
+    &#{$block}--small {
+      height: $rem-size-48;
+    }
+
+    #{$block}__content {
+      gap: 0;
+    }
+
+    &:hover,
+    &:focus-visible {
+      #{$block}__content {
+        transform: scale(1.15);
+      }
+    }
+  }
+
+  &-link {
+    @include btn-theme(link);
+
+    &,
+    &#{$block}--small,
+    &#{$block}--large {
+      --bimco-btn-padding-x: 0;
+      --bimco-btn-padding-y: $rem-size-2;
+    }
+
+    #{$block}__content {
+      width: fit-content;
+
+      &::after,
+      &::before {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        content: "";
+        opacity: 0;
+        transition-timing-function: $slow-transition-timing-function;
+        transition-duration: $transition-speed;
+        transition-property: transform, opacity;
+      }
+
+      &::after {
+        width: 100%;
+        background: linear-gradient(90deg, $bimco-light-blue-600 41.15%, $bimco-dark-blue-300 100%);
+        transform: scaleX(0);
+        transform-origin: left;
+      }
+
+      &::before {
+        width: 100%;
+        background: linear-gradient(90deg, $bimco-dark-blue-300 0%, $bimco-dark-blue-300 100%);
+        opacity: 0.5;
+      }
+    }
+
+    &:hover {
+      #{$block}__content {
+        &::after {
+          opacity: 1;
+          transition-duration: calc($transition-speed / 2);
+          transform: scaleX(100%);
+        }
+      }
+    }
+  }
+
+  &-toggle {
+    --bimco-btn-font-size: #{$rem-size-24};
+    --bimco-btn-padding-y: #{$rem-size-12};
+    --bimco-btn-padding-x: #{$rem-size-12};
+    @include btn-theme(toggle);
+
+    #{$block}__icon {
+      width: $rem-size-24;
+      height: $rem-size-24;
+      margin: auto;
+      animation: none;
+
+      &--after {
+        display: none;
+      }
+    }
+
+    &:hover,
+    &:focus-visible {
+      #{$block}__icon {
+        color: var(--bimco-btn-icon-hover);
+      }
+    }
+
+    &--active {      
+      --bimco-btn-fill: #{$bimco-dark-blue-100};
+      --bimco-btn-outline: #{$bimco-dark-blue-200};
+      --bimco-btn-text: #{$bimco-light-blue-500};
+      --bimco-btn-icon: #{$bimco-light-blue-500};
+      --bimco-btn-text-hover: #{$bimco-light-blue-700};
+      --bimco-btn-icon-hover: #{$bimco-light-blue-700};
+
+      #{$block}__icon {
+        animation: btn-toggle-activate $transition-speed;
+
+        &--before {
+          display: none;
+        }
+
+        &--after {
+          display: block;
+        }
+      }
+    }
+  }
+
+  &-card {
+    @include btn-theme(card);
+
+    width: 100%;
+  }
+
+  &--small {
+    --bimco-btn-padding-y: #{$rem-size-12};
+    --bimco-btn-padding-x: #{$rem-size-20};
+  }
+
+  &--large {
+    --bimco-btn-font-size: #{$rem-size-18};
+    --bimco-btn-line-height: #{math.div(22, 18)};
+    --bimco-btn-padding-y: #{$rem-size-16};
+    --bimco-btn-padding-x: #{$rem-size-36};
+  }
+  
+  &--fill {
+    width: 100%;
+  }
+
+  @include media-breakpoint-up(sm) {
+    width: auto;
+
+    &--fill {
+      width: 100%;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &--small {
+      --bimco-btn-padding-y: #{$rem-size-14};
+      --bimco-btn-padding-x: #{$rem-size-24};
+    }
+  
+    &--large {
+      --bimco-btn-padding-y: #{$rem-size-20};
+    }
+
+    &-icon-full,
+    &-icon-subtle {
+      &#{$block}--small {
+        height: $rem-size-52;
+      }
+    }
+  }
+}

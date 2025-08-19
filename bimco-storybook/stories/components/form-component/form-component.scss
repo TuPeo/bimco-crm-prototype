@@ -1,0 +1,7 @@
+@import '../../abstracts';
+
+.form-component {
+  &__header {
+    padding: $rem-size-48 $rem-size-128 $rem-size-32 $rem-size-48;
+  }
+}

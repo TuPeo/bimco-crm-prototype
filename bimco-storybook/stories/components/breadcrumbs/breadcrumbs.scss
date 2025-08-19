@@ -1,0 +1,120 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.breadcrumbs {
+  $block: &;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: $rem-size-12;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0;
+
+  &__item {
+    @extend %navigation-eyebrow-style;
+
+    position: relative;
+    display: inline-flex;
+    gap: $rem-size-12;
+    align-items: center;
+    min-height: $rem-size-20;
+    padding: 0;
+    list-style: none;
+
+    &:has(#{$block}__expand.active) {
+      &::before {
+        position: absolute;
+        top: 9px;
+        left: -7px; 
+        width: 0;
+        height: 0;
+        content: '';
+        border-top: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-bottom: 12px solid $bimco-grey-200;
+        border-left: 12px solid transparent;
+      }
+      
+      &::after {
+        position: absolute;
+        top: 13px;
+        left: -5px;
+        z-index: $zindex-dropdown;
+        width: 0;
+        height: 0;
+        content: '';
+        border-top: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid $bimco-white;
+        border-left: 10px solid transparent;
+      }
+    }
+  }
+
+  &__divider {
+    color: var(--breadcrumbs-divider);
+  }
+
+  &__link {
+    position: relative;
+    z-index: 1;
+    color: var(--breadcrumbs-default-text);
+    text-decoration: none;
+    white-space: nowrap;
+
+    &--current {
+      color: var(--breadcrumbs-current-page-text);
+    }
+  }
+
+  &__expand {
+    position: absolute;
+    top: $rem-size-32;
+    left: -24px;
+    z-index: $zindex-dropdown;
+    display: flex;
+    flex-direction: column;
+    min-width: min(50vw, $rem-size-160);
+    max-width: 50vw;
+    visibility: hidden;
+    background-color: $bimco-white;
+    border: 1px solid $bimco-grey-200;
+    border-radius: $rem-size-4;
+
+    &--right {
+      right: -4px;
+      left: auto;
+    }
+
+    &.active {
+      visibility: visible;
+    }
+
+    &-item {
+      @extend %body-small-style;
+
+      padding: $rem-size-12 $rem-size-16;
+      overflow: hidden;
+      color: $bimco-grey-900;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      text-wrap: nowrap;
+
+      &:hover {
+        background-color: $bimco-cream-200;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    &__link {
+      &:not(#{$block}__link--current) {
+        &:hover {
+          color: var(--breadcrumbs-default-text-hover);
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

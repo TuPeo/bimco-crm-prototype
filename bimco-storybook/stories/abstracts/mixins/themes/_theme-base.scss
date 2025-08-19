@@ -1,0 +1,31 @@
+@mixin theme-btn-base {
+  // Btn success
+  --btn-success-fill: #{$bimco-green-600};
+  --btn-success-outline: #{$bimco-green-600};
+  --btn-success-text: #{$bimco-cream-100};
+  --btn-success-icon: #{$bimco-green-100};
+  --btn-success-fill-hover: #{$bimco-green-700};
+  --btn-success-outline-hover: #{$bimco-green-700};
+  --btn-success-text-hover: #{$bimco-white};
+  --btn-success-icon-hover: #{$bimco-green-100};
+
+  // Btn danger
+  --btn-danger-fill: #{$bimco-red-600};
+  --btn-danger-outline: #{$bimco-red-600};
+  --btn-danger-text: #{$bimco-cream-100};
+  --btn-danger-icon: #{$bimco-red-100};
+  --btn-danger-fill-hover: #{$bimco-red-700};
+  --btn-danger-outline-hover: #{$bimco-red-700};
+  --btn-danger-text-hover: #{$bimco-white};
+  --btn-danger-icon-hover: #{$bimco-red-100};
+
+  // Btn toggle
+  --btn-toggle-fill: #{$bimco-white};
+  --btn-toggle-outline: #{$bimco-grey-300};
+  --btn-toggle-text: #{$bimco-grey-700};
+  --btn-toggle-icon: #{$bimco-grey-700};
+  --btn-toggle-fill-hover: #{$bimco-dark-blue-200};
+  --btn-toggle-outline-hover: #{$bimco-dark-blue-200};
+  --btn-toggle-text-hover: #{$bimco-dark-blue-1000};
+  --btn-toggle-icon-hover: #{$bimco-dark-blue-1000};
+}

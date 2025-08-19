@@ -1,0 +1,93 @@
+@import "../../abstracts/";
+
+%headline-1-style {
+  @include headline-1-style;
+}
+
+%headline-2-style {
+  @include headline-2-style;
+}
+
+%headline-3-style {
+  @include headline-3-style;
+}
+
+%headline-4-style {
+  @include headline-4-style;
+}
+
+%headline-5-style {
+  @include headline-5-style;
+}
+
+%headline-em-style {
+  @include headline-em-style;
+}
+
+%card-title-1-style {
+  @include card-title-1-style;
+}
+
+%card-title-2-style {
+  @include card-title-2-style;
+}
+
+%body-style {
+  @include body-style;
+}
+
+%body-large-style {
+  @include body-large-style;
+}
+
+%body-small-style {
+  @include body-small-style;
+}
+
+%body-tight-style {
+  @include body-tight-style;
+}
+
+%eyebrow-style {
+  @include eyebrow-style;
+}
+
+%eyebrow-small-style {
+  @include eyebrow-small-style;
+}
+
+%form-label-style {
+  @include form-label-style;
+}
+
+%form-label-small-style {
+  @include form-label-small-style;
+}
+
+%form-input-style {
+  @include form-input-style;
+}
+
+%button-style {
+  @include button-style;
+}
+
+%button-small-style {
+  @include button-small-style;
+}
+
+%button-large-style {
+  @include button-large-style;
+}
+
+%navigation-menu-link-style {
+  @include navigation-menu-link-style;
+}
+
+%navigation-eyebrow-style {
+  @include navigation-eyebrow-style;
+}
+
+%text-link-style {
+  @include text-link-style;
+}

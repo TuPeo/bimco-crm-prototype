@@ -1,0 +1,149 @@
+@import "../../abstracts/";
+
+.feature-cta-banner {
+  $image-overflow-amount: 12.5%;
+
+  position: relative;
+  padding: var(--bimco-section-spacer-default) 0;
+
+  &__background-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: clip;
+    background: var(--theme-surface-color);
+  }
+
+  &__inner-content {
+    z-index: 10;
+    padding: $rem-size-16;
+  }
+
+  &__title {
+    margin-bottom: $rem-size-14;
+  }
+
+  &__description {
+    margin-bottom: $rem-size-36;
+  }
+
+  &__inner-image-wrapper {
+    position: relative;
+    margin-top: -$image-overflow-amount;
+
+    &::before,
+    &::after {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 27.5%;
+      content: "";
+      background-color: $bimco-light-blue-500;
+      background-blend-mode: multiply;
+    }
+
+    &::before {
+      clip-path: polygon(0 57.5%, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    &::after {
+      clip-path: polygon(0 0, 100% 57.5%, 100% 100%, 0% 100%);
+      mix-blend-mode: multiply;
+    }
+  }
+
+  &__inner-image {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    aspect-ratio: 3/2;
+    object-fit: cover;
+  }
+
+  &__image-wash {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      0deg,
+      rgb(0 0 0 / 0%) 0%,
+      var(--theme-surface-color) 90%
+    );
+  }
+
+  @include media-breakpoint-up(md) {
+    &__inner-content {
+      padding: $rem-size-48;
+    }
+
+    &__inner-image-wrapper {
+      &::before,
+      &::after {
+        height: 27.5%;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    $image-overflow-amount: 20%;
+
+    &__inner {
+      flex-direction: row-reverse;
+      min-height: 528px;
+    }
+
+    &__inner-content {
+      display: flex;
+      flex-basis: 45%;
+      flex-direction: column;
+      justify-content: center;
+      padding: $rem-size-48 $rem-size-48 $rem-size-48 0;
+    }
+
+    &__inner-image-wrapper {
+      flex-basis: 55%;
+      margin-top: 0;
+
+      &::before,
+      &::after {
+        width: 17.5%;
+        height: 100%;
+      }
+
+      &::before {
+        clip-path: polygon(0 0, 100% 0, 41.5% 100%, 0 100%);
+      }
+
+      &::after {
+        clip-path: polygon(0 0, 41.5% 0, 100% 100%, 0 100%);
+      }
+    }
+
+    &__image-wash {
+      left: 2px;
+      width: calc(100% + $image-overflow-amount);
+      background: linear-gradient(
+        90deg,
+        rgb(0 0 0 / 0%) 0%,
+        var(--theme-surface-color) 98%
+      );
+    }
+
+    &__inner-image {
+      width: calc(100% + $image-overflow-amount);
+      max-width: calc(100% + $image-overflow-amount);
+    }
+  }
+}

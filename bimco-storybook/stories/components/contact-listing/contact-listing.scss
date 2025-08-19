@@ -1,0 +1,16 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts";
+
+.contact-listing {
+  padding: var(--bimco-section-spacer-default) 0;
+
+  &__intro {
+    margin-bottom: $rem-size-48;
+  }
+
+  @include media-breakpoint-up(md) {
+    &__intro {
+      margin-bottom: $rem-size-80;
+    }
+  }
+}

@@ -1,0 +1,141 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts";
+
+.quick-links {
+  $block: &;
+
+  overflow-x: hidden;
+
+  &__text-col {
+    padding-top: var(--bimco-section-spacer-default);
+    padding-bottom: var(--bimco-section-spacer-default);
+  }
+
+  &__btn-group {
+    margin-top: $rem-size-36;
+  }
+
+  &__links-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__link {
+    @extend %button-large-style;
+
+    position: relative;
+    left: calc(-1 * (var(--viewport-width) - 100%) / 2);
+    display: flex;
+    flex-basis: 100%;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    width: var(--viewport-width);
+    padding: $rem-size-32 var(--bimco-container-padding-x);
+    color: var(--typography-headlines);
+    text-decoration: none;
+    border-top: 1px solid var(--theme-primary);
+
+    &:hover, 
+    &:focus {
+      background-image: linear-gradient(to left, var(--cards-hover-gradient-color-1), var(--cards-hover-gradient-color-2));
+      
+      #{$block}__link-icon {
+        display: none;
+      }
+
+      #{$block}__link-pip {
+        display: block;
+      }
+    }
+  }
+  
+  &__link-pip {
+    display: none;
+    width: $rem-size-20;
+    height: $rem-size-20;
+    margin: $rem-size-4;
+    background: var(--theme-primary);
+  }
+
+  &__link-icon {
+    font-size: $rem-size-28;
+    color: var(--theme-primary);
+  }
+
+  @include media-breakpoint-between(md, lg) {
+    &__links-col {
+      position: relative;
+      left: calc(-1 * (var(--viewport-width) - 100%) / 2);
+      flex-direction: row;
+      width: var(--viewport-width);
+      max-width: var(--viewport-width);
+    }
+
+    &__link {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: $rem-size-24 var(--bimco-container-padding-x);
+      border-left: 1px solid var(--theme-primary);
+      
+      &:first-child {
+        border-left: none;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    &__text {
+      max-width: 40rem;
+    }
+
+    &__link {
+      left: 0;
+      width: 100%;
+      min-height: 12rem;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__row {
+      @include make-row;
+
+      justify-content: space-between;
+    }
+
+    &__text-col {
+      @include make-col-ready;
+      @include make-col(5);
+    }
+
+    &__btn-group {
+      margin-top: $rem-size-48;
+    }
+
+    &__links-col {
+      @include make-col-ready;
+      @include make-col(5);
+
+      position: relative;
+      flex-direction: column;
+    }
+
+    &__link {
+      width: calc(100% + var(--bimco-container-padding-x));
+      padding: $rem-size-32 var(--bimco-container-padding-x) $rem-size-32 $rem-size-32;
+      border-left: 1px solid var(--theme-primary);
+
+      &:first-child {
+        border-top: none;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(xl) {
+    &__link {
+      width: 100%;
+      padding-right: $rem-size-32;
+      border-right: 1px solid var(--theme-primary);
+    }
+  }
+}

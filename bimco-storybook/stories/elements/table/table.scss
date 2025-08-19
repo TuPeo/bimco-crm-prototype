@@ -1,0 +1,43 @@
+@import "../../abstracts";
+
+.bimco-table {
+  width: 100%;
+
+  thead {
+    tr {
+      border-bottom: 1px solid var(--tables-heading-line);
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid var(--tables-cell-line);
+    }
+  }
+
+  th {
+    font-weight: $font-weight-semibold;
+    color: var(--typography-headlines);
+    text-transform: uppercase;
+    background-color: var(--tables-heading-background);
+  }
+
+  td {
+    background-color: transparent;
+
+    > svg {
+      padding-right: $rem-size-4;
+    }
+
+    a {
+      font-weight: $font-weight-normal;
+      color: var(--typography-link);
+      text-decoration: underline;
+    }
+  }
+
+  th,
+  td {
+    padding: $rem-size-14 $rem-size-16;
+  }
+}

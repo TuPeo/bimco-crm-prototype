@@ -1,0 +1,53 @@
+@mixin fluid-property-value($property-name, $min-vw, $max-vw, $min-value, $max-value, $px-to-rem: false) {
+  & {
+    @if  $min-vw == 0 {
+      @if $px-to-rem {
+        #{$property-name}: rfs-value($min-value);
+      } @else {
+        #{$property-name}: $min-value;
+      }
+    } @else {
+      @media (min-width: $min-vw) {
+        #{$property-name}: fluid-value($min-vw, $max-vw, $min-value, $max-value, $px-to-rem);
+      }
+
+      @media (min-width: $max-vw) {
+        @if $px-to-rem {
+          #{$property-name}: rfs-value($max-value);
+        } @else {
+          #{$property-name}: $max-value;
+        }
+      }
+    }
+  }
+}
+
+@mixin multi-breakpoint-fluid-property-value($property-name, $breakpoint-map, $px-to-rem: false) {
+  @each $breakpoint, $size in $breakpoint-map {
+    $i: list.index($breakpoint-map, $breakpoint $size);
+
+    @if length($breakpoint-map) == 1 {
+      & {
+        #{$property-name}: $size;
+      }
+    } @else if $i != length($breakpoint-map) {
+      @include fluid-property-value(
+        $property-name,
+        map.get($grid-breakpoints, $breakpoint),
+        map.get($grid-breakpoints, list.nth(list.nth($breakpoint-map, calc($i + 1)), 1)),
+        $size,
+        list.nth(list.nth($breakpoint-map, calc($i + 1)), 2),
+        $px-to-rem
+      );
+    }
+  }
+}
+
+@mixin line-clamp($lines: 3) {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: $lines;
+  line-clamp: $lines;
+  -webkit-box-orient: vertical;
+}
+

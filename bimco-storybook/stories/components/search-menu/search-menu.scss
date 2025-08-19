@@ -1,0 +1,48 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.search-menu {
+  &__swiper-wrapper {
+    opacity: 1;
+    transition: opacity 0.3s $slow-transition-timing-function;
+
+    &--hidden {
+      pointer-events: none;
+      opacity: 0.2;
+    }
+  }
+
+  &__search-wrapper {
+    position: relative;
+  }
+
+  &__recommended-searches {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: calc(var(--bs-gutter-x) * 0.5);
+    z-index: 10;
+    display: none;
+    flex-direction: column;
+    width: calc(100% - var(--bs-gutter-x));
+    overflow-y: hidden;
+
+    &--show {
+      display: flex;
+    }
+  }
+
+  &__swiper {
+    padding-top: $rem-size-48;
+  }
+
+  &__column-heading {
+    @extend %navigation-eyebrow-style;
+    color: $bimco-grey-500;
+  }
+
+  @include media-breakpoint-up(md) {
+    &__swiper {
+      padding-top: $rem-size-80;
+    }
+  }
+}

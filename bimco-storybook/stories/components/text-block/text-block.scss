@@ -1,0 +1,191 @@
+@use "sass:map";
+@use "../../base/placeholders/typography";
+@use "../../base";
+@import "../../abstracts/";
+
+.text-block-component {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &__container::before {
+    display: block;
+    width: 100%;
+    height: 0;
+    margin-bottom: $rem-size-16;
+    content: "";
+    border-top: $rem-size-2 solid var(--theme-divider-default);
+  }
+
+  &__eyebrow {
+    @extend %eyebrow-style;
+    margin-bottom: $rem-size-10;
+  }
+
+  &__headline {
+    @extend %headline-2-style;
+    margin-bottom: $rem-size-16;
+  }
+
+  &__abstract {
+    @extend %body-style;
+    margin-bottom: var(--bimco-section-spacer);
+  }
+
+  &__row,
+  &__container,
+  &__columns {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  &__container {
+    padding-top: var(--bimco-section-spacer-tighter);
+    margin-bottom: var(--bimco-section-spacer-tighter);
+  }
+
+  &__columns {
+    gap: $rem-size-16;
+    margin-top: $rem-size-40;
+  }
+
+  &__header {
+    margin-bottom: $rem-size-40;
+    text-align: left;
+  }
+
+  &__buttons {
+    margin-top: $rem-size-48;
+  }
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-right: $rem-size-16;
+    text-align: center;
+
+    &:not(:first-child) {
+      padding-top: $rem-size-40;
+    }
+
+    &-title {
+      @extend %headline-5-style;
+      margin-bottom: $rem-size-12;
+      text-align: left;
+    }
+
+    &-content {
+      @extend %body-style;
+      text-align: left;
+    }
+
+    &-buttons {
+      padding-top: $rem-size-36;
+    }
+  }
+
+  @mixin grid-layout($count) {
+    display: grid;
+    grid-template-columns: repeat($count, 1fr);
+  }
+
+  &__columns-section--1 {
+    margin-top: $rem-size-40;
+  }
+
+  &__columns-section--2,
+  &__columns-section--3,
+  &__columns-section--4 {
+    @include grid-layout(1);
+    flex-wrap: nowrap;
+  }
+
+  // &__columns-section--3,
+  // &__columns-section--4 {
+  //   @include grid-layout(2);
+  // }
+
+  @include media-breakpoint-up(md) {
+    &__columns-section--2 {
+      @include grid-layout(2);
+    }
+
+    &__columns-section--2.asymmetrical {
+      grid-template-columns: 1fr 2fr !important;
+    }
+
+    &__columns-section--3 {
+      @include grid-layout(3);
+    }
+
+    &__columns-section--4 {
+      @include grid-layout(2);
+
+      .text-block-component__column {
+        &:nth-child(3),
+        &:nth-child(4) {
+          padding-top: $rem-size-40;
+        }
+      }
+    }
+
+    &__headline {
+      margin-bottom: $rem-size-18;
+    }
+
+    &__columns {
+      overflow-x: hidden;
+    }
+
+    &__column {
+      &:not(:first-child) {
+        padding-top: 0;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__header {
+      padding-right: $rem-size-56;
+    }
+
+    &__headline {
+      margin-bottom: $rem-size-20;
+    }
+
+    &__buttons {
+      margin-top: $rem-size-56;
+    }
+
+    &__columns {
+      margin-top: $rem-size-80;
+    }
+
+    &__container::before {
+      margin-bottom: $rem-size-32;
+    }
+
+    &__columns-section--1 {
+      margin-top: 0;
+    }
+
+    &__columns-section--4 {
+      @include grid-layout(4);
+
+      .text-block-component__column {
+        &:nth-child(3),
+        &:nth-child(4) {
+          padding-top: 0;
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-up(xl) {
+    &__container::before {
+      margin-bottom: $rem-size-64;
+    }
+  }
+}

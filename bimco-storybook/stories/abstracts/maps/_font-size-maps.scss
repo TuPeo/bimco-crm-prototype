@@ -1,0 +1,65 @@
+$headline-1-font-size-map: (
+  xs: 44px, // 2.75rem
+  md: 56px, // 3.5rem
+  xl: 72px, // 4.5rem
+  xxl: 80px  // 5rem
+);
+$headline-2-font-size-map: (
+  xs: 36px, // 2.25rem
+  md: 44px, // 2.75rem
+  xl: 56px  // 3.5rem
+);
+$headline-3-font-size-map: (
+  xs: 32px,  // 2rem
+  md: 36px,  // 2.25rem
+  xl: 40px,  // 2.5rem
+  xxl: 44px   // 2.75rem
+);
+$headline-4-font-size-map: (
+  xs: 24px,  // 1.5rem
+  md: 28px,  // 1.75rem
+  xl: 32px,  // 2rem
+  xxl: 36px   // 2.25rem
+);
+$headline-5-font-size-map: (
+  xs: 20px,  // 1.25rem
+  md: 24px,  // 1.5rem
+  xl: 28px,  // 1.75rem
+  xxl: 32px   // 2rem
+);
+$body-font-size-map: (
+  xs: 16px, // 1rem
+  md: 17px // 1.063rem
+);
+$body-large-font-size-map: (
+  xs: 18px,  // 1.125rem
+  md: 18px,  // 1.125rem
+  xl: 20px   // 1.25rem
+);
+$body-small-font-size-map: (
+  xs: 14px,  // 0.875rem
+);
+$body-tight-font-size-map: (
+  xs: 16px  // 1rem
+);
+$eyebrow-font-size-map: (
+  xs: 20px,  // 1.25rem
+  md: 20px,  // 1.25rem
+  xl: 24px,  // 1.5rem
+  xxl: 28px   // 1.75rem
+);
+$eyebrow-small-font-size-map: (
+  xs: 18px,  // 1.125rem
+  md: 18px,  // 1.125rem
+  xl: 18px,  // 1.125rem
+  xxl: 20px   // 1.25rem
+);
+$form-label-font-size-map: (
+  xs: 17px,
+);
+$form-label-small-font-size-map: (
+  xs: 14px
+);
+$form-input-font-size-map: (
+  xs: 16px
+);

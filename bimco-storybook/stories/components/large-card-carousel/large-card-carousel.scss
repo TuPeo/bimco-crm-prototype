@@ -1,0 +1,112 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.large-card-carousel {
+  padding: var(--bimco-section-spacer-tight) 0;
+
+  overflow: hidden;
+
+  &__swiper {
+    overflow: visible;
+
+    &--no-swiper {
+      .swiper-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: $rem-size-18;
+        align-items: center;
+      }
+
+      .swiper-slide {
+        flex: 0 1 100%;
+      }
+    }
+  }
+
+  &__intro {
+    margin-bottom: $rem-size-56;
+  }
+
+  &__title {
+    @extend %headline-4-style;
+    margin-bottom: $rem-size-8;
+  }
+
+  &__description {
+    @extend %body-style;
+  }
+
+  &__scrollbar {
+    position: relative;
+    width: 90%;
+    height: $rem-size-1;
+    margin-top: $rem-size-48;
+    overflow: visible;
+    background: linear-gradient(90deg, rgba(#253941, 0.2) 0%, rgba(#253941, 0.3) 18%, rgba(#253941, 0) 100%);
+  }
+
+  &__drag {
+    position: absolute;
+    top: -$rem-size-6;
+    height: $rem-size-16;
+    margin-left: $rem-size-22;
+    background: var(--theme-primary);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+
+    &:hover::before {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      content: "";
+      background: var(--theme-primary);;
+      filter: blur($rem-size-20);
+      border-radius: 2px;
+      box-shadow: 0 0 $rem-size-20 rgba($bimco-light-blue-600, 0.6);
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: flex-start;
+    height: auto;
+    overflow: visible;
+  }
+
+  .swiper-wrapper {
+    align-items: stretch;
+    overflow: visible;
+  }
+
+  @include media-breakpoint-up(md) {
+    &__intro {
+      margin-bottom: $rem-size-80;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__swiper {
+      &--no-swiper {
+        .swiper-wrapper {
+          flex-direction: row;
+          gap: $rem-size-16;
+          justify-content: center;
+        }
+
+        .swiper-slide {
+          flex: 0 1 calc(50% - $rem-size-8);
+          margin-bottom: 0;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}

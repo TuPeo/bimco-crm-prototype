@@ -1,0 +1,25 @@
+@import "../../abstracts";
+
+.related-content-block {
+  $block: &;
+
+  padding: var(--bimco-section-spacer-tight) 0;
+
+  // Where adjacent blocks don't have any theme applied...
+  &:not(.theme-zone) + {
+    #{$block}:not(.theme-zone) {
+      padding-top: 0;
+      margin-top: -1px; // close sub-pixel rendering gaps
+    }
+  }
+
+  // ...or have the same theme applied, collapse the top padding for even spacing
+  @each $theme-variant in 'white', 'light', 'brand', 'dark' {
+    &.theme--#{$theme-variant} + {
+      #{$block}.theme--#{$theme-variant} {
+        padding-top: 0;
+        margin-top: -1px;
+      }
+    }
+  }
+}

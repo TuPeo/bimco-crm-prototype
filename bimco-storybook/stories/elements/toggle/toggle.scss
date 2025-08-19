@@ -1,0 +1,131 @@
+@use "../../base/placeholders/typography";
+@import '../../abstracts/';
+
+.form-control {
+  $block: &;
+
+  &.toggle,
+  &.toggle:hover {
+    display: flex;
+    gap: $rem-size-12;
+    align-items: center;
+    min-height: $rem-size-40;
+
+    #{$block}__label {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+      padding: 0;
+      font-size: var(--bimco-body-font-size);
+      color: var(--typography-body-content);
+
+      &::after {
+        display: none;
+      }
+    }
+
+    #{$block}__input {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: $rem-size-80;
+      min-width: 0;
+      height: $rem-size-40;
+      min-height: 0;
+      padding: 0;
+      margin: 0;
+      appearance: none;
+      cursor: pointer;
+      background-color: $bimco-light-blue-800;
+      background-image: none;
+      border: 1px solid $bimco-light-blue-600;
+      border-radius: $rem-size-40;
+      transform: translateY(-50%);
+
+      +#{$block}__input-handle {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: $rem-size-32;
+        height: $rem-size-32;
+        pointer-events: none;
+        background-color: $bimco-white;
+        border-radius: 100%;
+        transition: transform linear 0.125s;
+        transform: translateY(-50%) translateX(4px);
+      }
+
+      &-wrapper {
+        position: relative;
+        width: max-content;
+        height: max-content;
+      }
+
+      &:hover {
+        border: 2px solid $bimco-light-blue-600;
+
+        +#{$block}__input-handle {
+          transform: translateY(-50%) translateX(8px);
+        }
+      }
+
+      &:checked {
+        background-color: $bimco-light-blue-400;
+        border: 1px solid $bimco-light-blue-300;
+
+        +#{$block}__input-handle {
+          transform: translateY(-50%) translateX(44px);
+        }
+
+        &:hover {
+          border: 2px solid $bimco-light-blue-300;
+
+          +#{$block}__input-handle {
+            transform: translateY(-50%) translateX(40px);
+          }
+        }
+      }
+    }
+
+    &.error {
+      border-bottom: 2px solid var(--form-input-error-icon);
+    }
+
+    &.disabled {
+      #{$block}__label {
+        color: $bimco-grey-400;
+      }
+
+      #{$block}__input {
+        background-color: $bimco-grey-100;
+        border: 1px solid $bimco-grey-100;
+      }
+    }
+
+    &.small {
+      min-height: $rem-size-32;
+
+      #{$block}__input {
+        width: $rem-size-64;
+        height: $rem-size-32;
+
+        +#{$block}__input-handle {
+          width: $rem-size-24;
+          height: $rem-size-24;
+        }
+
+        &:checked {      
+          +#{$block}__input-handle {
+            transform: translateY(-50%) translateX(36px);
+          }
+
+          &:hover {      
+            +#{$block}__input-handle {
+              transform: translateY(-50%) translateX(32px);
+            }
+          }
+        }
+      }
+    }
+  }
+}

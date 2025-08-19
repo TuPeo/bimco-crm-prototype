@@ -1,0 +1,103 @@
+@import "../../abstracts";
+
+.members-dashboard-intro {
+  $block: &;
+
+  --member-icon-width: 68px;
+  --member-icon-border-width: 4px;
+
+  &__image {
+    position: relative;
+    width: 100%;
+  }
+
+  &__banner-image {
+    width: 100%;
+    aspect-ratio: 100 / 24;
+    object-fit: cover;
+  }
+
+  &__edit-button {
+    position: absolute;
+    right: $rem-size-8;
+    bottom: $rem-size-8;
+
+    .btn {
+      &__content {
+        // TODO: Review this colour and if we can use one from existing variables
+        background: rgb(8 49 95 / 20%);
+        border: none;
+      }
+
+      &__icon {
+        color: $bimco-white;
+      }
+
+      &:hover,
+      &:focus {
+        .btn__content {
+          // TODO: Review this colour and if we can use one from existing variables
+          background: rgb(8 49 95 / 50%);
+          border: none;
+        }
+      }
+    }
+  }
+
+  &__content {
+    position: relative;
+    padding-top: calc(var(--member-icon-width) / 2 + var(--member-icon-border-width) + $rem-size-28);
+  }
+
+  &__icon {
+    position: absolute;
+    top: 0;
+    left: var(--bimco-container-padding-x);
+    width: max-content;
+    padding: 0;
+    transform: translateY(-50%);
+
+    img {
+      width: calc(var(--member-icon-width) + 2 * var(--member-icon-border-width));
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border: var(--member-icon-border-width) solid var(--theme-surface-color);
+      border-radius: calc(var(--member-icon-width) / 2 + var(--member-icon-border-width));
+    }
+  }
+
+  &__welcome-row {
+    display: flex;
+    row-gap: $rem-size-32;
+    justify-content: space-between;
+  }
+
+  &__greeting-wrapper,
+  &__account-button-wrapper {
+    width: 100%;
+    padding: 0;
+  }
+
+  &__company {
+    color: $bimco-grey-500;
+    text-transform: uppercase;
+  }
+
+  @include media-breakpoint-up(md) {
+    --member-icon-width: 120px;
+    --member-icon-border-width: 10px;
+
+    &__edit-button {
+      right: $rem-size-28;
+      bottom: $rem-size-28;
+    }
+
+    &__greeting-wrapper,
+    &__account-button-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      width: max-content;
+    }
+  }
+}

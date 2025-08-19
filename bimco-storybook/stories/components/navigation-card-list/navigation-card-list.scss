@@ -1,0 +1,11 @@
+@import "../../abstracts";
+
+.navigation-card-list {
+  @include media-breakpoint-up(md) {
+    .swiper-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: $rem-size-16;
+    }
+  }
+}

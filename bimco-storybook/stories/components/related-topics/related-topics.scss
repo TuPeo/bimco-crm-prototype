@@ -1,0 +1,44 @@
+@use "../../base/placeholders/typography";
+@import '../../abstracts';
+
+.related-topics {
+  $block: &;
+
+  &__title {
+    @extend %eyebrow-style;
+    margin-bottom: $rem-size-32;
+    color: var(--typography-headlines);
+    text-transform: uppercase;
+  }
+
+  &__topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $rem-size-16;
+    justify-content: flex-start;
+  }
+
+  &__topic {
+    display: flex;
+    flex-direction: column;
+    gap: $rem-size-10;
+    justify-content: space-between;
+    width: 100%;
+    padding: $rem-size-24;
+    cursor: pointer;
+    background-color: #005d8a0d; // see trending-menu-card-item
+  }
+
+  &__topic-count {
+    @extend %eyebrow-style;
+    color: var(--typography-body-description);
+    opacity: 0.7;
+  }
+  
+  @include media-breakpoint-up(md) {
+    #{$block}__topic {
+      width: calc(33.3333% - (2 / 3) * $rem-size-16);
+      min-height: 250px;
+    }
+  }
+}

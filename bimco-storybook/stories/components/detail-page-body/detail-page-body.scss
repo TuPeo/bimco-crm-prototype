@@ -1,0 +1,10 @@
+@import "../../abstracts/";
+
+.detail-page-body {
+  position: relative;
+  padding: var(--bimco-section-spacer-tighter) 0;
+
+  &__inner {
+    background-color: var(--theme-surface-color);
+  }
+}

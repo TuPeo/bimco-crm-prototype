@@ -1,0 +1,13 @@
+@import '../../abstracts/';
+
+.category-tag {
+  display: inline-block;
+  padding: $rem-size-6 $rem-size-14;
+  font-size: $rem-size-15;
+  font-weight: $font-weight-medium;
+  color: var(--search-result-tag-color);
+  text-decoration: none;
+  background-color: var(--search-result-tag-background);
+  border: none;
+  border-radius: $rem-size-2;
+}

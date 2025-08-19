@@ -1,0 +1,9 @@
+@use '../vendors';
+@use '../vendors/google-fonts';
+@use '../base';
+@use '../layout';
+
+.docs-story,
+.sb-story {
+  background-color: var(--theme-surface-color);
+}

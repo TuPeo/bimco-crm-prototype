@@ -1,0 +1,65 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts";
+
+.content-listing {
+  padding: var(--bimco-section-spacer-default) 0;
+  overflow-x: hidden;
+
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $rem-size-8 $rem-size-32;
+    align-items: center;
+    margin-bottom: $rem-size-32;
+
+    &-link {
+      margin: $rem-size-14 0;
+    }
+  }
+
+  &__heading {
+    @extend %navigation-eyebrow-style;
+
+    margin-bottom: 0;
+  }
+
+  &__search {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    row-gap: $rem-size-80;
+    min-height: 60vh;
+    scroll-margin-top: calc(var(--bimco-header-height) + var(--bimco-section-spacer-default));
+  }
+
+  &__results-container {
+    position: relative;
+    flex: 1;
+  }
+
+  &__teaser {
+    position: absolute;
+    bottom: 0;
+    z-index: $zindex-dropdown;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    height: 12rem;
+    max-height: 100%;
+    padding-bottom: $rem-size-48;
+    pointer-events: none;
+    background-image: linear-gradient(to bottom, transparent, var(--theme-surface-color));
+
+    &-btn {
+      pointer-events: initial;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__teaser {
+      height: 18rem;
+      padding-bottom: $rem-size-56;
+    }
+  }
+}

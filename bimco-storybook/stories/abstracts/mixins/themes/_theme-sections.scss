@@ -1,0 +1,264 @@
+@mixin theme-global(
+  $theme-primary-light,
+  $theme-primary,
+  $theme-primary-dark,
+  $theme-primary-light-hover,
+  $theme-primary-hover,
+  $theme-primary-dark-hover,
+  $theme-surface-color,
+  $theme-surface-color-transparent,
+  $theme-surface-image-mid,
+  $theme-surface-image-top
+) {
+  --theme-primary-light: #{$theme-primary-light};
+  --theme-primary: #{$theme-primary};
+  --theme-primary-dark: #{$theme-primary-dark};
+  --theme-primary-light-hover: #{$theme-primary-light-hover};
+  --theme-primary-hover: #{$theme-primary-hover};
+  --theme-primary-dark-hover: #{$theme-primary-dark-hover};
+  --theme-surface-color: #{$theme-surface-color};
+  --theme-surface-color-transparent: #{$theme-surface-color-transparent};
+  --theme-surface-image-mid: #{$theme-surface-image-mid};
+  --theme-surface-image-top: #{$theme-surface-image-top};
+}
+
+@mixin theme-breadcrumbs(
+  $breadcrumbs-default-text,
+  $breadcrumbs-default-text-hover,
+  $breadcrumbs-current-page-text,
+  $breadcrumbs-divider
+) {
+  --breadcrumbs-default-text: #{$breadcrumbs-default-text};
+  --breadcrumbs-default-text-hover: #{$breadcrumbs-default-text-hover};
+  --breadcrumbs-current-page-text: #{$breadcrumbs-current-page-text};
+  --breadcrumbs-divider: #{$breadcrumbs-divider};
+}
+
+@mixin theme-dividers($theme-divider-default, $theme-divider-subtle) {
+  --theme-divider-default: #{$theme-divider-default};
+  --theme-divider-subtle: #{$theme-divider-subtle};
+}
+
+@mixin theme-progress-bars(
+  $theme-progress-incomplete-step,
+  $theme-progress-complete-step,
+  $theme-progress-active-step,
+  $theme-progress-spinner-background,
+  $theme-progress-spinner-foreground
+) {
+  --theme-progress-incomplete-step: #{$theme-progress-incomplete-step};
+  --theme-progress-complete-step: #{$theme-progress-complete-step};
+  --theme-progress-active-step: #{$theme-progress-active-step};
+  --theme-progress-spinner-background: #{$theme-progress-spinner-background};
+  --theme-progress-spinner-foreground: #{$theme-progress-spinner-foreground};
+}
+
+@mixin theme-footer($theme-footer-label) {
+  --theme-footer-label: #{$theme-footer-label};
+}
+
+@mixin theme-forms(
+  $form-label,
+  $form-label-small,
+  $form-label-small-focused,
+  $form-label-disabled,
+  $form-input,
+  $form-input-focused,
+  $form-input-background,
+  $form-input-gradient-focused,
+  $form-input-placeholder,
+  $form-input-error,
+  $form-input-error-icon
+) {
+  --form-label: #{$form-label};
+  --form-label-small: #{$form-label-small};
+  --form-label-small-focused: #{$form-label-small-focused};
+  --form-label-disabled: #{$form-label-disabled};
+  --form-input: #{$form-input};
+  --form-input-focused: #{$form-input-focused};
+  --form-input-background: #{$form-input-background};
+  --form-input-gradient-focused: #{$form-input-gradient-focused};
+  --form-input-placeholder: #{$form-input-placeholder};
+  --form-input-error: #{$form-input-error};
+  --form-input-error-icon: #{$form-input-error-icon};
+}
+
+@mixin theme-cards(
+  $cards-fill,
+  $cards-highlight,
+  $cards-hover-fill,
+  $cards-hover-gradient-color-1,
+  $cards-hover-gradient-color-2,
+  $cards-hover-outline,
+  $cards-hover-button,
+) {
+  --cards-fill: #{$cards-fill};
+  --cards-highlight: #{$cards-highlight};
+  --cards-hover-fill: #{$cards-hover-fill};
+  --cards-hover-gradient-color-1: #{$cards-hover-gradient-color-1};
+  --cards-hover-gradient-color-2: #{$cards-hover-gradient-color-2};
+  --cards-hover-outline: #{$cards-hover-outline};
+  --cards-hover-button: #{$cards-hover-button};
+};
+
+@mixin theme-tables(
+  $tables-data-block-background,
+  $tables-data-block-header-background,
+  $tables-data-block-header-text,
+  $tables-tab-text,
+  $tables-heading-line,
+  $tables-heading-background,
+  $tables-cell-line,
+) {
+  --tables-data-block-background: #{$tables-data-block-background};
+  --tables-data-block-header-background: #{$tables-data-block-header-background};
+  --tables-data-block-header-text: #{$tables-data-block-header-text};
+  --tables-tab-text: #{$tables-tab-text};
+  --tables-heading-line: #{$tables-heading-line};
+  --tables-heading-background: #{$tables-heading-background};
+  --tables-cell-line: #{$tables-cell-line};
+};
+
+@mixin theme-fonts(
+  $typography-headlines,
+  $typography-body-description,
+  $typography-body-content,
+  $typography-rating-icon,
+  $typography-eyebrow,
+  $typography-navigation-eyebrow,
+  $typography-link,
+  $typography-link-hover
+) {
+  --typography-headlines: #{$typography-headlines};
+  --typography-body-description: #{$typography-body-description};
+  --typography-body-content: #{$typography-body-content};
+  --typography-rating-icon: #{$typography-rating-icon};
+  --typography-eyebrow: #{$typography-eyebrow};
+  --typography-navigation-eyebrow: #{$typography-navigation-eyebrow};
+  --typography-link: #{$typography-link};
+  --typography-link-hover: #{$typography-link-hover};
+}
+
+@mixin theme-search-results(
+  $search-result-tag-background,
+  $search-result-tag-color,
+  $search-result-featured-background,
+  $search-result-featured-color,
+  $search-result-featured-tag-background,
+  $search-result-featured-tag-color
+) {
+  --search-result-tag-background: #{$search-result-tag-background};
+  --search-result-tag-color: #{$search-result-tag-color};
+  --search-result-featured-background: #{$search-result-featured-background};
+  --search-result-featured-color: #{$search-result-featured-color};
+  --search-result-featured-tag-background: #{$search-result-featured-tag-background};
+  --search-result-featured-tag-color: #{$search-result-featured-tag-color};
+}
+
+@mixin theme-bimco-header(
+  $background,
+  $text-color,
+  $supergraphic-background-left,
+  $supergraphic-background-right,
+  $menu-button-background,
+  $menu-button-color,
+  $search-button-background,
+  $search-button-color,
+  $close-button-background,
+  $close-button-color,
+  $theme-header-top-link-background,
+  $theme-header-top-link-border
+) {
+  --theme-header-background: #{$background};
+  --theme-header-text-color: #{$text-color};
+  --theme-header-supergraphic-background-left: #{$supergraphic-background-left};
+  --theme-header-supergraphic-background-right: #{$supergraphic-background-right};
+  --theme-header-menu-button-background: #{$menu-button-background};
+  --theme-header-menu-button-color: #{$menu-button-color};
+  --theme-header-search-button-background: #{$search-button-background};
+  --theme-header-search-button-color: #{$search-button-color};
+  --theme-header-close-button-background: #{$close-button-background};
+  --theme-header-close-button-color: #{$close-button-color};
+  --theme-header-top-link-background: #{$theme-header-top-link-background};
+  --theme-header-top-link-border: #{$theme-header-top-link-border};
+}
+
+@mixin theme-navigation-link(
+  $background,
+  $color,
+  $hover-background
+) {
+  --theme-navigation-link-background: #{$background};
+  --theme-navigation-link-background-hover: #{$hover-background};
+  --theme-navigation-link-color: #{$color};
+}
+
+@mixin theme-bimco-logo-color(
+  $color
+) {
+  --theme-bimco-logo-color: #{$color};
+}
+
+@mixin theme-swiper(
+  $pagination-pip-color,
+  $pagination-pip-color-active,
+  $pagination-text-color,
+  $pagination-text-color-active
+) {
+  --theme-pagination-pip-color: #{$pagination-pip-color};
+  --theme-pagination-pip-color-active: #{$pagination-pip-color-active};
+  --theme-pagination-text-color: #{$pagination-text-color};
+  --theme-pagination-text-color-active: #{$pagination-text-color-active};
+}
+
+@mixin theme-navigation-card(
+  $background,
+  $background-hover,
+  $accent-color,
+  $accent-color-hover
+) {
+  --theme-navigation-card-background: #{$background};
+  --theme-navigation-card-background-hover: #{$background-hover};
+  --theme-navigation-card-accent-color: #{$accent-color};
+  --theme-navigation-card-accent-color-hover: #{$accent-color-hover};
+}
+
+@mixin theme-chapter-links(
+  $card-background,
+  $card-index-color,
+  $card-pip-color,
+  $card-background-hover,
+  $card-text-color-hover,
+  $card-background-active,
+  $card-text-color-active
+) {
+  --theme-chapter-link-card-background: #{$card-background};
+  --theme-chapter-link-card-index-color: #{$card-index-color};
+  --theme-chapter-link-card-pip-color: #{$card-pip-color};
+  --theme-chapter-link-card-background-hover: #{$card-background-hover};
+  --theme-chapter-link-card-text-color-hover: #{$card-text-color-hover};
+  --theme-chapter-link-card-background-active: #{$card-background-active};
+  --theme-chapter-link-card-text-color-active: #{$card-text-color-active};
+}
+
+@mixin theme-accordion(
+  $accordion-color,
+  $accordion-background-color,
+  $accordion-button-color,
+  $accordion-button-background-color,
+  $accordion-color-hover,
+  $accordion-background-color-hover,
+  $accordion-button-color-hover,
+  $accordion-button-background-color-hover
+) {
+  --accordion-color: #{$accordion-color};
+  --accordion-background-color: #{$accordion-background-color};
+  --accordion-button-color: #{$accordion-button-color};
+  --accordion-button-background-color: #{$accordion-button-background-color};
+  --accordion-color-hover: #{$accordion-color-hover};
+  --accordion-background-color-hover: #{$accordion-background-color-hover};
+  --accordion-button-color-hover: #{$accordion-button-color-hover};
+  --accordion-button-background-color-hover: #{$accordion-button-background-color-hover};
+}
+
+

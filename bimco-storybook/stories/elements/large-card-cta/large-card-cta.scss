@@ -1,0 +1,43 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.large-card-cta {
+  min-height: $rem-size-400;
+  padding: $rem-size-24;
+  text-align: center;
+  background-color: $bimco-dark-blue-600;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  &__title {
+    @extend %headline-5-style;
+    margin-bottom: $rem-size-16;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: $bimco-cream-100;
+  }
+
+  &__description {
+    @extend %body-style;
+    color: $bimco-cream-100;
+  }
+
+  &__button-group {
+    margin-top: $rem-size-28;
+  }
+
+  @include media-breakpoint-up(md) {
+    padding: $rem-size-48 $rem-size-64;
+
+    &__button-group {
+      margin-top: $rem-size-48;
+    }
+  }
+}

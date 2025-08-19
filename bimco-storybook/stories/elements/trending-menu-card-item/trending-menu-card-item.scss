@@ -1,0 +1,112 @@
+@use "sass:map";
+@use "../../base/placeholders/typography";
+@use "../../base";
+@import "../../abstracts/";
+
+.trending-menu-card-item {
+  text-decoration: none;
+  cursor: pointer;
+  background-color: #005d8a0d; // 5% opacity -- there is no variable for this color
+  box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #005d8a40; // 25% opacity on hover -- there is no variable for this color
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    padding: $rem-size-8;
+    margin: 0;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__row--content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__row--info {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: $rem-size-8;
+  }
+
+  &__title {
+    @extend %body-style;
+    padding: $rem-size-8 $rem-size-12 0;
+    color: var(--typography-headlines);
+  }
+
+  &__description {
+    @extend %body-small-style;
+    padding: $rem-size-10 $rem-size-12 $rem-size-8 $rem-size-12;
+    color: var(--typography-body-description);
+  }
+
+  &__ranking {
+    @extend %eyebrow-style;
+    padding: $rem-size-8 $rem-size-8 $rem-size-10 $rem-size-8;
+    color: var(--typography-headlines);
+  }
+
+  &__icon {
+    width: $rem-size-28;
+    height: $rem-size-28;
+    padding: $rem-size-8 $rem-size-8 $rem-size-8 0;
+    font-size: 2rem;
+    color: $bimco-green-200;
+
+    &.decreasing {
+      color: $bimco-red-500;
+      transform: scaleY(-1);
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: $rem-size-8;
+      padding-right: $rem-size-28;
+    }
+
+    &__title {
+      padding-top: $rem-size-8;
+      padding-left: $rem-size-12;
+    }
+
+    &__description {
+      padding-top: $rem-size-8;
+      padding-bottom: $rem-size-8;
+      padding-left: $rem-size-12;
+    }
+
+    &__row--info {
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0;
+    }
+
+    &__ranking {
+      padding: 0;
+    }
+
+    &__icon {
+      padding: $rem-size-14 $rem-size-6 0 $rem-size-6;
+
+      &.decreasing {
+        padding: $rem-size-4 $rem-size-6 $rem-size-14 $rem-size-6;
+      }
+    }
+  }
+}

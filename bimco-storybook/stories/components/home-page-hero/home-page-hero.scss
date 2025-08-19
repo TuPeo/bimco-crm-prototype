@@ -1,0 +1,154 @@
+@use "../../base/placeholders/typography";
+@import '../../abstracts/';
+
+.home-page-hero {
+  $block: &;
+
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  height: calc(100svh + var(--home-page-hero-height-addon));
+  padding-bottom: calc(#{$rem-size-8} + var(--home-page-hero-height-addon));
+  margin-top: calc(var(--bimco-header-height) * -1);
+
+  --home-page-hero-height-addon: 0px;
+
+  &--has-scroll-effects {
+    --home-page-hero-height-addon: 50svh;
+  }
+
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--viewport-width);
+    height: 100svh;
+
+    #{$block}--has-scroll-effects & {
+      position: fixed;
+    }
+
+    &::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background-image: linear-gradient(
+        0deg,
+        var(--theme-surface-color) 30%,
+        transparent
+      );
+    }
+
+    &-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__row {
+    row-gap: $rem-size-16;
+    align-items: flex-end;
+  }
+
+  &__title {
+    margin-bottom: 0;
+  }
+
+  &__description {
+    margin-bottom: $rem-size-48;
+  }
+
+  &__scroller {
+    display: none;
+  }
+
+  @include media-breakpoint-up(md) {
+    padding-bottom: calc(var(--bimco-section-spacer-tighter) + var(--home-page-hero-height-addon));
+
+    &__background {
+      &::after {
+        background-image: linear-gradient(
+          0deg,
+          var(--theme-surface-color) 10%,
+          transparent
+        );
+      }
+    }
+
+    &__container {
+      position: relative;
+    }
+
+    &__row {
+      row-gap: $rem-size-18;
+    }
+
+    &__scroller {
+      position: absolute;
+      top: 0;
+      right: var(--bimco-container-padding-x);
+      display: block;
+      width: 1px;
+      height: 150svh;
+
+      &::before {
+        position: absolute;
+        inset: 0;
+        content: "";
+        background-color: var(--typography-body-content);
+        opacity: 0.3;
+      }
+
+      &-handle {
+        $handle-size: 15px;
+
+        position: fixed;
+        bottom: var(--bimco-section-spacer-tighter);
+        width: $handle-size;
+        height: $handle-size;
+        margin-left: ($handle-size - 1px) * -0.5;
+        content: "";
+        background-color: var(--theme-primary-light);
+        box-shadow: 4px 4px ($handle-size * 3) 4px var(--theme-primary-light);
+
+        &::before {
+          position: absolute;
+          inset: ($handle-size * -4) (($handle-size - 1px) * 0.5);
+          content: "";
+          background-image: linear-gradient(to bottom,
+            transparent 0,
+            var(--theme-primary-light) 40%,
+            var(--theme-primary-light) 60%,
+            transparent 100%);
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__background {
+      &::after {
+        background-image: linear-gradient(
+          0deg,
+          var(--theme-surface-color),
+          transparent
+        );
+      }
+    }
+
+    &__text-col {
+      padding-right: $rem-size-40;
+    }
+
+    &__description {
+      margin-bottom: $rem-size-36;
+    }
+  }
+
+  @include media-breakpoint-up(xxxl) {
+    &__scroller {
+      right: calc(var(--bimco-container-padding-x) * 2);
+    }
+  }
+}

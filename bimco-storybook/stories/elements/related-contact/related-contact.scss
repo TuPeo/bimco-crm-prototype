@@ -1,0 +1,52 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts";
+
+.related-contact {
+  container-type: inline-size;
+
+  &__contact {
+    display: flex;
+    flex-direction: column;
+    gap: $rem-size-18;
+  }
+
+  &__info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: $rem-size-8;
+    padding-left: $rem-size-6;
+  }
+
+  &__image {
+    width: 56px;
+    max-width: 100%;
+    aspect-ratio: 1;
+  }
+
+  &__name {
+    @extend %headline-5-style;
+  }
+
+  &__job-title {
+    @extend %eyebrow-small-style;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: $rem-size-16;
+  }
+
+  @container (min-width: 640px) {
+    &__contact {
+      flex-direction: row;
+    }
+  }
+
+  @include media-breakpoint-up(xxxl) {
+    &__image {
+      width: 240px;
+    }
+  }
+}

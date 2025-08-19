@@ -1,0 +1,22 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "esModuleInterop": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "jsx": "react",
+    "lib": [ "dom", "ES2022", "scripthost" ],
+    "moduleResolution": "node",
+    "typeRoots": [
+      "./node_modules/@types",
+      "../node_modules/@types"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

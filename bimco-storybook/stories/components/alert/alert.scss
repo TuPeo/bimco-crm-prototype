@@ -1,0 +1,8 @@
+@import '../../abstracts';
+
+.alert {
+  display: flex;
+  column-gap: $rem-size-12;
+  align-items: center;
+  max-width: 40rem;
+}

@@ -1,0 +1,22 @@
+@import "../../abstracts";
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: $rem-size-28;
+  aspect-ratio: 1;
+  font-size: $font-size-sm;
+  color: white;
+  background: $bimco-dark-blue-900;
+  transition: transform 0.6s $slow-transition-timing-function;
+
+  &:hover {
+    transform: scale(1.15);
+  }
+
+  &:focus {
+    outline: solid $bimco-light-blue-400;
+    outline-offset: 2px;
+  }
+}

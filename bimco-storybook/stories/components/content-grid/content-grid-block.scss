@@ -1,0 +1,55 @@
+@use "sass:map";
+@import "../../abstracts";
+
+.content-grid-block {
+  $block: &;
+
+  position: relative;
+  padding: var(--bimco-section-spacer-default) 0;
+  scroll-margin-top: calc(var(--bimco-header-height) - var(--bimco-section-spacer-default) + #{$rem-size-40});
+
+  // Where adjacent blocks don't have any theme applied...
+  &:not(.theme-zone):not(#{$block}--has-background-media) + {
+    #{$block}:not(.theme-zone):not(#{$block}--has-background-media) {
+      padding-top: 0;
+      margin-top: -1px; // close sub-pixel rendering gaps
+      scroll-margin-top: calc(var(--bimco-header-height) + #{$rem-size-40});
+    }
+  }
+
+  // ...or have the same theme applied, collapse the top padding for even spacing
+  @each $theme-variant in 'white', 'light', 'brand', 'dark' {
+    &.theme--#{$theme-variant}:not(#{$block}--has-background-media) + {
+      #{$block}.theme--#{$theme-variant}:not(#{$block}--has-background-media) {
+        padding-top: 0;
+        margin-top: -1px; // close sub-pixel rendering gaps
+        scroll-margin-top: calc(var(--bimco-header-height) + #{$rem-size-40});
+      }
+    }
+  }
+
+  &--has-top-divider {
+    #{$block}__container {
+      &::before {
+        display: block;
+        height: $rem-size-2;
+        margin-bottom: var(--bimco-section-divider-spacer);
+        content: "";
+        background-color: var(--theme-divider-default);
+      }
+    }
+  }
+
+  &--image-media {
+    /* stylelint-disable custom-property-pattern */
+    --umb-block-grid--row-gap: #{$rem-size-16};
+    /* stylelint-enable custom-property-pattern */
+  }
+
+  @include media-breakpoint-up(xxxl) {
+    // Bring container max-width down to equivalent of 10/12 cols
+    &__container {
+      max-width: calc(#{map.get($container-max-widths, xxxl)} - (var(--bimco-container-padding-x) * 2));
+    }
+  }
+}

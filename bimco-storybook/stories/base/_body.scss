@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  overflow-y: scroll;
+  font-family: var(--bimco-display-font-family);
+  color: var(--typography-body-content);
+  background-color: var(--theme-surface-color);
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+
+  &.modal-open {
+    padding-right: var(--scrollbar-width);
+    overflow-y: hidden;
+  }
+}

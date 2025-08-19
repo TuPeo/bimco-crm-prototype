@@ -1,0 +1,33 @@
+@import './../../abstracts';
+
+.pagination {
+  display: flex;
+  gap: $rem-size-16;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+
+  &--hidden {
+    display: none;
+  }
+
+  &__page {
+    display: flex;
+    gap: $rem-size-16;
+    align-items: center;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__first-gap-marker,
+  &__last-gap-marker {
+    min-width: $rem-size-96;
+    height: $rem-size-2;
+    background-image: linear-gradient(90deg, #fff0 0%, var(--btn-secondary-text) 20%, #fff0 100%);
+  }
+
+  &__last-gap-marker {
+    transform: rotate(180deg);
+  }
+}

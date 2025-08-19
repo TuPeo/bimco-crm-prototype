@@ -1,0 +1,229 @@
+@mixin theme-brand {
+  @include theme-global(
+    $theme-primary-light: $bimco-light-blue-400,
+    $theme-primary: $bimco-light-blue-500,
+    $theme-primary-dark: $bimco-light-blue-600,
+    $theme-primary-light-hover: $bimco-light-blue-500,
+    $theme-primary-hover: $bimco-light-blue-400,
+    $theme-primary-dark-hover: $bimco-light-blue-500,
+    $theme-surface-color: $bimco-dark-blue-600,
+    $theme-surface-color-transparent: rgba($bimco-dark-blue-600, 0.75),
+    $theme-surface-image-mid: rgba($bimco-dark-blue-600, 0.8),
+    $theme-surface-image-top: rgba($bimco-dark-blue-600, 0.1)
+  );
+
+  @include theme-bimco-logo-color(
+    $color: $bimco-white
+  );
+
+  @include theme-dividers(
+    $theme-divider-default: $bimco-grey-300, 
+    $theme-divider-subtle: $bimco-light-blue-800
+  );
+
+  @include theme-swiper(
+    $pagination-pip-color: $bimco-grey-700,
+    $pagination-pip-color-active: $bimco-grey-100,
+    $pagination-text-color: $bimco-grey-700,
+    $pagination-text-color-active: $bimco-white
+  );
+
+  @include theme-progress-bars(
+    $theme-progress-incomplete-step: $bimco-grey-800,
+    $theme-progress-complete-step: $bimco-green-500,
+    $theme-progress-active-step: $bimco-light-blue-500,
+    $theme-progress-spinner-background: $bimco-orange-100,
+    $theme-progress-spinner-foreground: $bimco-orange-600
+  );
+
+  @include theme-forms(
+    $form-label: $bimco-grey-900,
+    $form-label-small: $bimco-dark-blue-600,
+    $form-label-small-focused: $bimco-white,
+    $form-label-disabled: $bimco-grey-400,
+    $form-input: $bimco-grey-900,
+    $form-input-focused: $bimco-white,
+    $form-input-background: $bimco-dark-blue-200,
+    $form-input-gradient-focused: #0577AD,
+    $form-input-placeholder: #C6CDD5B2,
+    $form-input-error: $bimco-white,
+    $form-input-error-icon: $bimco-red-500
+  );
+
+  @include theme-cards(
+    $cards-fill: #006996,
+    $cards-highlight: $bimco-light-blue-200,
+    $cards-hover-fill: linear-gradient(0deg, rgba(4, 51, 71, 0.95) 0%, rgba(4, 51, 71, 0.95) 100%),
+    $cards-hover-gradient-color-1: $bimco-dark-blue-500,
+    $cards-hover-gradient-color-2: rgba($bimco-dark-blue-500, 0),
+    $cards-hover-outline: $bimco-dark-blue-600,
+    $cards-hover-button: #064766,
+  );
+
+  @include theme-tables(
+    $tables-data-block-background: $bimco-dark-blue-1000,
+    $tables-data-block-header-background: radial-gradient(circle at 0% 0%, $bimco-cream-400 0%, $bimco-cream-300 150%),
+    $tables-data-block-header-text: $bimco-dark-blue-700,
+    $tables-tab-text: $bimco-cream-300,
+    $tables-cell-line: $bimco-light-blue-800,
+    $tables-heading-line: $bimco-grey-300,
+    $tables-heading-background: $bimco-dark-blue-600,
+  );
+
+  @include theme-footer(
+    $theme-footer-label: $bimco-grey-600
+  );
+  
+  @include theme-fonts(
+    $typography-headlines: $bimco-cream-100,
+    $typography-body-description: $bimco-cream-300,
+    $typography-body-content: $bimco-cream-100,
+    $typography-rating-icon: $bimco-cream-100,
+    $typography-eyebrow: $bimco-light-blue-500,
+    $typography-navigation-eyebrow: $bimco-grey-500,
+    $typography-link: $bimco-orange-500,
+    $typography-link-hover: $bimco-orange-700
+  );
+
+  @include theme-search-results(
+    $search-result-tag-background: $bimco-dark-blue-100,
+    $search-result-tag-color: $bimco-dark-blue-600,
+    $search-result-featured-background: $bimco-dark-blue-800,
+    $search-result-featured-color: $bimco-cream-100,
+    $search-result-featured-tag-background: $bimco-cream-500,
+    $search-result-featured-tag-color: $bimco-dark-blue-900
+  );
+
+  @include theme-bimco-header(
+    $background: radial-gradient(circle at -40% -40%, $bimco-dark-blue-600 0%, $bimco-dark-blue-1000 100%),
+    $text-color: $bimco-white,
+    $supergraphic-background-left: $bimco-dark-blue-500,
+    $supergraphic-background-right: $bimco-dark-blue-800,
+    $menu-button-background: $bimco-orange-600,
+    $menu-button-color: $bimco-cream-100,
+    $search-button-background: $bimco-dark-blue-700,
+    $search-button-color: $bimco-cream-100,
+    $close-button-background: $bimco-cream-400,
+    $close-button-color: $bimco-dark-blue-800,
+    $theme-header-top-link-background: $bimco-dark-blue-900,
+    $theme-header-top-link-border: $bimco-dark-blue-800
+  );
+
+  @include theme-navigation-link(
+    $background: rgb(0 93 138 / 5%),
+    $color: $bimco-cream-300,
+    $hover-background: rgb(0 93 138 / 25%)
+  );
+
+  @include theme-navigation-card(
+    $background: rgb(0 93 138 / 20%),
+    $background-hover: rgb(0 93 138 / 25%),
+    $accent-color: $bimco-dark-blue-1000,
+    $accent-color-hover: $bimco-dark-blue-500
+  );
+
+  @include theme-breadcrumbs(
+    $breadcrumbs-default-text: $bimco-grey-100,
+    $breadcrumbs-default-text-hover: $bimco-dark-blue-300,
+    $breadcrumbs-current-page-text: $bimco-grey-300,
+    $breadcrumbs-divider: $bimco-grey-300
+  );
+
+  @include theme-chapter-links(
+    $card-background:  $bimco-dark-blue-700,
+    $card-index-color: $bimco-cream-100,
+    $card-pip-color: $bimco-light-blue-500,
+    $card-background-hover: $bimco-dark-blue-1000,
+    $card-text-color-hover: $bimco-cream-100,
+    $card-background-active: $bimco-dark-blue-800,
+    $card-text-color-active: $bimco-cream-100
+  );
+
+  @include theme-accordion (
+    $accordion-color: $bimco-cream-100,
+    $accordion-background-color: $bimco-dark-blue-1000,
+    $accordion-button-color: $bimco-grey-800,
+    $accordion-button-background-color: $bimco-cream-500,
+    $accordion-color-hover: $bimco-cream-100,
+    $accordion-background-color-hover: $bimco-dark-blue-900,
+    $accordion-button-color-hover: $bimco-grey-800,
+    $accordion-button-background-color-hover: $bimco-cream-100
+  );
+}
+
+@mixin theme-btn-brand {
+  // Shared
+  --btn-focus-color: #{$bimco-light-blue-400};
+
+  // Btn primary
+  --btn-primary-fill: #{$bimco-orange-500};
+  --btn-primary-outline: #{$bimco-orange-500};
+  --btn-primary-text: #{$bimco-cream-100};
+  --btn-primary-icon: #{$bimco-cream-400};
+  --btn-primary-fill-hover: #{$bimco-white};
+  --btn-primary-outline-hover: #{$bimco-white};
+  --btn-primary-text-hover: #{$bimco-dark-blue-800};
+  --btn-primary-icon-hover: #{$bimco-dark-blue-800};
+
+  // Btn secondary
+  --btn-secondary-fill: #{$bimco-white}00;
+  --btn-secondary-outline: linear-gradient(
+      292deg,
+      #{$bimco-dark-blue-500} 0%,
+      #{$bimco-dark-blue-100} 49%,
+      #{$bimco-dark-blue-100} 60%,
+      #{$bimco-dark-blue-500} 100%
+    )
+    1;
+  --btn-secondary-text: #{$bimco-cream-200};
+  --btn-secondary-icon: #{$bimco-light-blue-400};
+  --btn-secondary-fill-hover: #{$bimco-white}0A;
+  --btn-secondary-outline-hover: #{$bimco-dark-blue-200};
+  --btn-secondary-text-hover: #{$bimco-white};
+  --btn-secondary-icon-hover: #{$bimco-light-blue-500};
+
+  // Btn link
+  --btn-link-text: #{$bimco-dark-blue-200};
+  --btn-link-underline-gradient-from: #{$bimco-dark-blue-400};
+  --btn-link-underline-gradient-from-to: #{$bimco-dark-blue-400};
+  --btn-link-icon: #{$bimco-orange-400};
+  --btn-link-text-hover: #{$bimco-white};
+  --btn-link-underline-gradient-hover-from: #{$bimco-light-blue-500};
+  --btn-link-underline-gradient-hover-to: #{$bimco-dark-blue-400};
+  --btn-link-icon-hover: #{$bimco-orange-500};
+  --btn-link-focus-color: #{$bimco-light-blue-800};
+
+  // Btn icon full
+  --btn-icon-full-fill: #{$bimco-cream-500};
+  --btn-icon-full-outline: #{$bimco-cream-500};
+  --btn-icon-full-icon: #{$bimco-dark-blue-800};
+  --btn-icon-full-fill-hover: #{$bimco-cream-100};
+  --btn-icon-full-outline-hover: #{$bimco-cream-100};
+  --btn-icon-full-fill-icon-hover: #{$bimco-grey-800};
+
+  // Btn icon subtle
+  --btn-icon-subtle-fill: #{$bimco-dark-blue-700};
+  --btn-icon-subtle-outline: #{$bimco-dark-blue-700};
+  --btn-icon-subtle-icon: #{$bimco-cream-100};
+  --btn-icon-subtle-fill-hover: #{$bimco-dark-blue-800};
+  --btn-icon-subtle-outline-hover: #{$bimco-dark-blue-800};
+  --btn-icon-subtle-fill-icon-hover: #{$bimco-cream-100};
+
+  // Btn icon tag
+  --btn-icon-tag-fill: #046999;
+  --btn-icon-tag-outline: #046999;
+  --btn-icon-tag-text: #{$bimco-white};
+  --btn-icon-tag-icon: #{$bimco-grey-300};
+  --btn-icon-tag-fill-hover: #{$bimco-dark-blue-800};
+  --btn-icon-tag-outline-hover: #{$bimco-dark-blue-800};
+  --btn-icon-tag-text-hover: #{$bimco-cream-100};
+  --btn-icon-tag-icon-hover: #{$bimco-cream-100};
+
+  // Btn card
+  --btn-card-fill: #09557A;
+  --btn-card-outline: none;
+  --btn-card-text: #{$bimco-cream-100};
+  --btn-card-icon: #{$bimco-cream-100};
+  --btn-card-fill-hover: #064766;
+  --btn-card-text-hover: #{$bimco-cream-100};
+}

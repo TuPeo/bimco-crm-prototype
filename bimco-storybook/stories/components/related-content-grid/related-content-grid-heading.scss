@@ -1,0 +1,9 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts";
+
+.related-content-heading {
+  @extend %navigation-eyebrow-style;
+
+  display: inline-block;
+  margin-bottom: $rem-size-20;
+}

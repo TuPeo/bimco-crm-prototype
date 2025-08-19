@@ -1,0 +1,7 @@
+@import "../../abstracts";
+
+.content-listing-list {
+  display: flex;
+  flex-direction: column;
+  gap: $rem-size-8;
+}

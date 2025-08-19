@@ -1,0 +1,10 @@
+.shop-page {
+  display: flex;
+  flex-direction: column;
+
+  &__container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,28 @@
+@import '../../abstracts/';
+
+.search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $rem-size-4;
+
+  &.theme-zone {
+    background-color: transparent;
+  }
+
+  &__input-col {
+    position: relative;
+    flex: 1 0 0;
+  }
+
+  &__button-col {
+    flex: 1;
+  }
+
+  @include media-breakpoint-up(sm) {
+    flex-wrap: nowrap;
+
+    &__button-col {
+      flex: 0;
+    }
+  }
+}

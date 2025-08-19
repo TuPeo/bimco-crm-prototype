@@ -1,0 +1,86 @@
+@use "../../../base/placeholders/typography";
+@import '../../../abstracts/';
+
+.choices {
+  $block: &;
+
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 12rem;
+  padding-top: $rem-size-20;
+
+  &__input {
+    // select element must have display for aspnet client validation
+    &[hidden] {
+      display: block !important;
+      pointer-events: none;
+    }
+  }
+
+  &__inner {
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+  }
+
+  &[data-type*="select-one"] {
+    &::after {
+      display: none;
+    }
+
+    #{$block}__inner {
+      padding-bottom: 0;
+    }
+
+    #{$block}__input {
+      height: 0;
+      padding: 0;
+      border: none;
+    }
+  }
+
+  &__placeholder {
+    color: var(--form-input-placeholder);
+    opacity: 1;
+  }
+
+  &__list {
+    &--single {
+      padding: 0;
+
+      #{$block}__item {
+        padding-right: var(--form-control-icon-spacer-x);
+        padding-left: var(--form-control-spacer-x);
+        font-size: var(--bimco-form-input-font-size);
+      }
+    }
+
+    &--dropdown,
+    &[aria-expanded] {
+      z-index: $zindex-dropdown;
+      margin-top: $rem-size-12;
+      border-radius: 0;
+
+      &,
+      .is-open & {
+        border: 1px solid $bimco-grey-200;
+      }
+
+      #{$block}__item {
+        padding: $rem-size-12 var(--form-control-spacer-x);
+        font-size: var(--bimco-body-small-font-size);
+        color: $bimco-grey-600;
+
+        &.is-highlighted {
+          color: var(--form-input);
+          background-color: var(--form-input-background);
+        }
+      }
+    }
+  }
+}

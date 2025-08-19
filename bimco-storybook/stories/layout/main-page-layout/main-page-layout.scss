@@ -1,0 +1,17 @@
+.main-page-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: var(--viewport-height);
+
+  &__header {
+    height: var(--bimco-header-height);
+  }
+
+  &__body {
+    flex: 1;
+  }
+
+  &__footer {
+    position: relative;
+  }
+}

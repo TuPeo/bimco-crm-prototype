@@ -1,0 +1,38 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.media-grid-item {
+  $block: &;
+
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+
+  &--two-thirds {
+    width: 67%;
+  }
+
+  &--half {
+    width: 50%;
+  }
+
+  // Ensures that items in Image Media Block rows can align correctly when correct aspect ratios are applied
+  &__media-container:not(.media-container--none) {
+    .content-grid-block--image-media & {
+      margin: 0 calc(var(--bs-gutter-x) * -0.5);
+    }
+  }
+
+  &__caption {
+    @extend %body-small-style;
+
+    padding-right: $rem-size-16;
+    margin-top: $rem-size-8;
+  }
+
+  @include media-breakpoint-up(md) {
+    &__caption {
+      margin-top: $rem-size-16;
+    }
+  }
+}

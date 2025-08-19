@@ -1,0 +1,9 @@
+.grid-system {
+  width: 100%;
+  background-color: var(--theme-surface-color);
+
+  &__card {
+    color: var(--btn-icon-full-icon);
+    background-color: var(--theme-primary);
+  }
+}

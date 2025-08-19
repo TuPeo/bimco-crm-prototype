@@ -1,0 +1,71 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts";
+
+.pinned-links {
+  $block: &;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: $rem-size-28;
+  padding: $rem-size-28 $rem-size-12 $rem-size-36 $rem-size-12;
+  background-color: var(--btn-icon-subtle-fill);
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .btn__icon {
+      color: $bimco-light-blue-600;
+    }
+  }
+
+  &__heading {
+    @extend %eyebrow-small-style;
+    margin-right: $rem-size-28;    
+    color: var(--typography-body-description);
+  }
+
+  &__editlink.btn {
+    width: max-content;
+  }
+
+  &__links {
+    text-wrap: nowrap;
+  }
+
+  &__link.btn, &__link.btn:hover {
+    width: max-content;
+    margin-right: $rem-size-12;
+
+    .btn__content {
+      padding: $rem-size-8 $rem-size-18 $rem-size-8 $rem-size-14;
+      background-color: var(--theme-surface-color);
+      border-radius: 1000px;
+
+      &::before, &::after {
+        display: none;
+      }
+    }
+
+    .btn__icon {
+      color: $bimco-light-blue-600;
+    }
+  }
+  
+  @include media-breakpoint-up(md) {
+    row-gap: $rem-size-40;
+    padding: $rem-size-36 $rem-size-36 $rem-size-48 $rem-size-36;
+
+    &__header {
+      justify-content: flex-start;
+    }
+
+    &__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $rem-size-12;
+    }
+  }
+}

@@ -1,0 +1,75 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.key-details {
+  $block: &;
+
+  display: table;
+  width: 100%;
+
+  a.key-details__detail {
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__detail {
+    position: relative;
+    display: table-row;
+    width: 100%;
+    color: var(--typography-body-content);
+
+    /*
+      Safari doesn't support `position: relative` on `<tr>` or or `display: table-row` elements,
+      but these two properties can be used as an alternative.
+      Source: https://mtsknn.fi/blog/relative-tr-in-safari/
+    */
+    /* stylelint-disable order/properties-order */
+    transform: translate(0);
+    clip-path: inset(0);
+    /* stylelint-enable order/properties-order */
+  
+    &--hoverable {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &-icon {
+      display: table-cell;
+      width: $rem-size-48;
+      color: $bimco-white;
+      text-align: center;
+      vertical-align: middle;
+      background-color: var(--cards-hover-outline);
+    }
+
+    &-desc {
+      display: table-cell;
+      padding: $rem-size-8 $rem-size-10;
+      border: 1px solid var(--cards-hover-outline);
+    }
+
+    &-title {
+      display: block;
+      font-weight: $font-weight-semibold;
+    }
+
+    &-content {
+      @extend %body-small-style;
+      display: block;
+
+      svg {
+        margin-right: $rem-size-8;
+      }
+    }
+
+    &:not(:first-child) {
+      #{$block}__detail-desc {
+        border-top: none;
+      }
+    }
+  }
+}

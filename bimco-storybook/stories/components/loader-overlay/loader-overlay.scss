@@ -1,0 +1,23 @@
+@import '../../abstracts';
+
+.loader-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: $zindex-sticky + 5;
+  visibility: hidden;
+  background-color: var(--theme-surface-color-transparent);
+
+  &__inner {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    max-height: 60vh;
+  }
+
+  &--visible {
+    visibility: visible;
+  }
+}

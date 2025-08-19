@@ -1,0 +1,390 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+@mixin header-element-hidden {
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+@mixin header-element-visible {
+  pointer-events: initial;
+  visibility: visible;
+  opacity: 1;
+}
+
+@mixin header-element-visibility-transition {
+  transition:
+    opacity var(--bimco-header-transition-speed),
+    visibility var(--bimco-header-transition-speed);
+}
+
+@mixin header-menu-container {
+  @include header-element-hidden;
+  @include header-element-visibility-transition;
+
+  position: absolute;
+  top: calc(var(--bimco-header-height));
+  left: 0;
+  z-index: 10;
+  width: var(--viewport-width);
+  max-height: calc(100dvh - var(--bimco-header-height));
+  padding-top: var(--bimco-header-menu-container-padding-top);
+  padding-bottom: var(--bimco-header-menu-container-padding-bottom);
+  overflow-y: scroll;
+}
+
+%header-menu-container {
+  @include header-menu-container;
+}
+
+.bimco-header {
+  $block: &;
+
+  --bimco-header-supergraphic-height: 10px;
+  --bimco-header-inner-expanded-height: 0;
+  --bimco-header-transition-speed: 0.6s;
+  --bimco-header-menu-container-padding-top: #{$rem-size-18};
+  --bimco-header-menu-container-padding-bottom: #{$rem-size-14};
+
+  position: fixed;
+  z-index: $zindex-fixed;
+  width: var(--viewport-width);
+  height: var(--bimco-header-height);
+  max-height: 100dvh;
+  color: var(--theme-header-text-color);
+  background: var(--theme-header-background);
+  transition:
+    transform var(--bimco-header-transition-speed) $slow-transition-timing-function,
+    height var(--bimco-header-transition-speed) $slow-transition-timing-function;
+    
+  &__supergraphic {
+    position: absolute;
+    bottom: calc(var(--bimco-header-supergraphic-height) * -0.6);
+    z-index: -2;
+    width: 50%;
+    height: var(--bimco-header-supergraphic-height);
+    opacity: 1;
+    transition: opacity var(--bimco-header-transition-speed);
+
+    &--left {
+      left: 0;
+      clip-path: polygon(0 0, 0% 100%, 100% 40%);
+      background-color: var(--theme-header-supergraphic-background-left);
+      transform-origin: left 40%;
+
+      #{$block}--has-scroll-indicator & {
+        transform: scale(0.2);
+      }
+    }
+
+    &--right {
+      right: 0;
+      clip-path: polygon(100% 0, 0 40%, 100% 100%);
+      background-color: var(--theme-header-supergraphic-background-right);
+      transform-origin: right 40%;
+
+      #{$block}--has-scroll-indicator & {
+        transform: scale(1.8);
+      }
+    }
+  }
+
+  &--header-expanded {
+    height: 100dvh;
+
+    #{$block}__supergraphic {
+      opacity: 0;
+    }
+  }
+
+  &--hidden {
+    transform: translateY(calc(-1 * var(--bimco-header-height)));
+  }
+
+  &__content-wrapper {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  &__container {
+    height: 100%;
+  }
+
+  &__top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100%;
+    max-height: var(--bimco-header-height);
+    padding: $rem-size-14 0;
+  }
+
+  &__logo {
+    flex: 0 0 auto;
+    height: 100%;
+    aspect-ratio: 100/52;
+
+    img,
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__mobile-back-button {
+    left: 0;
+    display: inline-flex;
+    gap: $rem-size-8;
+    align-items: center;
+    color: var(--typography-headlines);
+    background: none;
+    border: none;
+
+    &:disabled {
+      display: none;
+    }
+
+    &-label {
+      @extend %headline-5-style;
+    }
+
+    &-chevron {
+      font-size: $rem-size-16;
+      color: var(--theme-header-text-color);
+    }
+  }
+
+  &__top-link {
+    color: var(--theme-header-text-color);
+
+    &:focus {
+      outline-offset: -1px;
+    }
+  }
+
+  &__navigation-menu-container {
+    @extend %header-menu-container;
+
+    #{$block}__top-link-wrapper--active & {
+      @include header-element-visible;
+    }
+  }
+
+  &__mobile-buttons {
+    display: flex;
+    gap: $rem-size-6;
+    height: 100%;
+  }
+
+  &__desktop-buttons {
+    display: none;
+  }
+
+  &__header-button {
+    height: 100%;
+    aspect-ratio: 1;
+    font-size: $rem-size-12;
+    border: none;
+
+    &--menu {
+      color: var(--theme-header-menu-button-color);
+      background: var(--theme-header-menu-button-background);
+    }
+
+    &--search {
+      color: var(--theme-header-search-button-color);
+      background: var(--theme-header-search-button-background);
+    }
+
+    &--close {
+      color: var(--theme-header-close-button-color);
+      background: var(--theme-header-close-button-background);
+    }
+
+    &--hidden {
+      display: none;
+    }
+  }
+
+  &__search-button {
+    --bimco-btn-icon: var(--theme-header-search-button-color);
+    --bimco-btn-fill: var(--theme-header-search-button-background);
+  }
+
+  &__search-menu {
+    @extend %header-menu-container;
+
+    &--active {
+      @include header-element-visible;
+    }
+  }
+
+  &__mobile-menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: $rem-size-16;
+    margin-top: $rem-size-32;
+
+    .btn,
+    #{$block}__login-form {
+      flex-basis: 100%;
+    }
+  }
+
+  &__login-form {
+    display: flex;
+  }
+
+  @include media-breakpoint-up(md) {
+    --bimco-header-supergraphic-height: 20px;
+    --bimco-header-menu-container-padding-top: #{$rem-size-16};
+    --bimco-header-menu-container-padding-bottom: #{$rem-size-32};
+  
+    &--header-expanded {
+      height: calc(var(--bimco-header-height) + var(--bimco-header-inner-expanded-height));
+
+      #{$block}__supergraphic {
+        opacity: 1;
+      }
+    }
+
+    &__top {
+      padding-bottom: $rem-size-24;
+    }
+
+    &__mobile-menu-buttons {
+      flex-direction: row;
+      gap: $rem-size-16;
+      margin-top: $rem-size-40;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    &__logo {
+      &--hidden {
+        display: none;
+      }
+    }
+
+    &__top-menu {
+      @include header-menu-container;
+
+      padding-right: var(--bimco-container-padding-x);
+      padding-left: var(--bimco-container-padding-x);
+
+      #{$block}--navigation-menu-open & {
+        @include header-element-visible;
+      }
+    }
+
+    &__top-link {
+      @include header-element-visible;
+      @include header-element-visibility-transition;
+
+      display: inline-flex;
+      justify-content: center;
+      width: 100%;
+      padding: $rem-size-36 $rem-size-8;
+      margin-bottom: -1px;
+      font-size: $rem-size-17;
+      font-weight: $font-weight-medium;
+      text-decoration: none;
+      background: var(--theme-header-top-link-background);
+      border: 1px solid var(--theme-header-top-link-border);
+
+      &--desktop-link {
+        display: none;
+      }
+
+      #{$block}__top-menu--any-menu-open & {
+        @include header-element-hidden;
+      }
+    }
+
+    &__navigation-menu-container {
+      position: fixed;
+    }
+
+    &__mobile-menu-buttons {
+      @include header-element-visible;
+      @include header-element-visibility-transition;
+  
+      #{$block}__top-menu--any-menu-open & {
+        @include header-element-hidden;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    --bimco-header-supergraphic-height: 38px;
+    --bimco-header-menu-container-padding-top: #{$rem-size-24};
+    --bimco-header-menu-container-padding-bottom: #{$rem-size-56};
+    
+    &__top {
+      position: static;
+      height: 100%;
+      padding: $rem-size-32 0 0;
+    }
+
+    &__logo {
+      height: 52px;
+    }
+
+    &__mobile-back-button,
+    &__mobile-buttons,
+    &__mobile-menu-buttons {
+      display: none;
+    }
+
+    &__desktop-buttons {
+      display: block;
+    }
+
+    &__top-menu {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      &--one-link-active {
+        #{$block}__top-link-wrapper {
+          &:not(#{$block}__top-link-wrapper--active, :focus-within) {
+            opacity: 0.25;
+          }
+        }
+      }
+    }
+
+    &__top-link {
+      display: inline-block;
+      height: 100%;
+      padding: $rem-size-16 $rem-size-18;
+      text-decoration: none;
+
+      &--mobile-button {
+        display: none;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &-wrapper {
+        height: 100%;
+      }
+
+      &-chevron {
+        margin-left: $rem-size-10;
+        font-size: $rem-size-12;
+        transition: transform var(--bimco-header-transition-speed) $slow-transition-timing-function;
+
+        #{$block}__top-link-wrapper--active & {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+}

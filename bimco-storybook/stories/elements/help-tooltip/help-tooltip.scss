@@ -1,0 +1,24 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.help-tooltip {
+  position: relative;
+  display: inline-block;
+
+  &__icon {
+    font-size: $rem-size-24;
+    color: $bimco-grey-500;
+    cursor: pointer;
+    transition: color 0.3s ease-in;
+
+    &:hover {
+      color: $bimco-grey-400;
+    }
+  }
+
+  .tooltip-inner {
+    word-wrap: break-word;
+    white-space: normal;
+  }
+}
+

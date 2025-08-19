@@ -1,0 +1,74 @@
+@import "../../abstracts";
+
+@mixin card-grid-modifier($col-md, $col-lg: 0, $row-gap: $rem-size-16, $row-gap-md: $rem-size-16) {
+  --card-grid-row-gap: #{$row-gap};
+
+  @include media-breakpoint-up(md) {
+    --card-grid-row-gap: #{$row-gap-md};
+
+    // For md -> lg
+    // container overall width range is 696px -> 1232px
+    // 1/2 width range is 348px -> 616px
+    // For lg up
+    // container overall width range is 1168px -> 1848px
+    // 1/3 width range is 389px -> 616px
+    // breakpoint for 2 cols should be > 616px and < 696px
+    @container (min-width: 640px) {
+      .card-grid__col {
+        @include make-col($col-md);
+      }
+    }
+  }
+
+  @if $col-lg > 0 {
+    @include media-breakpoint-between(lg, xl) {
+      // container overall width range is 1168px -> 1400px
+      // 2/3 width range is 779px -> 933px
+      // breakpoint for 3 cols should be > 933px and < 1168px
+      @container (min-width: 960px) {
+        .card-grid__col {
+          @include make-col($col-lg);
+        }
+      }
+    }
+
+    @include media-breakpoint-up(xl) {
+      // container overall width range is 1336px -> 1848px
+      // 2/3 width range is 891px -> 1232px
+      // breakpoint for 3 cols should be > 1232px and < 1336px
+      @container (min-width: 1280px) {
+        .card-grid__col {
+          @include make-col($col-lg);
+        }
+      }
+    }
+  }
+}
+
+.card-grid {
+  container-type: inline-size;
+  position: relative;
+  row-gap: var(--card-grid-row-gap);
+
+  --card-grid-row-gap: #{$rem-size-16};
+
+  &__col {
+    display: flex;
+
+    > * {
+      flex: 1;
+    }
+  }
+
+  &--preview {
+    @include card-grid-modifier(6);
+  }
+
+  &--content {
+    @include card-grid-modifier(6, 4, $rem-size-28, $rem-size-32);
+  }
+
+  &--contact {
+    @include card-grid-modifier(4, 3, $rem-size-28, $rem-size-32);
+  }
+}

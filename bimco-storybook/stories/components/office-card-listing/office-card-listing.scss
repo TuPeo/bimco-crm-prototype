@@ -1,0 +1,33 @@
+@use '../../base/placeholders/typography';
+@import '../../abstracts';
+
+.office-card-listing {
+  padding: var(--bimco-section-spacer-default) 0;
+
+  &__header {
+    row-gap: $rem-size-14;
+    margin-bottom: $rem-size-48;
+  }
+
+  &__heading {
+    @extend %headline-3-style;
+
+    margin-bottom: 0;
+  }
+
+  &__cards {
+    row-gap: $rem-size-24;
+  }
+  
+  @include media-breakpoint-up(md) {
+    &__header {
+      margin-bottom: $rem-size-56;
+    }
+  }
+  
+  @include media-breakpoint-up(lg) {
+    &__header {
+      margin-bottom: $rem-size-112;
+    }
+  }
+}

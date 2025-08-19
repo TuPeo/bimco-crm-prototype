@@ -1,0 +1,8 @@
+@import "../../abstracts/";
+
+.accordion-block {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: $rem-size-12;
+}

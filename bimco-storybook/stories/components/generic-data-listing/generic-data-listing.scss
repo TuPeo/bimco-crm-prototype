@@ -1,0 +1,147 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.generic-data-listing {
+  &__container {
+    position: relative;
+    min-height: 100svh;
+    padding-top: var(--bimco-section-spacer-tighter);
+    padding-bottom: var(--bimco-section-spacer-tighter);
+    scroll-margin-top: calc(var(--bimco-header-height) + 1rem);
+  }
+
+  &__main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    row-gap: $rem-size-48;
+  }
+
+  &__results-container {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  &__index-col {
+    position: relative;
+    flex: 0 0 $rem-size-40;
+  }
+
+  &__index {
+    position: sticky;
+    top: calc(var(--bimco-header-height) + 1rem);
+    z-index: $zindex-sticky;
+    margin-left: auto;
+  }
+
+  &__results-col {
+    position: relative;
+    flex: 1;
+  }
+
+  &__results {
+    &,
+    thead, th, td {
+      display: block;
+    }
+
+    tbody, tr {
+      display: flex;
+    }
+  }
+
+  &__results-header-col {
+    @extend %navigation-eyebrow-style;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__results-body {
+    flex-direction: column;
+    row-gap: $rem-size-8;
+  }
+
+  &__footer {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    z-index: $zindex-offcanvas;
+    display: flex;
+    gap: $rem-size-8;
+    width: 100%;
+    padding: $rem-size-8;
+    background: linear-gradient(to left, rgba($bimco-light-blue-600, 60%), rgba($bimco-white, 60%));
+    backdrop-filter: blur(2px);
+  }
+
+  @include media-breakpoint-down(md) {
+    &__filters-submit-btn {
+      display: none;
+    }
+
+    &__results-header {
+      @include visually-hidden;
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    &__results {
+      tr {
+        display: flex;
+        gap: $rem-size-16;
+
+        .desc-col {
+          flex: 0 1 50%;
+          padding-right: $rem-size-32;
+        }
+
+        .date-col,
+        .taxo-col,
+        .link-col {
+          flex: 0 1 25%;
+        }
+      }
+
+      &--4-cols {
+        tr {
+          .desc-col {
+            flex-basis: 40%;
+          }
+
+          .date-col,
+          .taxo-col,
+          .link-col {
+            flex-basis: 20%;
+          }
+        }
+      }
+    }
+
+    &__results-header {
+      margin-bottom: $rem-size-8;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__filters-container {
+      position: sticky;
+      top: calc(var(--bimco-header-height) + 1rem);
+      bottom: auto;
+      z-index: $zindex-sticky;
+      width: 100%;
+      padding-right: $rem-size-40;
+      // max-height: calc(100svh - (var(--bimco-header-height) + 1rem) - $rem-size-32);
+      // overflow-y: auto;
+    }
+
+    &__main {
+      row-gap: $rem-size-80;
+    }
+
+    &__footer {
+      display: none;
+    }
+  }
+}

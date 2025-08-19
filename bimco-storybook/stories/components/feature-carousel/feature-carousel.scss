@@ -1,0 +1,153 @@
+@use "sass:math";
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.feature-carousel {
+  $block: &;
+
+  padding: var(--bimco-section-spacer-default) 0;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    order: 2;
+  }
+
+  &__heading {
+    @extend %eyebrow-small-style;
+
+    margin-bottom: 0;
+    color: var(--typography-headlines);
+  }
+
+  &__indicator {
+    @extend %body-small-style;
+
+    font-weight: $font-weight-medium;
+    color: var(--typography-headlines);
+  }
+
+  &__swiper {
+    position: relative;
+    order: 0;
+    overflow: hidden;
+    opacity: 0;
+
+    &.swiper-initialized {
+      height: auto !important;
+      opacity: 1;
+    }
+  }
+
+  &__swiper-wrapper {
+    &.row {
+      flex-wrap: nowrap;
+      width: auto;
+
+      --bs-gutter-x: 16px;
+    }
+  }
+
+  &__swiper-slide {
+    height: auto;
+
+    .content-card {
+      height: 100%;
+    }
+  }
+
+  &__controls {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    order: 3;
+    margin-top: $rem-size-16;
+  }
+
+  &__scrollbar {
+    position: relative;
+    order: 1;
+    height: $rem-size-2;
+    margin: $rem-size-12 0;
+    background: var(--cards-hover-button);
+  }
+
+  &__scrollbar-drag {
+    height: $rem-size-2;
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--typography-headlines) 40%,
+      var(--typography-headlines) 60%,
+      transparent 100%
+    );
+    background-size: cover;
+    transition: background-image 1.2s ease-in-out;
+  }
+
+  @include media-breakpoint-up(sm) {
+    &__header {
+      order: 3;
+    }
+
+    &__swiper {
+      &::after {
+        position: absolute;
+        inset: -1px -4px;
+        z-index: 2;
+        pointer-events: none;
+        content: "";
+        background-image: 
+          linear-gradient(to left, transparent 75%, var(--theme-surface-color) 100%),
+          linear-gradient(to right, transparent 75%, var(--theme-surface-color) 100%);
+      }
+    }
+
+    &__swiper-slide {
+      #{$block}__swiper-wrapper.row & {
+        @include make-col(8);
+      }
+    }
+
+    &__controls {
+      order: 1;
+      margin-top: $rem-size-56 * -1;
+    }
+
+    &__scrollbar {
+      order: 2;
+      margin-top: $rem-size-64;
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    &__swiper-slide {
+      #{$block}__swiper-wrapper.row & {
+        width: 50%;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__swiper {
+      &::after {
+        background-image: 
+          linear-gradient(to left, transparent 67%, var(--theme-surface-color) 100%),
+          linear-gradient(to right, transparent 67%, var(--theme-surface-color) 100%);
+      }
+    }
+
+    &__swiper-slide {
+      #{$block}__swiper-wrapper.row & {
+        width: math.div(1, 3) * 100%;
+      }
+    }
+  }
+}

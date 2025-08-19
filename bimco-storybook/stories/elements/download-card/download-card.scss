@@ -1,0 +1,64 @@
+@use '../../base/placeholders/typography';
+@import '../../abstracts';
+
+.download-card {
+  position: relative;
+  display: flex;
+  gap: $rem-size-16;
+  align-items: center;
+  padding: $rem-size-16;
+  background-color: var(--cards-fill);
+
+  &:hover {
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background-image: linear-gradient(to bottom, var(--cards-hover-gradient-color-1), var(--cards-hover-gradient-color-2));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  &__icon-wrapper {
+    z-index: 1;
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: $rem-size-48;
+    height: $rem-size-48;
+    background-color: $bimco-orange-600;
+    border-radius: 50%;
+  }
+
+  &__icon {
+    font-size: $rem-size-28;
+    color: $bimco-white;
+  }
+
+  &__content {
+    z-index: 1;
+    flex: 1;
+  }
+
+  &__description {
+    @extend %button-small-style;
+
+    margin-bottom: 0;
+  }
+
+  &__link {
+    @extend %button-small-style;
+
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+    color: var(--btn-link-text);
+    text-decoration: none;
+  }
+}

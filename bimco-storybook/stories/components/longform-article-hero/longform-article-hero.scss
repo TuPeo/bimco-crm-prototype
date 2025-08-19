@@ -1,0 +1,146 @@
+@use '../../base/placeholders/typography';
+@import '../../abstracts/';
+
+.longform-article-hero {
+  position: relative;
+
+  --bg-gradient-stop-start: 8%;
+  --bg-gradient-stop-end: 60%;
+
+  &__inner {
+    width: 100%;
+    overflow: clip;
+  }
+
+  &__background {
+    position: relative;
+    aspect-ratio: 4/5;
+    transform-origin: top center;
+
+    &-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &-wash {
+      position: absolute;
+      inset: -1px;
+      background-image: linear-gradient(
+        to top,
+        var(--theme-surface-color) var(--bg-gradient-stop-start),
+        transparent var(--bg-gradient-stop-end)
+      );
+    }
+  }
+
+  &__header {
+    position: relative;
+  }
+
+  &__title {
+    @extend %headline-2-style;
+
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    width: 100%;
+    padding: 0 var(--bimco-container-padding-x);
+    margin-bottom: $rem-size-24;
+    text-align: center;
+  }
+
+  &__key-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0;
+  }
+
+  &__key-detail {
+    display: flex;
+    gap: $rem-size-4 $rem-size-16;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 25rem;
+    padding: $rem-size-14 $rem-size-16;
+    margin-top: -1px;
+    background-color: var(--theme-surface-color);
+    border: 1px solid var(--typography-eyebrow);
+
+    &-label {
+      height: $rem-size-24;
+    }
+
+    &-icon {
+      font-size: $rem-size-20;
+      color: var(--typography-eyebrow);
+    }
+
+    &-value {
+      @extend %body-small-style;
+
+      margin-bottom: 0;
+    }
+  }
+
+  &__description-container {
+    padding-top: var(--bimco-section-spacer-tighter);
+    padding-bottom: var(--bimco-section-spacer-default);
+  }
+
+  &__description {
+    max-width: 50rem;
+    margin: 0 auto;
+    text-align: center;
+
+    p {
+      @extend %body-large-style;
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    --bg-gradient-stop-start: #{$rem-size-80};
+    --bg-gradient-stop-end: 50%;
+
+    &__inner {
+      position: relative;
+      height: calc(100svh - var(--bimco-header-height) - #{$rem-size-24});
+    }
+
+    &__background {
+      position: absolute;
+      inset: 0;
+      aspect-ratio: unset;
+    }
+
+    &__header {
+      position: absolute;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    &__title {
+      position: static;
+      padding: 0;
+      margin-bottom: $rem-size-40;
+    }
+
+    &__key-details {
+      flex-flow: row wrap;
+      justify-content: center;
+    }
+
+    &__key-detail {
+      flex-direction: column;
+      width: auto;
+      min-width: 12.5rem;
+      margin-right: -1px;
+    }
+  }
+}

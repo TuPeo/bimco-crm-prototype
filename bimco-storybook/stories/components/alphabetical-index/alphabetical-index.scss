@@ -1,0 +1,40 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.alphabetical-index {
+  $block: &;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: $rem-size-14;
+
+  &__item {
+    @extend %button-large-style;
+
+    font-size: $rem-size-12;
+    color: $bimco-grey-300;
+    text-decoration: none;
+    text-transform: uppercase;
+    background: none;
+    border: none;
+
+    &[href] {
+      color: var(--typography-body-content);
+
+      &#{$block}__item--active, 
+      &:hover, 
+      &:focus {
+        color: var(--typography-eyebrow);
+      }
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    width: $rem-size-16;
+
+    &__item {
+      font-size: $rem-size-18;
+    }
+  }
+}

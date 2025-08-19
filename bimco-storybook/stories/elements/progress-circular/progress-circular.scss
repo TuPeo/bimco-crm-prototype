@@ -1,0 +1,72 @@
+@import '../../abstracts/';
+
+@keyframes progress-rotate {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.progress {
+  $block: &;
+
+  &--hidden {
+    display: none;
+  }
+
+  &--circular {
+    --pixel-size: calc(1px * var(--size));
+    --stroke-width: calc(var(--pixel-size) / var(--stroke-width-ratio));
+    --diameter: calc(var(--pixel-size) - var(--stroke-width));
+    --radius: calc(var(--diameter) / 2);
+    --origin-x: calc(var(--pixel-size) / 2);
+    --origin-y: calc(var(--pixel-size) / 2);
+
+    position: relative;
+    width: var(--pixel-size);
+    height: var(--pixel-size);
+
+    #{$block}__circle {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: var(--pixel-size);
+      height: var(--pixel-size);
+      transform: rotate(-90deg);
+
+      circle {
+        fill: none;
+        stroke-linecap: round;
+        stroke-width: var(--stroke-width);
+        transform-origin: var(--origin-x) var(--origin-y);
+        cx: var(--origin-x);
+        cy: var(--origin-y);
+        r: var(--radius);
+
+        &.incomplete {
+          stroke: var(--theme-progress-spinner-background);
+        }
+
+        &.completed {
+          stroke: var(--theme-progress-spinner-foreground);
+        }
+      }
+    }
+
+    &#{$block}--indeterminate {
+      #{$block}__circle {
+        circle {
+          &.completed {
+            animation-name: progress-rotate;
+            animation-duration: 1.5s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+          }
+        }
+      }
+    }
+  }
+}

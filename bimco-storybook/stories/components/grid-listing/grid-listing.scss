@@ -1,0 +1,116 @@
+@use "../../base/placeholders/typography";
+@import '../../abstracts';
+
+.grid-listing {
+  $block: &;
+  position: relative;
+
+  &__header {
+    margin-bottom: $rem-size-32;
+
+    .btn {
+      width: unset;
+    }
+  }
+
+  &__title {
+    @extend %eyebrow-style;
+    margin: $rem-size-16 0;
+    color: var(--typography-headlines);
+    text-transform: uppercase;
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $rem-size-32 $rem-size-16;
+    justify-content: flex-start;
+  }
+
+  &__teaser-link {
+    position: absolute;
+    bottom: $rem-size-16;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: $rem-size-64;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  &__teaser-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: $rem-size-364;
+    content: '';
+    background-image: linear-gradient(
+      0deg,
+      var(--theme-surface-color) 30%,
+      transparent
+    );
+    opacity: 0.8;
+  }
+
+  &__teaser-card {
+    display: none;
+    width: 100%;
+    height: $rem-size-80;
+    background-color: var(--cards-fill);
+
+    &:first-of-type {
+      display: block;
+    }
+  }
+  
+  @include media-breakpoint-up(sm) {
+    #{$block}__header {
+      display: flex;
+      gap: $rem-size-32;
+      align-items: center;
+      margin-bottom: $rem-size-32;
+    }
+  }
+  
+  @include media-breakpoint-up(md) {
+    #{$block}__teaser-card,
+    .reusable-card__wrapper {
+      max-width: calc(50% - 0.5 * $rem-size-16);
+    }
+
+    #{$block}__teaser-card {
+      &:nth-of-type(2) {
+        display: block;
+      }
+    }
+
+    #{$block}__teaser-link {
+      bottom: 0;
+
+      .btn {
+        width: unset;
+      }
+    }
+  }
+  
+  @include media-breakpoint-up(lg) {
+    #{$block}__teaser-card,
+    .reusable-card__wrapper {
+      max-width: calc(33.33333% - (2 / 3 * $rem-size-16));
+    }
+
+    #{$block}__teaser-card {
+      &:nth-of-type(3) {        
+        display: block;
+      }
+    }
+
+    #{$block}__teaser-link {
+      bottom: $rem-size-64;
+    }
+  }
+}

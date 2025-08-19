@@ -1,0 +1,97 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.accordion-item {
+  $block: &;
+
+  scroll-margin-top: calc(var(--bimco-header-height) + 1rem);
+
+  &__header {
+    @extend %body-large-style;
+
+    margin-bottom: 0;
+  }
+
+  &__header-content {
+    display: flex;
+    gap: $rem-size-12;
+    align-items: flex-start;
+  }
+
+  &__header-content-icon {
+    font-size: $rem-size-24;
+  }
+
+  &__header-button {
+    display: flex;
+    gap: $rem-size-24;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: $rem-size-24;
+    color: var(--accordion-color);
+    text-align: left;
+    background-color: var(--accordion-background-color);
+    border: unset;
+
+    &:not(.collapsed) {
+      #{$block}__header-icon {
+        transform: rotate(45deg);
+      }        
+    }
+
+    &:hover {
+      color: var(--accordion-color-hover);
+      background-color: var(--accordion-background-color-hover);
+
+      #{$block}__header-icon-wrapper {
+        color: var(--accordion-button-color-hover);
+        background-color: var(--accordion-button-background-color-hover);    
+      }
+    }
+  }
+
+  &__header-icon-wrapper {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    align-self: flex-start;
+    justify-content: center;
+    width: $rem-size-52;
+    height: $rem-size-52;
+    color: var(--accordion-button-color);
+    background-color: var(--accordion-button-background-color);
+  }
+
+  &__header-icon {
+    transition: transform 0.1s;
+  }
+
+  &__image-wrapper {
+    aspect-ratio: 2;
+    margin-bottom: $rem-size-24;
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__body {
+    padding: $rem-size-24;
+    color: var(--accordion-color);
+    background-color: var(--accordion-background-color);
+  }
+
+  &__btn-group {
+    margin-top: $rem-size-36;
+  }
+
+  @include media-breakpoint-up(md) {
+    &__header-content {
+      flex-direction: column;
+    }
+  }
+}

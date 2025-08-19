@@ -1,0 +1,231 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.video-carousel {
+  $block: &;
+  overflow: hidden;
+  background-image: linear-gradient(180deg, rgb(0 85 126 / 0%) 0%, #0092BC 100%), var(--current-thumbnail-url);
+  background-position: center;
+  background-size: cover;
+
+  .bimco-container {
+    backdrop-filter: blur(8.5px);
+  }
+  
+  &__link {
+    &.btn {
+      width: auto;
+    }
+  }
+
+  &__content-wrapper {
+    position: relative;
+    padding-top: var(--bimco-section-spacer-default);
+  }
+
+  &__navigation-wrapper {
+    display: none;
+  }
+
+  &__title {
+    @extend %eyebrow-small-style;
+    
+    color: var(--typography-body-description);
+  }
+
+  &__video-wrapper {
+    position: relative;
+    display: flex;
+
+    video {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__play-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    gap: $rem-size-8;
+    align-items: stretch;
+  }
+
+  &__slide-thumbnail {
+    display: none;
+  }
+
+  &__slide-button-container {
+    .btn {
+      width: $rem-size-48;
+      height: $rem-size-48;
+    }
+
+    .btn__icon {
+      width: $rem-size-18;
+      height: $rem-size-18;
+    }
+  }
+
+  &__slide-title-container {
+    display: none;
+  }
+
+  &__middle {
+    display: flex;
+    flex-direction: column;
+    gap: $rem-size-20;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: $rem-size-4;
+  }
+
+  &__middle-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: $rem-size-8;
+    justify-content: center;
+    padding: $rem-size-8 $rem-size-16;
+    background-color: $bimco-dark-blue-1000;
+  }
+  
+  &__slide-eyebrow {
+    @extend %eyebrow-small-style;
+    margin-bottom: 0;
+  }
+
+  &__slide-title {
+    margin-bottom: 0;
+    color: $bimco-white;
+  }
+
+  &__bottom {
+    display: flex;
+    flex-direction: column;
+    gap: $rem-size-20;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__pagination-wrapper {
+    position: relative;
+    width: 100%;
+    padding: $rem-size-20;
+  }
+
+  &__pagination {
+    position: relative;
+    display: flex;
+    gap: 10px;
+    padding: $rem-size-22 0;
+  }
+
+  &__pagination-item {
+    position: relative;
+    flex-basis: 100%;
+    height: $rem-size-12;
+    border-bottom: 4px solid #FFF3;
+
+    .pagination-thumbnail {
+      display: none;
+    }
+
+    &--active {
+      border-bottom: 4px solid #FFF;
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    &__navigation-wrapper {
+      display: flex;
+      gap: $rem-size-10;
+      justify-content: center;
+    }
+    
+    &__middle-title-container {
+      padding: $rem-size-16 $rem-size-24;
+    }
+
+    &__slide-button-container {
+      .btn {
+        width: $rem-size-120;
+        height: $rem-size-120;
+      }
+
+      .btn__icon {
+        width: $rem-size-40;
+        height: $rem-size-40;
+      }
+    }
+
+    &__pagination-item {
+      &:hover {
+        .pagination-thumbnail {
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: block;
+          width: 100%;
+          transform: translateY(-100%);
+        }
+      }
+    }
+
+    &__bottom {
+      margin-top: $rem-size-28;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__navigation-wrapper {
+      gap: $rem-size-12;
+    }
+
+    &__swiper {
+      width: calc(1000% / 12);
+    }
+
+    &__play-container {
+      top: $rem-size-24;
+      bottom: unset;
+      left: $rem-size-24;
+    }
+
+    &__slide-title-container {
+      display: flex;
+      flex-direction: column;
+      gap: $rem-size-8;
+      justify-content: center;
+      padding: $rem-size-16 $rem-size-24;
+      background-color: $bimco-dark-blue-1000;
+    }
+    
+    &__middle-title-container {
+      display: none;
+    }
+
+    &__bottom {
+      margin-top: $rem-size-40;
+    }
+  }
+
+  @include media-breakpoint-up(xl) {
+    &__play-container {
+      top: $rem-size-32;
+      left: $rem-size-32;
+    }
+
+    &__slide-button-container {
+      .btn {
+        width: $rem-size-160;
+        height: $rem-size-160;
+      }
+
+      .btn__icon {
+        width: $rem-size-60;
+        height: $rem-size-60;
+      }
+    }
+  }
+}

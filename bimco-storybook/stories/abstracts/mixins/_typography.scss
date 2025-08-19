@@ -1,0 +1,293 @@
+@use "sass:math";
+
+// Headline styles
+
+@mixin headline-1-style {
+  font-family: var(--bimco-functional-font-family);
+  font-size: var(--bimco-headline-1-font-size);
+  font-weight: $font-weight-medium;
+  line-height: $line-height-sm;
+  color: var(--typography-headlines);
+  text-transform: none;
+  letter-spacing: -1px;
+}
+
+@mixin headline-2-style {
+  font-family: var(--bimco-functional-font-family);
+  font-size: var(--bimco-headline-2-font-size);
+  font-weight: $font-weight-medium;
+  line-height: $line-height-sm;
+  color: var(--typography-headlines);
+  text-transform: none;
+  letter-spacing: -1px;
+}
+
+@mixin headline-3-style {
+  font-family: var(--bimco-functional-font-family);
+  font-size: var(--bimco-headline-3-font-size);
+  font-weight: $font-weight-medium;
+  line-height: $line-height-sm;
+  color: var(--typography-headlines);
+  text-transform: none;
+  letter-spacing: -0.5px;
+}
+
+@mixin headline-4-style {
+  font-family: var(--bimco-functional-font-family);
+  font-size: var(--bimco-headline-4-font-size);
+  font-weight: $font-weight-medium;
+  line-height: $line-height-sm;
+  color: var(--typography-headlines);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+@mixin headline-5-style {
+  font-family: var(--bimco-functional-font-family);
+  font-size: var(--bimco-headline-5-font-size);
+  font-weight: $font-weight-medium;
+  line-height: $line-height-sm;
+  color: var(--typography-headlines);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+@mixin headline-em-style {
+  font-style: normal;
+  color: var(--typography-eyebrow);
+}
+
+@mixin card-title-style {
+  font-family: var(--bimco-functional-font-family);
+  font-weight: $font-weight-medium;
+  line-height: math.div(4, 3);
+  color: var(--typography-headlines);
+}
+
+@mixin card-title-1-style {
+  @include card-title-style;
+
+  font-size: var(--bimco-card-title-1-font-size);
+}
+
+@mixin card-title-2-style {
+  @include card-title-style;
+
+  font-size: var(--bimco-card-title-2-font-size);
+}
+
+// Body styles
+
+@mixin body-style {
+  font-family: var(--bimco-display-font-family);
+  font-size: var(--bimco-body-font-size);
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base;
+  color: var(--typography-body-content);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+@mixin body-large-style {
+  font-family: var(--bimco-display-font-family);
+  font-size: var(--bimco-body-large-font-size);
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base;
+  color: var(--typography-body-content);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+@mixin body-small-style {
+  font-family: var(--bimco-display-font-family);
+  font-size: var(--bimco-body-small-font-size);
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base;
+  color: var(--typography-body-content);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+@mixin body-tight-style {
+  font-family: var(--bimco-display-font-family);
+  font-size: var(--bimco-body-tight-font-size);
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base;
+  color: var(--typography-body-content);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+@mixin eyebrow-style {
+  font-family: var(--bimco-functional-font-family);
+  font-size: var(--bimco-eyebrow-font-size);
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-sm;
+  color: var(--typography-eyebrow);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@mixin eyebrow-small-style {
+  font-family: var(--bimco-functional-font-family);
+  font-size: var(--bimco-eyebrow-small-font-size);
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-sm;
+  color: var(--typography-eyebrow);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@mixin form-label-style {
+  font-family: var(--bimco-display-font-family);
+  font-size: var(--bimco-form-label-font-size);
+  font-weight: $font-weight-medium;
+  line-height: $line-height-base;
+  color: var(--form-label);
+}
+
+@mixin form-label-small-style {
+  font-family: var(--bimco-display-font-family);
+  font-size: var(--bimco-form-label-small-font-size);
+  font-weight: $font-weight-medium;
+  line-height: $line-height-sm;
+  color: var(--form-label-small);
+}
+
+@mixin form-input-style {
+  font-family: var(--bimco-display-font-family);
+  font-size: var(--bimco-form-input-font-size);
+  font-weight: $font-weight-normal;
+  line-height: $line-height-sm;
+  color: var(--form-input);
+}
+
+@mixin button-style {
+  font-family: var(--bimco-functional-font-family);
+  font-size: var(--bimco-button-font-size);
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-sm;
+  letter-spacing: normal;
+}
+
+@mixin button-large-style {
+  font-family: var(--bimco-functional-font-family);
+  font-size: var(--bimco-button-large-font-size);
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-sm;
+  letter-spacing: normal;
+}
+
+@mixin button-small-style {
+  font-family: var(--bimco-functional-font-family);
+  font-size: var(--bimco-button-small-font-size);
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-sm;
+  letter-spacing: normal;
+}
+
+@mixin navigation-menu-link-style {
+  font-family: var(--bimco-display-font-family);
+  font-size: var(--bimco-navigation-eyebrow-font-size);
+  font-weight: $font-weight-normal;
+  line-height: $line-height-sm;
+  text-transform: uppercase;
+  letter-spacing: normal;
+}
+
+@mixin navigation-eyebrow-style {
+  font-family: var(--bimco-display-font-family);
+  font-size: var(--bimco-navigation-eyebrow-font-size);
+  font-weight: $font-weight-bold;
+  line-height: $line-height-sm;
+  color: var(--typography-navigation-eyebrow);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+@mixin text-link-style {
+  color: var(--typography-link);
+
+  &:hover,
+  &:focus {
+    color: var(--typography-link-hover);
+  }
+}
+
+@mixin rich-text {
+  p, 
+  ul, 
+  ol, 
+  dl {
+    a {
+      @include text-link-style;
+    }
+  }
+
+  dl {
+    &.inline {
+      dt {
+        display: inline;
+
+        &:not(:first-child)::before {
+          white-space: pre;
+          content: "\A";
+        }
+      }
+
+      dd {
+        display: inline;
+      }
+    }
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    margin: $rem-size-24 0;
+  }
+
+  figure {
+    margin-top: $rem-size-24;
+    margin-bottom: $rem-size-24;
+
+    img {
+      margin: 0;
+    }
+  }
+
+  p:has(img),
+  p:has(figure) {
+    margin: $rem-size-24 0;
+
+    img,
+    figure {
+      margin: 0;
+    }
+  }
+
+  figcaption {
+    @extend %body-small-style;
+
+    padding-right: $rem-size-16;
+    margin-top: $rem-size-8;
+  }
+
+  &__btn-group {
+    margin: $rem-size-36 0;
+  }
+
+  > *:first-child {
+    margin-top: 0 !important;
+  }
+
+  > *:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  @include media-breakpoint-up(md) {
+    figcaption {
+      margin-top: $rem-size-16;
+    }
+  }
+}

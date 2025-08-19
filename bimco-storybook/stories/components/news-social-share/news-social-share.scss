@@ -1,0 +1,32 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.news-social-share {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__title {
+    @extend %eyebrow-style;
+    align-self: flex-start;
+    margin-bottom: $rem-size-8;
+    font-size: $rem-size-14;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  &__icons {
+    display: flex;
+    gap: $rem-size-8;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  &__link-button.social-link {
+    width: $rem-size-56;
+    height: $rem-size-56;
+    font-size: $rem-size-20;
+    color: var(--btn-icon-full-icon);
+    background-color: var(--btn-icon-full-fill);
+  }
+}

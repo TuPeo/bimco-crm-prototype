@@ -1,0 +1,119 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.toast {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  font-size: $rem-size-16;
+  color: white;
+  background-color: white;
+  border: 1px solid $bimco-grey-200;
+  border-radius: $rem-size-4;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 10%);
+  opacity: 1; // Default to visible
+  transition: opacity 0.3s ease-in-out;
+
+  &--show {
+    opacity: 1; // Makes the toast visible when 'toast--show' is applied
+  }
+
+  &--hide {
+    opacity: 0; // Hides the toast when 'toast--hide' is applied
+  }
+
+  &__box {
+    width: 100%;
+    padding: $rem-size-10;
+    padding-bottom: $rem-size-12;
+  }
+
+  &__icon {
+    align-self: flex-start;
+    padding: 0;
+    font-size: $rem-size-24;
+  }
+
+  &__icon-column {
+    align-self: flex-start;
+  }
+
+  &__close-column {
+    align-self: flex-start;
+  }
+
+  &__row {
+    display: flex;
+    gap: $rem-size-8;
+    align-items: flex-start;
+    align-self: stretch;
+    justify-content: space-between;
+  }
+
+  &__header {
+    @extend %body-style;
+    margin-bottom: $rem-size-8;
+    font-weight: bold;
+    color: $bimco-dark-blue-700;
+  }
+
+  &__message {
+    @extend %body-small-style;
+    margin: 0;
+    color: $bimco-grey-600;
+  }
+
+  &__close-button {
+    align-self: flex-start;
+    padding: 0;
+    font-size: $rem-size-16;
+    color: $bimco-grey-800;
+    cursor: pointer;
+    background: none;
+    border: none;
+
+    &:hover {
+      color: $bimco-grey-500;
+    }
+  }
+
+  &--alert {
+    color: $bimco-orange-400;
+
+    &--washed {
+      background: linear-gradient(
+        270deg,
+        $bimco-orange-200 -41.83%,
+        #fffbf5 45.92%
+      );
+      border: 1px solid $bimco-orange-200;
+    }
+  }
+
+  &--information {
+    color: $bimco-dark-blue-400;
+
+    &--washed {
+      background: linear-gradient(270deg, #c8e7f4 -41.83%, #fdfefe 45.92%);
+      border: 1px solid $bimco-dark-blue-200;
+    }
+  }
+
+  &--error {
+    color: $bimco-red-300;
+
+    &--washed {
+      background: linear-gradient(270deg, #fed7d7 -41.83%, #fffafa 45.92%);
+      border: 1px solid $bimco-red-200;
+    }
+  }
+
+  &--success {
+    color: $bimco-green-300;
+
+    &--washed {
+      background: linear-gradient(270deg, #d5f0d3 -41.83%, #fbfefa 45.92%);
+      border: 1px solid $bimco-green-200;
+    }
+  }
+}

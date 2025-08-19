@@ -1,0 +1,21 @@
+@function strip-units($number) {
+    @return math.div($number, ($number * 0 + 1));
+  }
+  
+  @function fluid-value($min-vw, $max-vw, $min-value, $max-value, $px-to-rem: false) {
+    $u1: math.unit($min-vw);
+    $u2: math.unit($max-vw);
+    $u3: math.unit($min-value);
+    $u4: math.unit($max-value);
+
+    @if  $u3 != $u4 {
+      @return null;
+    }
+
+    @if $px-to-rem {
+      @return calc(#{rfs-value($min-value)} + #{strip-units($max-value - $min-value)} * ((100vw - #{rfs-value($min-vw)}) / #{strip-units($max-vw - $min-vw)}));
+    } @else {
+      @return calc(#{$min-value} + #{strip-units($max-value - $min-value)} * ((100vw - #{$min-vw}) / #{strip-units($max-vw - $min-vw)}));
+    }
+  }
+  

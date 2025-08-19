@@ -1,0 +1,39 @@
+@import '../../abstracts/';
+
+.filter-bar {
+  $block: &;
+
+  padding: $rem-size-6;
+
+  &__tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+
+  .btn--small {
+    display: inline-block;
+    padding: $rem-size-12 $rem-size-6 $rem-size-6 $rem-size-6;
+
+    .btn__content {
+      gap: $rem-size-10;
+      padding: $rem-size-10 $rem-size-10 $rem-size-10 $rem-size-16;
+      font-weight: $font-weight-semibold;
+      
+      svg {
+        max-width: $rem-size-14;
+        max-height: $rem-size-14;
+      }
+    }
+
+    &#{$block}__cap-number {
+      .btn__content {
+        padding-right: $rem-size-16;
+      }
+    }
+  }
+
+  .btn-link {
+    padding-left: $rem-size-6;
+  }
+}

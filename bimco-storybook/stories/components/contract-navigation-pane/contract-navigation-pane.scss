@@ -1,0 +1,155 @@
+@use "sass:map";
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+$block: "contract-navigation-pane";
+
+.contract-navigation-pane {
+  display: flex;
+  flex-direction: column;
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $rem-size-2;
+    width: 100%;
+    background-color: $bimco-grey-300;
+    border-top: $rem-size-2 solid $bimco-grey-300;
+    border-bottom: $rem-size-2 solid $bimco-grey-300;
+  }
+
+  &__section {
+    box-sizing: border-box;
+    display: flex;
+    flex: 1 1 50%;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    min-height: $rem-size-120;
+    cursor: pointer;
+    background-color: var(--theme-surface-color);
+
+    &:hover {
+      background-color: $bimco-cream-300;
+
+      .#{$block}__icon--center {
+        color: $bimco-orange-600;
+      }
+    }
+
+    &--center {
+      flex: 1 1 100%;
+      text-align: center;
+    }
+
+    &--previous {
+      flex: 1 1 49%;
+      padding: 0 $rem-size-18;
+      text-align: left;
+    }
+
+    &--next {
+      flex: 1 1 49%;
+      padding: 0 $rem-size-18;
+      text-align: right;
+    }
+  }
+
+  &__link {
+    flex-grow: 1;
+    font-size: $rem-size-36;
+    color: $bimco-light-blue-600 !important;
+  }
+
+  &__link--center {
+    font-size: $rem-size-36;
+    color: $bimco-light-blue-600 !important;
+
+    .btn__content::before {
+      opacity: 0 !important;
+    }
+  }
+
+  &__title,
+  &__text-button {
+    @extend %eyebrow-style;
+    margin: $rem-size-24 0 $rem-size-8;
+    color: $bimco-light-blue-600;
+    text-transform: uppercase;
+  }
+
+  &__contract-title {
+    @extend %body-style;
+    margin-bottom: $rem-size-24;
+    text-decoration: none !important;
+  }
+
+  a {
+    text-decoration: none !important;
+  }
+
+  &__text-button {
+    display: none;
+  }
+
+  &__icon {
+    margin-top: $rem-size-24;
+    font-size: $rem-size-24;
+    color: $bimco-light-blue-600;
+  }
+
+  &__icon--center {
+    margin-bottom: $rem-size-24;
+    font-size: $rem-size-24;
+    color: $bimco-light-blue-600;
+  }
+
+  @include media-breakpoint-up(md) {
+    flex-direction: row;
+
+    &__section {
+      flex-basis: 33%;
+      min-height: $rem-size-200;
+    }
+
+    &__section--center {
+      flex-basis: 25%;
+    }
+
+    &--previous,
+    &--next {
+      flex: 1 1 auto;
+    }
+
+    &__title {
+      margin: $rem-size-64 0 $rem-size-24;
+    }
+
+    &__icon {
+      margin-right: $rem-size-8;
+      margin-left: $rem-size-8;
+    }
+
+    &__icon--center {
+      margin-bottom: $rem-size-64;
+    }
+
+    &__text-button {
+      display: inline;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__section--previous,
+    &__section--next {
+      padding: $rem-size-42 $rem-size-92;
+    }
+  }
+
+  @include media-breakpoint-up(xl) {
+    &__section--previous,
+    &__section--next {
+      padding: $rem-size-42 $rem-size-160;
+    }
+  }
+}

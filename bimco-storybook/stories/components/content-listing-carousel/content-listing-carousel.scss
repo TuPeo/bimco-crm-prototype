@@ -1,0 +1,105 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.content-listing-carousel {
+  $block: &;
+
+  &__swiper {
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+
+    &.swiper-initialized {
+      height: auto !important;
+      opacity: 1;
+    }
+  }
+
+  &__swiper-wrapper {
+    &.row {
+      flex-wrap: nowrap;
+      width: auto;
+
+      --bs-gutter-x: 16px;
+    }
+  }
+
+  &__swiper-slide {
+    height: auto;
+
+    > * {
+      height: 100%;
+    }
+  }
+
+  &__controls {
+    display: none;
+  }
+
+  &__pagination {
+    position: static;
+    display: flex;
+    gap: $rem-size-10;
+    height: $rem-size-48;
+    margin-top: $rem-size-24;
+  }
+
+  &__pagination-item {
+    flex: 1;
+    background-image: linear-gradient(to bottom, 
+      transparent $rem-size-22, 
+      var(--swiper-pagination-item-bg-color) $rem-size-22,
+      var(--swiper-pagination-item-bg-color) $rem-size-26,
+      transparent $rem-size-26);
+
+    --swiper-pagination-item-bg-color: #{$bimco-cream-1000};
+
+    &--active {
+      --swiper-pagination-item-bg-color: var(--theme-primary);
+    }
+  }
+
+  @include media-breakpoint-up(sm) {
+    &__swiper {
+      overflow: visible;
+    }
+
+    &__swiper-slide {
+      #{$block}__swiper-wrapper.row & {
+        @include make-col(10);
+      }
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    &__swiper-slide {
+      #{$block}__swiper-wrapper.row & {
+        @include make-col(5);
+      }
+    }
+
+    &__controls {
+      position: absolute;
+      right: 0;
+      bottom: calc(100% + #{$rem-size-32});
+      display: flex;
+      gap: $rem-size-10;
+    }
+
+    &__pagination {
+      display: none;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__swiper-slide {
+      #{$block}__swiper-wrapper.row & {
+        @include make-col(4);
+      }
+    }
+
+    &__controls {
+      gap: $rem-size-12;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+@use "../../base/placeholders/typography";
+@import "../../abstracts";
+
+.content-grid-item {
+  $block: &;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  &__btn-group {
+    margin-top: $rem-size-36;
+
+    #{$block}--text-main & {
+      margin-top: $rem-size-48;
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    &--text {
+      padding-right: $rem-size-16;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &--text-main {
+      padding-right: $rem-size-56;
+    }
+
+    &__btn-group {
+      #{$block}--text-main & {
+        margin-top: $rem-size-56;
+      }
+    }
+  }
+}

@@ -1,0 +1,338 @@
+@use "../../base/placeholders/typography";
+@import '../../abstracts/';
+
+.reusable-card {
+  $block: &;
+
+  display: flex;
+  flex-direction: column;
+  grid-row: 1;
+  
+  grid-column: 1;
+  background-color: var(--cards-fill);
+
+  &__wrapper {
+    display: grid;
+    width: 100%;
+
+    &:hover {
+      #{$block}__hover-backdrop {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__tags {
+    display: flex;
+    gap: $rem-size-12;
+    padding-bottom: $rem-size-24;
+
+    &-divider {
+      border-right: 1px solid #D5D8DB;
+    }
+  }
+
+  &__tag {
+    font-weight: $font-weight-normal;
+    color: var(--typography-body-description);
+
+    &-icon {
+      margin-right: $rem-size-8;
+    }
+
+    &:first-of-type {
+      font-weight: $font-weight-semibold;
+      color: var(--typography-body-content);
+    }
+  }
+
+  &__image {
+    aspect-ratio: 16/9;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &-popout {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      width: 100px;
+      height: 100px;
+      text-align: center;
+      background-color: #0092BCCC;
+      backdrop-filter: blur($rem-size-8);
+
+      h3 {
+        margin: auto;
+        font-weight: $font-weight-normal;
+        color: $bimco-white;
+      }
+    }
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: $rem-size-12;
+    padding: $rem-size-24 $rem-size-18 $rem-size-32 $rem-size-18;
+  }
+
+  &__desc {
+    @include line-clamp(3);
+  }
+
+  &__titles {
+    display: flex;
+    flex-direction: column;
+    gap: $rem-size-4;
+  }
+
+  &__subtitle {
+    @extend %body-large-style;
+    font-weight: $font-weight-semibold;
+    color: var(--cards-highlight);
+    text-transform: uppercase;
+  }
+
+  &__contact {
+    display: flex;
+    padding: $rem-size-24 $rem-size-18 $rem-size-32 $rem-size-18;
+
+    .btn-group {
+      flex-direction: row;
+    }
+  }
+
+  &__hover-backdrop {
+    z-index: 1;
+    display: none;
+    background: transparent;
+    backdrop-filter: blur(30px);
+    opacity: 0;
+    transition: all 0.3s ease-out;
+
+    #{$block}__hover-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      background: var(--cards-hover-fill);
+      opacity: 0.8;
+    }
+
+    #{$block}__hover-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: $rem-size-24 $rem-size-18 $rem-size-32 $rem-size-18;
+    }
+
+    #{$block}__description {
+      display: table;
+      width: 100%;
+      padding: $rem-size-24 $rem-size-18 $rem-size-8 $rem-size-18;
+    }
+
+    #{$block}__hover-tag {
+      display: table-row;
+
+      &-icon {
+        display: table-cell;
+        color: $bimco-white;
+        text-align: center;
+        vertical-align: middle;
+        background-color: var(--cards-hover-outline);
+      }
+
+      &-desc {
+        display: table-cell;
+        padding: $rem-size-8 $rem-size-10;
+        border: 1px solid var(--cards-hover-outline);
+        border-top: none;
+      }
+
+      &-title {
+        display: block;
+        font-weight: $font-weight-semibold;
+      }
+
+      &-subtitle {
+        @extend %body-small-style;
+        display: block;
+      }
+
+      &:first-of-type {
+        #{$block}__hover-tag-desc {
+          border-top: 1px solid var(--cards-hover-outline);
+        }
+      }
+    }
+
+    #{$block}__contact {
+      .btn-group {
+        width: 100%;
+  
+        .btn-secondary {
+          .btn__content {
+            background-color: var(--cards-hover-button);
+            border: 1px solid var(--cards-hover-button);
+          }
+        }
+      }
+    }
+  }
+
+  &--person {
+    #{$block}__image {
+      aspect-ratio: 3/4;
+    }
+  }
+
+  &--event {
+    #{$block}__image {
+      position: relative;
+      aspect-ratio: 1.777;
+    }
+
+    #{$block}__contact {
+      .btn-group {
+        width: 100%;
+  
+        .btn-secondary {
+          .btn__content {
+            font-weight: $font-weight-semibold;
+            background-color: var(--btn-icon-subtle-fill);
+            border: 1px solid var(--btn-icon-subtle-fill);
+          }
+        }
+      }
+    }
+
+    &#{$block}__hover-backdrop {
+      display: block;
+      
+      #{$block}__contact {
+        .btn-secondary {
+          .btn__content {
+            background-color: var(--cards-hover-button);
+          }
+        }
+      }
+    }
+  }
+
+  &--resizeable {
+    @include media-breakpoint-up(md) {
+      #{$block}__description {
+        padding: $rem-size-48 $rem-size-36;
+      }
+  
+      #{$block}__tags {
+        padding-bottom: $rem-size-12;
+      }
+  
+      #{$block}--person {
+        flex-direction: row;
+  
+        #{$block}__image {
+          flex-basis: 33.33%;
+          aspect-ratio: inherit;
+        }
+  
+        #{$block}__description {
+          flex-basis: 66.66%;
+        }
+      }
+  
+      #{$block}--news {
+        flex-direction: row;
+  
+        #{$block}__image {
+          flex-basis: 40%;
+          aspect-ratio: inherit;
+        }
+  
+        #{$block}__description {
+          flex-basis: 60%;
+        }
+  
+        #{$block}__desc {
+          @include line-clamp(2);
+        }
+      }
+    }
+  
+    @include media-breakpoint-up(lg) {
+      #{$block}__description {
+        padding: $rem-size-64 $rem-size-128;
+      }
+  
+      #{$block}--person {
+        #{$block}__image {
+          flex-basis: 25%;
+        }
+  
+        #{$block}__description {
+          flex-basis: 75%;
+        }
+      }
+  
+      #{$block}--news {
+        #{$block}__image {
+          flex-basis: 35%;
+        }
+  
+        #{$block}__description {
+          flex-basis: 65%;
+        }
+      }
+  
+      #{$block}__desc {
+        @include line-clamp(99);
+      }
+    }
+  
+    @include media-breakpoint-up(xl) {
+      #{$block}--person {
+        #{$block}__image {
+          flex-basis: 20%;
+        }
+      }
+    }
+  }
+  
+  &--landscape {
+    flex-direction: row;
+    column-gap: $rem-size-18;
+
+    #{$block}__image {
+      max-width: 50%;
+    }
+
+    #{$block}__description {
+      padding-bottom: 0;
+      padding-left: $rem-size-6;
+    }
+  
+    #{$block}__contact {
+      padding-left: 0;
+    }
+
+    @include media-breakpoint-up(xl) {
+      #{$block}__image {
+        max-width: 50%;
+      }
+    }
+  }
+}

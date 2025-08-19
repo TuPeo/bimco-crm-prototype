@@ -1,0 +1,126 @@
+@use '../../base/placeholders/typography';
+@import '../../abstracts/';
+
+.search-result-card {
+  $block: &;
+
+  position: relative;
+  display: flex;
+  gap: $rem-size-28;
+  justify-content: space-between;
+  padding: $rem-size-24 $rem-size-12;
+  border-bottom: 1px solid var(--search-result-featured-background);
+
+  &__metadata {
+    margin-bottom: $rem-size-8;
+  }
+
+  &__title {
+    @extend %body-large-style;
+    @include line-clamp(2);
+
+    margin-bottom: $rem-size-8;
+    font-weight: $font-weight-bold;
+
+    &-link {
+      color: var(--typography-body-content);
+      text-decoration: none;
+    }
+  }
+
+  &__title-arrow {
+    padding-left: $rem-size-8;
+    color: $bimco-grey-500;
+  }
+
+  &__text {
+    &,
+    > *:first-child {
+      @extend %body-style;
+      @include line-clamp(2);
+
+      margin-bottom: 0;
+    }
+
+    > *:not(:first-child) {
+      display: none;
+    }
+  }
+
+  &__tag-row {
+    display: flex;
+    flex-flow: row wrap;
+    gap: $rem-size-12;
+    align-items: center;
+    margin-top: $rem-size-18;
+  }
+
+  &__tag {
+    font-weight: $font-weight-normal;
+  }
+
+  &__image-col {
+    display: none;
+  }
+
+  &:hover {
+    background-color: var(--search-result-featured-background);
+
+    #{$block}__title {
+      color: var(--search-result-featured-color);
+    }
+
+    #{$block}__text {
+      color: var(--search-result-featured-color);
+    }
+
+    #{$block}__tag {
+      color: var(--search-result-featured-tag-color);
+      background-color: var(--search-result-featured-tag-background);
+    }
+
+    &::before {
+      position: absolute;
+      top: $rem-size-4;
+      right: $rem-size-4;
+      width: $rem-size-12;
+      height: $rem-size-12;
+      content: '';
+      background-color: var(--theme-primary-light);
+    }
+
+    &::after {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      content: '';
+      background-color: var(--theme-primary-light);
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    padding: $rem-size-24 $rem-size-24;
+
+    &__image-col {
+      display: block;
+      flex: 0 0 $rem-size-128;
+      align-self: center;
+      aspect-ratio: 1;
+    }
+
+    &__image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__title-arrow {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,256 @@
+@use "./placeholders/typography";
+@import "../abstracts";
+
+:root {
+  --bimco-display-font-family: #{$font-family-sans-serif};
+  --bimco-functional-font-family: "Golos Text", #{$font-family-sans-serif};
+
+  // Headline
+  @include multi-breakpoint-fluid-property-value(--bimco-headline-1-font-size, $headline-1-font-size-map, true);
+  @include multi-breakpoint-fluid-property-value(--bimco-headline-2-font-size, $headline-2-font-size-map, true);
+  @include multi-breakpoint-fluid-property-value(--bimco-headline-3-font-size, $headline-3-font-size-map, true);
+  @include multi-breakpoint-fluid-property-value(--bimco-headline-4-font-size, $headline-4-font-size-map, true);
+  @include multi-breakpoint-fluid-property-value(--bimco-headline-5-font-size, $headline-5-font-size-map, true);
+
+  --bimco-card-title-1-font-size: #{$rem-size-26};
+  --bimco-card-title-2-font-size: #{$rem-size-32};
+  --bimco-headline-1-margin-bottom: #{$rem-size-16};
+  --bimco-headline-2-margin-bottom: #{$rem-size-16};
+  --bimco-headline-3-margin-bottom: #{$rem-size-14};
+  --bimco-headline-4-margin-bottom: #{$rem-size-12};
+  --bimco-headline-5-margin-bottom: #{$rem-size-12};
+
+  // Body
+  @include multi-breakpoint-fluid-property-value(--bimco-body-font-size, $body-font-size-map, true);
+  @include multi-breakpoint-fluid-property-value(--bimco-body-large-font-size, $body-large-font-size-map, true);
+  @include multi-breakpoint-fluid-property-value(--bimco-body-small-font-size, $body-small-font-size-map, true);
+  @include multi-breakpoint-fluid-property-value(--bimco-body-tight-font-size, $body-tight-font-size-map, true);
+  @include multi-breakpoint-fluid-property-value(--bimco-eyebrow-font-size, $eyebrow-font-size-map, true);
+  @include multi-breakpoint-fluid-property-value(--bimco-eyebrow-small-font-size, $eyebrow-small-font-size-map, true);
+  @include multi-breakpoint-fluid-property-value(--bimco-form-label-font-size, $form-label-font-size-map, true);
+  @include multi-breakpoint-fluid-property-value(--bimco-form-label-small-font-size, $form-label-small-font-size-map, true);
+  @include multi-breakpoint-fluid-property-value(--bimco-form-input-font-size, $form-input-font-size-map, true);
+
+  // Buttons
+  --bimco-button-font-size: #{$rem-size-16};
+  --bimco-button-large-font-size: #{$rem-size-18};
+  --bimco-button-small-font-size: #{$rem-size-16};
+
+  // Navigation
+  --bimco-navigation-eyebrow-font-size: #{$rem-size-15};
+
+  @include media-breakpoint-up(md) {
+    --bimco-headline-1-margin-bottom: #{$rem-size-18};
+    --bimco-headline-2-margin-bottom: #{$rem-size-18};
+  }
+
+  @include media-breakpoint-up(lg) {
+    --bimco-headline-1-margin-bottom: #{$rem-size-20};
+    --bimco-headline-2-margin-bottom: #{$rem-size-20};
+  }
+}
+
+h1,
+.headline-1 {
+  @extend %headline-1-style;
+
+  margin-bottom: var(--bimco-headline-1-margin-bottom);
+
+  em {
+    @extend %headline-em-style;
+  }
+
+  .eyebrow {
+    @extend %eyebrow-style;
+
+    display: block;
+    margin-bottom: $rem-size-10;
+  }
+}
+
+h2,
+.headline-2 {
+  @extend %headline-2-style;
+
+  margin-bottom: var(--bimco-headline-2-margin-bottom);
+
+  em {
+    @extend %headline-em-style;
+  }
+
+  .eyebrow {
+    @extend %eyebrow-style;
+
+    display: block;
+    margin-bottom: $rem-size-10;
+  }
+}
+
+h3,
+.headline-3 {
+  @extend %headline-3-style;
+
+  margin-bottom: var(--bimco-headline-3-margin-bottom);
+
+  em {
+    @extend %headline-em-style;
+  }
+
+  .eyebrow {
+    @extend %eyebrow-small-style;
+
+    display: block;
+    margin-bottom: $rem-size-8;
+  }
+}
+
+h4,
+.headline-4 {
+  @extend %headline-4-style;
+
+  margin-bottom: var(--bimco-headline-4-margin-bottom);
+
+  em {
+    @extend %headline-em-style;
+  }
+
+  .eyebrow {
+    @extend %eyebrow-small-style;
+
+    display: block;
+    margin-bottom: $rem-size-8;
+  }
+}
+
+h5,
+.headline-5 {
+  @extend %headline-5-style;
+
+  margin-bottom: var(--bimco-headline-5-margin-bottom);
+
+  em {
+    @extend %headline-em-style;
+  }
+
+  .eyebrow {
+    @extend %eyebrow-small-style;
+
+    display: block;
+    margin-bottom: $rem-size-8;
+  }
+}
+
+p,
+.body-text-regular {
+  @extend %body-style;
+}
+
+p.lead,
+.body-text-large {
+ @extend %body-large-style; 
+}
+
+p {
+  &.eyebrow,
+  .eyebrow {
+    @extend %eyebrow-small-style;
+
+    display: block;
+    margin-bottom: $rem-size-8;
+  }
+}
+
+.body-text-small {
+  @extend %body-small-style;
+}
+
+.body-text-tight {
+  @extend %body-tight-style;
+}
+
+.eyebrow-regular {
+  @extend %eyebrow-style;
+}
+
+.eyebrow-small {
+  @extend %eyebrow-small-style;
+}
+
+label,
+.form-label {
+  @extend %form-label-style;
+}
+
+.form-label-small {
+  @extend %form-label-style;
+}
+
+input,
+.form-input {
+  @extend %form-input-style;
+}
+
+.button-style {
+  @extend %button-style;
+}
+
+.button-large {
+  @extend %button-large-style;
+}
+
+.button-small {
+  @extend %button-small-style;
+}
+
+.navigation-menu-link {
+  @extend %navigation-menu-link-style;
+}
+
+.navigation-eyebrow {
+  @extend %navigation-eyebrow-style;
+}
+
+ol {
+  list-style-position: outside;
+
+  li {
+    padding-left: $rem-size-12;
+  }
+}
+
+ul {
+  list-style-position: outside;
+  list-style-type: square;
+
+  li {
+    padding-left: $rem-size-6;
+
+    &::marker {
+      color: var(--typography-body-description);
+    }
+  }
+}
+
+li {
+  color: var(--typography-body-content);
+}
+
+p.pull-out {
+  @extend %headline-5-style;
+
+  margin-top: $rem-size-32;
+  margin-bottom: $rem-size-32;
+
+  &::before {
+    display: inline-block;
+    width: $rem-size-20;
+    height: $rem-size-20;
+    margin-right: $rem-size-10;
+    content: "";
+    background-color: var(--theme-primary);
+  }
+}
+
+.rich-text {
+  @include rich-text;
+}

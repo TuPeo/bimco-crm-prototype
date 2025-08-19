@@ -1,0 +1,68 @@
+@import '../../abstracts/';
+
+.slim-cta {
+  --slim-cta-blip-height: 8px;
+  --slim-cta-y-padding: var(--bimco-section-spacer-tighter);
+  --slim-cta-content-gap: #{$rem-size-32};
+
+  position: relative;
+  margin-bottom: calc(-1 * (var(--slim-cta-blip-height) / 2));
+
+  &__inner {
+    padding-top:  var(--bimco-section-spacer-tighter);
+    padding-bottom: var(--bimco-section-spacer-tighter);
+    background-color: var(--theme-surface-color);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--slim-cta-content-gap);
+  }
+
+  &::before {
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    height: var(--slim-cta-blip-height);
+    margin-bottom: calc(-1 * (var(--slim-cta-blip-height) / 2));
+    clip-path: polygon(0% 0%,100% 50%,0% 100%);
+    content: "";
+    background-color: $bimco-dark-blue-500;
+  }
+  
+  &::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    height: var(--slim-cta-blip-height);
+    margin-bottom: calc(-1 * (var(--slim-cta-blip-height) / 2));
+    clip-path: polygon(100% 0%,100% 100% ,0% 50%);
+    content: "";
+    background-color: $bimco-blue-cta-blip;
+  }
+
+  &--no-supergraphic {
+    margin-bottom: 0;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    --slim-cta-blip-height: 22px;
+    --slim-cta-content-gap: #{$rem-size-36};
+  }
+
+  @include media-breakpoint-up(xl) {
+    --slim-cta-blip-height: 38px;
+    --slim-cta-content-gap: #{$rem-size-48};
+  }
+
+  @include media-breakpoint-up(xl) {
+    --slim-cta-blip-height: 44px;
+  }
+}

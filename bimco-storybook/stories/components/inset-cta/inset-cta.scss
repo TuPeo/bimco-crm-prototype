@@ -1,0 +1,57 @@
+@use "sass:map";
+@use "../../base/placeholders/typography";
+@import "../../abstracts/";
+
+.inset-cta {
+  container-type: inline-size;
+  position: relative;
+  height: 100%;
+  background-color: var(--theme-surface-color);
+
+  &__background {
+    position: absolute;
+    inset: 0;
+
+    &--wash {
+      &::after {
+        position: absolute;
+        inset: 0;
+        content: "";
+        background-color: var(--theme-surface-image-mid);
+      }
+    }
+
+    &-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    row-gap: $rem-size-36;
+    height: 100%;
+    padding: var(--bimco-section-spacer-tighter) var(--inset-cta-content-padding-x);
+
+    --inset-cta-content-padding-x: #{$rem-size-18};
+  }
+
+  &__btn-group {
+    margin-top: auto;
+  }
+
+  @container (min-width: #{map.get($grid-breakpoints, md) - (map.get($bimco-container-padding-x, md) * 2)}) {
+    &__content {
+      --inset-cta-content-padding-x: #{$rem-size-24};
+    }
+  }
+
+  @container (min-width: #{map.get($grid-breakpoints, lg) - (map.get($bimco-container-padding-x, lg) * 2)}) {
+    &__content {
+      --inset-cta-content-padding-x: #{$rem-size-64};
+    }
+  }
+}

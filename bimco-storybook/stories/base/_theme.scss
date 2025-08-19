@@ -1,0 +1,91 @@
+@import '../abstracts';
+
+%theme-white {
+  @include theme-white;
+  @include theme-btn-white;
+}
+
+%theme-light {
+  @include theme-light;
+  @include theme-btn-light;
+}
+
+%theme-brand {
+  @include theme-brand;
+  @include theme-btn-brand;
+}
+
+%theme-dark {
+  @include theme-dark;
+  @include theme-btn-dark;
+}
+
+:root {
+  --theme-surface-color: #{$bimco-cream-400};
+  --typography-body-content: #{$bimco-grey-800};
+
+  @include theme-btn-base;
+
+  @media (prefers-color-scheme: dark) {
+    --theme-surface-color: #{$bimco-dark-blue-1000};
+    --typography-body-content: #{$bimco-cream-100};
+  }
+}
+
+.theme {
+  &,
+  .theme-zone {
+    color: var(--typography-body-content);
+    background-color: var(--theme-surface-color);
+  
+    &.theme {
+      &--white {
+        @extend %theme-white;
+  
+        .theme-inverse {
+          @extend %theme-dark;
+        }
+  
+        .theme-inverse-alt {
+          @extend %theme-brand;
+        }
+      }
+  
+      &--light {
+        @extend %theme-light;
+  
+        .theme-inverse {
+          @extend %theme-dark;
+        }
+  
+        .theme-inverse-alt {
+          @extend %theme-brand;
+        }
+      }
+  
+      &--brand {
+        @extend %theme-brand;
+  
+        .theme-inverse {
+          @extend %theme-light;
+        }
+  
+        .theme-inverse-alt {
+          @extend %theme-light;
+        }
+      }
+  
+      &--dark {
+        @extend %theme-dark;
+  
+        .theme-inverse {
+          @extend %theme-light;
+        }
+  
+        .theme-inverse-alt {
+          @extend %theme-light;
+        }
+      }
+    }
+  }
+}

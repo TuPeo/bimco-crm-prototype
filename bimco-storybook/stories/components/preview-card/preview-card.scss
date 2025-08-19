@@ -1,0 +1,67 @@
+@use '../../base/placeholders/typography';
+@import '../../abstracts';
+
+.preview-card {
+  $block: &;
+  
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $rem-size-12;
+  width: 100%;
+  padding: $rem-size-20;
+  color: var(--typography-body-description);
+  text-decoration: none;
+  background-color: var(--cards-fill);
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background-image: linear-gradient(to bottom, var(--cards-hover-gradient-color-1), var(--cards-hover-gradient-color-2));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  &::after {
+    position: absolute;
+    right: $rem-size-20;
+    bottom: $rem-size-20;
+    width: $rem-size-14;
+    height: $rem-size-14;
+    content: '';
+    background-color: var(--theme-primary-light);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  &__metadata {
+    position: relative;
+  }
+
+  &__title {
+    @extend %body-large-style;
+
+    position: relative;
+    width: calc(100% - #{$rem-size-16});
+    margin: 0;
+    font-weight: $font-weight-bold;
+    color: var(--typography-headlines);
+    text-decoration: underline;
+    text-decoration-thickness: 0.05em;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.1em;
+    transition: text-decoration-color 0.3s;
+  }
+
+  &:hover {
+    &::before, 
+    &::after {
+      opacity: 1;
+    }
+
+    #{$block}__title {
+      text-decoration-color: inherit;
+    }
+  }
+}
