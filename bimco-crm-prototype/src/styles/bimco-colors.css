@@ -1,0 +1,260 @@
+/* BIMCO Color System - Based on storybook variables */
+
+:root {
+  /* BIMCO Light Blue Scale */
+  --bimco-light-blue-100: #dcf6fe;
+  --bimco-light-blue-200: #b9ecfb;
+  --bimco-light-blue-300: #6ed2ef;
+  --bimco-light-blue-400: #37b7dc;
+  --bimco-light-blue-500: #04a1ce;
+  --bimco-light-blue-600: #0092bc;
+  --bimco-light-blue-700: #0586ab;
+  --bimco-light-blue-800: #037798;
+  --bimco-light-blue-900: #02647f;
+  --bimco-light-blue-1000: #014254;
+
+  /* BIMCO Dark Blue Scale */
+  --bimco-dark-blue-100: #ddf0f8;
+  --bimco-dark-blue-200: #c8e7f4;
+  --bimco-dark-blue-300: #71b9e2;
+  --bimco-dark-blue-400: #55a9d8;
+  --bimco-dark-blue-500: #0980ae;
+  --bimco-dark-blue-600: #00557e;
+  --bimco-dark-blue-700: #004f6f;
+  --bimco-dark-blue-800: #004460;
+  --bimco-dark-blue-900: #00384e;
+  --bimco-dark-blue-1000: #002737;
+
+  /* BIMCO Cream Scale */
+  --bimco-cream-100: #fefdfb;
+  --bimco-cream-200: #faf8f2;
+  --bimco-cream-300: #f6f3ec;
+  --bimco-cream-400: #f0ece3;
+  --bimco-cream-500: #e5dfd2;
+  --bimco-cream-600: #ddd6c7;
+
+  /* BIMCO Accent Colors */
+  --bimco-cta-blip: #04486a;
+  --bimco-white: #ffffff;
+  --bimco-black: #000000;
+
+  /* CRM Specific Colors */
+  --bimco-primary: var(--bimco-light-blue-600);
+  --bimco-secondary: var(--bimco-dark-blue-600);
+  --bimco-accent: var(--bimco-cta-blip);
+  --bimco-success: #059669;
+  --bimco-warning: #d97706;
+  --bimco-error: #dc2626;
+  --bimco-info: var(--bimco-light-blue-500);
+
+  /* Background Colors */
+  --bimco-bg-primary: var(--bimco-white);
+  --bimco-bg-secondary: var(--bimco-cream-100);
+  --bimco-bg-accent: var(--bimco-light-blue-100);
+  --bimco-bg-dark: var(--bimco-dark-blue-800);
+
+  /* Text Colors */
+  --bimco-text-primary: var(--bimco-dark-blue-900);
+  --bimco-text-secondary: var(--bimco-dark-blue-700);
+  --bimco-text-muted: var(--bimco-dark-blue-500);
+  --bimco-text-white: var(--bimco-white);
+
+  /* Border Colors */
+  --bimco-border-light: var(--bimco-cream-400);
+  --bimco-border-medium: var(--bimco-light-blue-300);
+  --bimco-border-dark: var(--bimco-dark-blue-300);
+}
+
+/* BIMCO Component Classes */
+.bimco-card {
+  @apply bg-white shadow-sm border border-gray-200 rounded-lg p-6;
+  border-color: var(--bimco-border-light);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.bimco-card-header {
+  @apply border-b pb-4 mb-6;
+  border-color: var(--bimco-border-light);
+}
+
+.bimco-btn-primary {
+  @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2;
+  background-color: var(--bimco-primary);
+  border-color: var(--bimco-primary);
+}
+
+.bimco-btn-primary:hover {
+  background-color: var(--bimco-light-blue-700);
+  border-color: var(--bimco-light-blue-700);
+}
+
+.bimco-btn-primary:focus {
+  ring-color: var(--bimco-primary);
+}
+
+.bimco-btn-secondary {
+  @apply inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-offset-2;
+  border-color: var(--bimco-border-medium);
+  color: var(--bimco-text-primary);
+}
+
+.bimco-btn-secondary:hover {
+  background-color: var(--bimco-bg-accent);
+  border-color: var(--bimco-primary);
+}
+
+.bimco-btn-secondary:focus {
+  ring-color: var(--bimco-primary);
+}
+
+.bimco-table {
+  @apply min-w-full divide-y;
+  divide-color: var(--bimco-border-light);
+}
+
+.bimco-table th {
+  @apply px-6 py-3 text-left text-xs font-medium uppercase tracking-wider;
+  color: var(--bimco-text-secondary);
+}
+
+.bimco-table td {
+  @apply px-6 py-4 whitespace-nowrap text-sm;
+  color: var(--bimco-text-primary);
+}
+
+.bimco-input {
+  @apply shadow-sm focus:ring-2 focus:border-transparent block w-full sm:text-sm border rounded-md px-3 py-2;
+  border-color: var(--bimco-border-medium);
+}
+
+.bimco-input:focus {
+  ring-color: var(--bimco-primary);
+  border-color: var(--bimco-primary);
+}
+
+.bimco-select {
+  @apply block w-full pl-3 pr-10 py-2 text-base border rounded-md focus:outline-none focus:ring-2 focus:border-transparent sm:text-sm;
+  border-color: var(--bimco-border-medium);
+}
+
+.bimco-select:focus {
+  ring-color: var(--bimco-primary);
+  border-color: var(--bimco-primary);
+}
+
+/* BIMCO Status Badges */
+.bimco-badge-success {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.bimco-badge-warning {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.bimco-badge-error {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  background-color: #fecaca;
+  color: #991b1b;
+}
+
+.bimco-badge-info {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  background-color: var(--bimco-light-blue-100);
+  color: var(--bimco-dark-blue-800);
+}
+
+.bimco-badge-primary {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  background-color: var(--bimco-light-blue-200);
+  color: var(--bimco-dark-blue-900);
+}
+
+/* Chart Colors for BIMCO theme */
+.bimco-chart-colors {
+  --chart-color-1: var(--bimco-light-blue-600);
+  --chart-color-2: var(--bimco-dark-blue-600);
+  --chart-color-3: var(--bimco-light-blue-400);
+  --chart-color-4: var(--bimco-dark-blue-400);
+  --chart-color-5: var(--bimco-light-blue-800);
+  --chart-color-6: var(--bimco-dark-blue-800);
+  --chart-color-7: var(--bimco-cream-500);
+  --chart-color-8: var(--bimco-cta-blip);
+}
+
+/* Sidebar Navigation - BIMCO styling */
+.bimco-sidebar {
+  background: linear-gradient(180deg, var(--bimco-dark-blue-800) 0%, var(--bimco-dark-blue-900) 100%);
+}
+
+.bimco-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  color: var(--bimco-light-blue-200);
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.bimco-nav-link:hover {
+  background-color: var(--bimco-dark-blue-700);
+  color: var(--bimco-white);
+}
+
+.bimco-nav-link.active {
+  background-color: var(--bimco-light-blue-700);
+  color: var(--bimco-white);
+}
+
+/* Data visualization specific styles */
+.bimco-stat-card {
+  background-color: white;
+  overflow: hidden;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border-radius: 0.5rem;
+  border-left: 4px solid var(--bimco-primary);
+}
+
+.bimco-chart-container {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  border: 1px solid var(--bimco-border-light);
+}
+
+.bimco-chart-title {
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: var(--bimco-text-primary);
+}
+
+/* Loading states */
+.bimco-loading {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+
+.bimco-loading-bar {
+  height: 1rem;
+  border-radius: 0.25rem;
+  background-color: var(--bimco-light-blue-200);
+}

@@ -1,0 +1,95 @@
+/* Import BIMCO Color System */
+@import '../styles/bimco-colors.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base Styles */
+html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+  background-color: var(--bimco-cream-200);
+  color: var(--bimco-dark-blue-900);
+  min-height: 100vh;
+}
+
+/* Remove default margins and padding */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* Maritime CRM specific base styles */
+.bimco-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.bimco-card {
+  background-color: var(--bimco-white);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--bimco-cream-500);
+}
+
+.bimco-button {
+  background-color: var(--bimco-primary);
+  color: var(--bimco-white);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.bimco-button:hover {
+  background-color: var(--bimco-light-blue-700);
+}
+
+.bimco-button-secondary {
+  background-color: var(--bimco-cream-400);
+  color: var(--bimco-dark-blue-900);
+}
+
+.bimco-button-secondary:hover {
+  background-color: var(--bimco-cream-500);
+}
+
+/* Text styles using BIMCO colors */
+.text-bimco-primary {
+  color: var(--bimco-primary);
+}
+
+.text-bimco-secondary {
+  color: var(--bimco-secondary);
+}
+
+.text-bimco-accent {
+  color: var(--bimco-accent);
+}
+
+/* Background utilities */
+.bg-bimco-primary {
+  background-color: var(--bimco-primary);
+}
+
+.bg-bimco-secondary {
+  background-color: var(--bimco-secondary);
+}
+
+.bg-bimco-cream {
+  background-color: var(--bimco-cream-200);
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .bimco-container {
+    padding: 0 0.75rem;
+  }
+}

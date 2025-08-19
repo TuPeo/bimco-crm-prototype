@@ -1,0 +1,411 @@
+import { Company, Contact, Course, DashboardStats } from '@/types';
+
+// Dashboard Statistics Mock Data
+export const mockDashboardStats: DashboardStats = {
+  totalCompanies: 2847,
+  totalContacts: 15632,
+  totalCourses: 156,
+  pendingNotifications: 8
+};
+
+// Chart Data for Dashboard
+export const companyDistributionData = [
+  { name: 'Denmark', value: 485, color: '#0092bc' },
+  { name: 'Norway', value: 392, color: '#00557e' },
+  { name: 'Germany', value: 356, color: '#37b7dc' },
+  { name: 'Singapore', value: 298, color: '#55a9d8' },
+  { name: 'United Kingdom', value: 267, color: '#037798' },
+  { name: 'Greece', value: 234, color: '#04486a' },
+  { name: 'Others', value: 815, color: '#ddd6c7' }
+];
+
+export const contactRoleData = [
+  { role: 'Fleet Manager', active: 1250, inactive: 89 },
+  { role: 'Operations Director', active: 890, inactive: 45 },
+  { role: 'Technical Director', active: 675, inactive: 32 },
+  { role: 'CEO/Managing Director', active: 567, inactive: 23 },
+  { role: 'Regional Manager', active: 445, inactive: 28 },
+  { role: 'Port Agent', active: 389, inactive: 67 },
+  { role: 'Other', active: 2234, inactive: 156 }
+];
+
+export const eventTrendData = [
+  { month: 'Sep 2023', courses: 12, events: 8, participants: 245 },
+  { month: 'Oct 2023', courses: 15, events: 10, participants: 298 },
+  { month: 'Nov 2023', courses: 18, events: 12, participants: 342 },
+  { month: 'Dec 2023', courses: 10, events: 6, participants: 178 },
+  { month: 'Jan 2024', courses: 14, events: 9, participants: 267 },
+  { month: 'Feb 2024', courses: 16, events: 11, participants: 312 },
+  { month: 'Mar 2024', courses: 20, events: 14, participants: 389 },
+  { month: 'Apr 2024', courses: 22, events: 16, participants: 434 },
+  { month: 'May 2024', courses: 19, events: 13, participants: 378 },
+  { month: 'Jun 2024', courses: 17, events: 12, participants: 323 },
+  { month: 'Jul 2024', courses: 21, events: 15, participants: 402 },
+  { month: 'Aug 2024', courses: 23, events: 17, participants: 456 }
+];
+
+export const membershipStatusData = [
+  { name: 'Active Members (M1)', value: 1892, color: '#059669' },
+  { name: 'Associate Members (M2)', value: 634, color: '#0586ab' },
+  { name: 'Inactive', value: 87, color: '#6b7280' },
+  { name: 'Prospects', value: 234, color: '#d97706' }
+];
+
+// Recent Activity Feed for Dashboard
+export const recentActivityData = [
+  {
+    id: '1',
+    user: 'Lars Nielsen',
+    action: 'updated company profile',
+    target: 'Maersk Line',
+    timestamp: '2024-08-19T10:45:00Z',
+    type: 'company_update'
+  },
+  {
+    id: '2', 
+    user: 'System',
+    action: 'synchronized campaign',
+    target: 'Q3 Member Newsletter',
+    timestamp: '2024-08-19T09:30:00Z',
+    type: 'system'
+  },
+  {
+    id: '3',
+    user: 'Astrid Johannessen',
+    action: 'registered for course',
+    target: 'BIMCO Laytime Definitions',
+    timestamp: '2024-08-19T08:15:00Z',
+    type: 'course_registration'
+  },
+  {
+    id: '4',
+    user: 'Admin',
+    action: 'created new contact',
+    target: 'Wei Ming Tan - PIL',
+    timestamp: '2024-08-18T16:20:00Z',
+    type: 'contact_create'
+  },
+  {
+    id: '5',
+    user: 'Hans Mueller',
+    action: 'updated course materials',
+    target: 'Digital Ship Management Systems',
+    timestamp: '2024-08-18T14:30:00Z',
+    type: 'course_update'
+  }
+];
+
+// Mock Companies Data
+export const mockCompanies: Company[] = [
+  {
+    id: '1',
+    registrationNumber: '123456',
+    name: 'Maersk Line',
+    name2: 'A.P. Moller-Maersk',
+    status: 'M1',
+    type: 'A1',
+    address: {
+      line1: 'Esplanaden 50',
+      line2: '',
+      line3: '',
+      postCode: '1098',
+      country: 'Denmark',
+      countryCode: 'DK'
+    },
+    email: 'contact@maersk.com',
+    numberOfEmployees: 25,
+    dateCreated: '2023-01-15',
+    lastUpdated: '2024-08-15'
+  },
+  {
+    id: '2',
+    registrationNumber: '789012',
+    name: 'MSC Mediterranean Shipping Company',
+    status: 'M0',
+    type: 'A2',
+    address: {
+      line1: 'Chemin Rieu 12-14',
+      line2: '',
+      line3: '',
+      postCode: '1208',
+      country: 'Switzerland',
+      countryCode: 'CH'
+    },
+    email: 'info@msc.com',
+    numberOfEmployees: 18,
+    dateCreated: '2023-03-20',
+    lastUpdated: '2024-08-10'
+  },
+  {
+    id: '3',
+    registrationNumber: '345678',
+    name: 'CMA CGM Group',
+    status: 'M1',
+    type: 'A1',
+    address: {
+      line1: '4 Quai d\'Arenc',
+      line2: '',
+      line3: '',
+      postCode: '13235',
+      country: 'France',
+      countryCode: 'FR'
+    },
+    email: 'contact@cma-cgm.com',
+    numberOfEmployees: 32,
+    dateCreated: '2023-02-10',
+    lastUpdated: '2024-08-12'
+  },
+  {
+    id: '4',
+    registrationNumber: '901234',
+    name: 'COSCO Shipping Lines',
+    status: 'M2',
+    type: 'B1',
+    address: {
+      line1: 'COSCO Plaza, Dong Chang\'an Jie 20',
+      line2: '',
+      line3: '',
+      postCode: '100006',
+      country: 'China',
+      countryCode: 'CN'
+    },
+    email: 'info@cosco.com.cn',
+    numberOfEmployees: 45,
+    dateCreated: '2023-05-15',
+    lastUpdated: '2024-08-08'
+  },
+  {
+    id: '5',
+    registrationNumber: '567890',
+    name: 'Hapag-Lloyd AG',
+    status: 'M1',
+    type: 'A1',
+    address: {
+      line1: 'Ballindamm 25',
+      line2: '',
+      line3: '',
+      postCode: '20095',
+      country: 'Germany',
+      countryCode: 'DE'
+    },
+    email: 'info@hapag-lloyd.com',
+    numberOfEmployees: 28,
+    dateCreated: '2023-04-08',
+    lastUpdated: '2024-08-14'
+  }
+];
+
+// Mock Contacts Data
+export const mockContacts: Contact[] = [
+  {
+    id: '1',
+    contactNumber: '123456_001',
+    firstName: 'John',
+    lastName: 'Hansen',
+    email: 'john.hansen@maersk.com',
+    phone: '+45 33 63 33 63',
+    companyId: '1',
+    companyName: 'Maersk Line',
+    role: 'Fleet Manager',
+    status: 'Active',
+    classifications: [
+      { code: 'BI-ADM', description: 'BIMCO Administrator', date: '2023-01-15' },
+      { code: 'BI-ASIA', description: 'BIMCO Asia Representative', date: '2023-06-20' }
+    ],
+    dateCreated: '2023-01-15',
+    lastUpdated: '2024-08-15'
+  },
+  {
+    id: '2',
+    contactNumber: '789012_001',
+    firstName: 'Maria',
+    lastName: 'Rodriguez',
+    email: 'maria.rodriguez@msc.com',
+    phone: '+41 22 703 88 88',
+    companyId: '2',
+    companyName: 'MSC Mediterranean Shipping Company',
+    role: 'Operations Manager',
+    status: 'Active',
+    classifications: [
+      { code: 'BI-BD', description: 'BIMCO Board Member', date: '2023-03-20' }
+    ],
+    dateCreated: '2023-03-20',
+    lastUpdated: '2024-08-10'
+  },
+  {
+    id: '3',
+    contactNumber: '345678_001',
+    firstName: 'Pierre',
+    lastName: 'Dubois',
+    email: 'pierre.dubois@cma-cgm.com',
+    phone: '+33 4 88 91 90 00',
+    companyId: '3',
+    companyName: 'CMA CGM Group',
+    role: 'Technical Director',
+    status: 'Active',
+    classifications: [
+      { code: 'BI-BS', description: 'BIMCO Business Support', date: '2023-02-10' }
+    ],
+    dateCreated: '2023-02-10',
+    lastUpdated: '2024-08-12'
+  },
+  {
+    id: '4',
+    contactNumber: '901234_001',
+    firstName: 'Li',
+    lastName: 'Wei',
+    email: 'li.wei@cosco.com.cn',
+    phone: '+86 10 6649 2000',
+    companyId: '4',
+    companyName: 'COSCO Shipping Lines',
+    role: 'Regional Manager',
+    status: 'Active',
+    classifications: [
+      { code: 'BI-ASIA', description: 'BIMCO Asia Representative', date: '2023-05-15' }
+    ],
+    dateCreated: '2023-05-15',
+    lastUpdated: '2024-08-08'
+  },
+  {
+    id: '5',
+    contactNumber: '567890_001',
+    firstName: 'Klaus',
+    lastName: 'Mueller',
+    email: 'klaus.mueller@hapag-lloyd.com',
+    phone: '+49 40 3001 0',
+    companyId: '5',
+    companyName: 'Hapag-Lloyd AG',
+    role: 'CEO',
+    status: 'Inactive',
+    classifications: [
+      { code: 'BI-ADM', description: 'BIMCO Administrator', date: '2023-04-08' }
+    ],
+    dateCreated: '2023-04-08',
+    lastUpdated: '2024-08-14'
+  }
+];
+
+// Mock Courses Data
+export const mockCourses: Course[] = [
+  {
+    id: '1',
+    title: 'BIMCO Laytime Definitions for Chartering',
+    category: 'Training',
+    group: '15+15',
+    startDate: '2024-09-15',
+    endDate: '2024-09-17',
+    location: 'Copenhagen, Denmark',
+    status: 'Upcoming',
+    maxParticipants: 25,
+    description: 'Comprehensive training on BIMCO laytime definitions and their practical application in chartering operations.',
+    participants: [
+      {
+        contactId: '1',
+        contactName: 'John Hansen',
+        email: 'john.hansen@maersk.com',
+        role: 'Attendee',
+        registrationDate: '2024-08-01'
+      },
+      {
+        contactId: '2',
+        contactName: 'Maria Rodriguez',
+        email: 'maria.rodriguez@msc.com',
+        role: 'Attendee',
+        registrationDate: '2024-08-03'
+      }
+    ]
+  },
+  {
+    id: '2',
+    title: 'Digital Maritime Technologies Webinar',
+    category: 'Webinar',
+    group: 'GM',
+    startDate: '2024-08-25',
+    endDate: '2024-08-25',
+    location: 'Online',
+    status: 'Ongoing',
+    maxParticipants: 100,
+    description: 'Learn about the latest digital technologies transforming the maritime industry.',
+    participants: [
+      {
+        contactId: '3',
+        contactName: 'Pierre Dubois',
+        email: 'pierre.dubois@cma-cgm.com',
+        role: 'Attendee',
+        registrationDate: '2024-08-05'
+      },
+      {
+        contactId: '4',
+        contactName: 'Li Wei',
+        email: 'li.wei@cosco.com.cn',
+        role: 'Speaker',
+        registrationDate: '2024-07-20'
+      }
+    ]
+  },
+  {
+    id: '3',
+    title: 'Maritime Law and Compliance Workshop',
+    category: 'Workshop',
+    group: 'EVENT',
+    startDate: '2024-07-10',
+    endDate: '2024-07-12',
+    location: 'Hamburg, Germany',
+    status: 'Completed',
+    maxParticipants: 50,
+    description: 'Deep dive into maritime legal frameworks and compliance requirements.',
+    participants: [
+      {
+        contactId: '1',
+        contactName: 'John Hansen',
+        email: 'john.hansen@maersk.com',
+        role: 'Attendee',
+        registrationDate: '2024-06-15'
+      },
+      {
+        contactId: '5',
+        contactName: 'Klaus Mueller',
+        email: 'klaus.mueller@hapag-lloyd.com',
+        role: 'Organizer',
+        registrationDate: '2024-06-10'
+      }
+    ]
+  }
+];
+
+// Mock Notifications Data
+export const mockNotifications = [
+  {
+    id: '1',
+    title: 'New Course Registration',
+    message: 'John Hansen registered for BIMCO Laytime Definitions course',
+    type: 'course_registration',
+    priority: 'medium',
+    isRead: false,
+    createdAt: '2024-08-19T10:30:00Z',
+    relatedEntity: 'course',
+    relatedId: '1'
+  },
+  {
+    id: '2',
+    title: 'Company Update Required',
+    message: 'Hapag-Lloyd AG profile needs verification',
+    type: 'company_update',
+    priority: 'high',
+    isRead: false,
+    createdAt: '2024-08-18T14:15:00Z',
+    relatedEntity: 'company',
+    relatedId: '5'
+  },
+  {
+    id: '3',
+    title: 'System Maintenance',
+    message: 'Scheduled maintenance completed successfully',
+    type: 'system',
+    priority: 'low',
+    isRead: true,
+    createdAt: '2024-08-17T09:00:00Z',
+    relatedEntity: 'system',
+    relatedId: 'maintenance'
+  }
+];
