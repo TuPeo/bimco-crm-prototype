@@ -18,6 +18,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import Header from './Header';
+import { BimcoLogo } from './BimcoLogo';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: HomeIcon },
@@ -80,14 +81,13 @@ export default function Layout({ children }: LayoutProps) {
                     </div>
                   </Transition.Child>
                   
-                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-800 px-6 pb-4">
+                  <div className="flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-4" style={{ backgroundColor: 'var(--bimco-dark-blue-800)' }}>
                     <div className="flex h-16 shrink-0 items-center">
-                      <Image
-                        src="/bimco-logo-w.svg"
-                        alt="BIMCO Logo"
+                      <BimcoLogo 
                         width={120}
                         height={32}
                         className="h-8 w-auto"
+                        color="#ffffff"
                       />
                     </div>
                     <nav className="flex flex-1 flex-col">
@@ -100,10 +100,25 @@ export default function Layout({ children }: LayoutProps) {
                                   href={item.href}
                                   className={clsx(
                                     pathname === item.href
-                                      ? 'bg-blue-700 text-white'
-                                      : 'text-blue-100 hover:text-white hover:bg-blue-700',
+                                      ? 'text-white' 
+                                      : 'text-blue-100 hover:text-white',
                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                   )}
+                                  style={{
+                                    backgroundColor: pathname === item.href 
+                                      ? 'var(--bimco-light-blue-700)' 
+                                      : 'transparent'
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    if (pathname !== item.href) {
+                                      e.currentTarget.style.backgroundColor = 'var(--bimco-light-blue-600)';
+                                    }
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    if (pathname !== item.href) {
+                                      e.currentTarget.style.backgroundColor = 'transparent';
+                                    }
+                                  }}
                                 >
                                   <item.icon
                                     className={clsx(
@@ -129,14 +144,13 @@ export default function Layout({ children }: LayoutProps) {
 
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-800 px-6 pb-4">
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-4" style={{ backgroundColor: 'var(--bimco-dark-blue-800)' }}>
             <div className="flex h-16 shrink-0 items-center">
-              <Image
-                src="/bimco-logo-w.svg"
-                alt="BIMCO Logo"
+              <BimcoLogo 
                 width={120}
                 height={32}
                 className="h-8 w-auto"
+                color="#ffffff"
               />
             </div>
             <nav className="flex flex-1 flex-col">
@@ -149,10 +163,25 @@ export default function Layout({ children }: LayoutProps) {
                           href={item.href}
                           className={clsx(
                             pathname === item.href
-                              ? 'bg-blue-700 text-white'
-                              : 'text-blue-100 hover:text-white hover:bg-blue-700',
+                              ? 'text-white'
+                              : 'text-blue-100 hover:text-white',
                             'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                           )}
+                          style={{
+                            backgroundColor: pathname === item.href 
+                              ? 'var(--bimco-light-blue-700)' 
+                              : 'transparent'
+                          }}
+                          onMouseEnter={(e) => {
+                            if (pathname !== item.href) {
+                              e.currentTarget.style.backgroundColor = 'var(--bimco-light-blue-600)';
+                            }
+                          }}
+                          onMouseLeave={(e) => {
+                            if (pathname !== item.href) {
+                              e.currentTarget.style.backgroundColor = 'transparent';
+                            }
+                          }}
                         >
                           <item.icon
                             className={clsx(

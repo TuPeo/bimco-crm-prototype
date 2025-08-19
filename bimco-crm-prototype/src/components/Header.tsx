@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { BimcoLogo } from './BimcoLogo';
 import { 
   Bars3Icon,
   XMarkIcon,
@@ -37,12 +38,11 @@ export default function Header({ sidebarOpen, setSidebarOpen }: HeaderProps) {
       {/* BIMCO Logo and Brand */}
       <div className="flex items-center gap-x-4 lg:gap-x-6">
         <div className="flex items-center">
-          <Image
-            src="/bimco-logo-w.svg"
-            alt="BIMCO Logo"
+          <BimcoLogo
             width={120}
             height={32}
             className="h-8 w-auto"
+            color="var(--bimco-dark-blue-800)"
           />
           <div className="ml-3">
             <p className="text-xs text-gray-500">Maritime Intelligence System</p>
