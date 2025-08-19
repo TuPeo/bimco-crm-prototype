@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
+import CompanyModal from '@/components/CompanyModal';
 import { mockCompanies } from '@/data/mockData';
 import { Company } from '@/types';
 import { 
@@ -18,6 +19,11 @@ export default function Companies() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [sortField, setSortField] = useState<keyof Company>('registrationNumber');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState<Company | undefined>(undefined);
+  const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
 
   // Filter companies based on search and status
   const filteredCompanies = companies
@@ -54,6 +60,32 @@ export default function Companies() {
 
   const uniqueStatuses = Array.from(new Set(companies.map(c => c.status)));
 
+  // Modal handlers
+  const openAddModal = () => {
+    setSelectedCompany(undefined);
+    setModalMode('add');
+    setIsModalOpen(true);
+  };
+
+  const openEditModal = (company: Company) => {
+    setSelectedCompany(company);
+    setModalMode('edit');
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedCompany(undefined);
+  };
+
+  const handleSaveCompany = (company: Company) => {
+    if (modalMode === 'add') {
+      setCompanies(prev => [...prev, company]);
+    } else {
+      setCompanies(prev => prev.map(c => c.id === company.id ? company : c));
+    }
+  };
+
   return (
     <Layout>
       <div className="space-y-6">
@@ -68,7 +100,10 @@ export default function Companies() {
             </p>
           </div>
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <button className="bimco-btn-primary flex items-center">
+            <button 
+              onClick={openAddModal}
+              className="bimco-btn-primary flex items-center"
+            >
               <PlusIcon className="h-4 w-4 mr-2" />
               Add Company
             </button>
@@ -165,15 +200,17 @@ export default function Companies() {
                     <td>
                       <div className="flex space-x-2">
                         <Link href={`/companies/${company.id}`}>
-                          <button className="text-blue-600 hover:text-blue-900">
+                          <button className="text-blue-600 hover:text-blue-900" title="View">
                             <EyeIcon className="h-4 w-4" />
                           </button>
                         </Link>
-                        <Link href={`/companies/${company.id}/edit`}>
-                          <button className="text-gray-600 hover:text-gray-900">
-                            <PencilIcon className="h-4 w-4" />
-                          </button>
-                        </Link>
+                        <button 
+                          onClick={() => openEditModal(company)}
+                          className="text-gray-600 hover:text-gray-900"
+                          title="Edit"
+                        >
+                          <PencilIcon className="h-4 w-4" />
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -195,6 +232,15 @@ export default function Companies() {
           <button className="bimco-btn-secondary">Export CSV</button>
           <button className="bimco-btn-secondary">Export Excel</button>
         </div>
+        
+        {/* Company Modal */}
+        <CompanyModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onSave={handleSaveCompany}
+          company={selectedCompany}
+          mode={modalMode}
+        />
       </div>
     </Layout>
   );

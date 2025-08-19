@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
+import CompanyModal from '@/components/CompanyModal';
 import { mockCompanies, mockContacts } from '@/data/mockData';
 import { Company, Contact } from '@/types';
 import { 
@@ -21,10 +22,24 @@ export default function CompanyDetail() {
   const companyId = params?.id as string;
   
   const [activeTab, setActiveTab] = useState<'general' | 'address' | 'contacts'>('general');
-  const [isEditing, setIsEditing] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [company, setCompany] = useState(mockCompanies.find(c => c.id === companyId));
 
-  const company = mockCompanies.find(c => c.id === companyId);
   const companyContacts = mockContacts.filter(c => c.companyId === companyId);
+
+  // Modal handlers
+  const openEditModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSaveCompany = (updatedCompany: Company) => {
+    setCompany(updatedCompany);
+    // In a real app, you would also update the global state or make an API call
+  };
 
   if (!company) {
     return (
@@ -65,15 +80,12 @@ export default function CompanyDetail() {
           </div>
           <div className="flex space-x-3">
             <button
-              onClick={() => setIsEditing(!isEditing)}
-              className={`${isEditing ? 'bimco-btn-secondary' : 'bimco-btn-primary'} flex items-center`}
+              onClick={openEditModal}
+              className="bimco-btn-primary flex items-center"
             >
               <PencilIcon className="h-4 w-4 mr-2" />
-              {isEditing ? 'Cancel' : 'Edit'}
+              Edit
             </button>
-            {isEditing && (
-              <button className="bimco-btn-primary">Save Changes</button>
-            )}
           </div>
         </div>
 
@@ -285,6 +297,17 @@ export default function CompanyDetail() {
             </div>
           )}
         </div>
+        
+        {/* Company Edit Modal */}
+        {company && (
+          <CompanyModal
+            isOpen={isModalOpen}
+            onClose={closeModal}
+            onSave={handleSaveCompany}
+            company={company}
+            mode="edit"
+          />
+        )}
       </div>
     </Layout>
   );

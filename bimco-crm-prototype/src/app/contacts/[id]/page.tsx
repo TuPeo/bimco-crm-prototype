@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
+import ContactModal from '@/components/ContactModal';
 import { mockContacts } from '@/data/mockData';
 import { Contact } from '@/types';
 import { 
@@ -22,9 +23,25 @@ export default function ContactDetail() {
   const contactId = params?.id as string;
   
   const [activeTab, setActiveTab] = useState<'general' | 'classifications' | 'history'>('general');
-  const [isEditing, setIsEditing] = useState(false);
+  const [contactData, setContactData] = useState<Contact | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const contact = mockContacts.find(c => c.id === contactId);
+  const contact = contactData || mockContacts.find(c => c.id === contactId);
+
+  // Modal handlers
+  const openEditModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSaveContact = (updatedContact: Omit<Contact, 'id'> | Contact) => {
+    if ('id' in updatedContact) {
+      setContactData(updatedContact as Contact);
+    }
+  };
 
   if (!contact) {
     return (
@@ -65,15 +82,12 @@ export default function ContactDetail() {
           </div>
           <div className="flex space-x-3">
             <button
-              onClick={() => setIsEditing(!isEditing)}
-              className={`${isEditing ? 'bimco-btn-secondary' : 'bimco-btn-primary'} flex items-center`}
+              onClick={openEditModal}
+              className="bimco-btn-primary flex items-center"
             >
               <PencilIcon className="h-4 w-4 mr-2" />
-              {isEditing ? 'Cancel' : 'Edit'}
+              Edit Contact
             </button>
-            {isEditing && (
-              <button className="bimco-btn-primary">Save Changes</button>
-            )}
           </div>
         </div>
 
@@ -318,6 +332,15 @@ export default function ContactDetail() {
           )}
         </div>
       </div>
+
+      {/* Contact Modal */}
+      <ContactModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onSave={handleSaveContact}
+        contact={contact}
+        mode="edit"
+      />
     </Layout>
   );
 }

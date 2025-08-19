@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
+import ContactModal from '@/components/ContactModal';
 import { mockContacts } from '@/data/mockData';
 import { Contact } from '@/types';
 import { 
@@ -19,6 +20,11 @@ export default function Contacts() {
   const [companyFilter, setCompanyFilter] = useState('all');
   const [sortField, setSortField] = useState<keyof Contact>('contactNumber');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
+  const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
 
   // Get unique companies for filter
   const uniqueCompanies = Array.from(new Set(contacts.map(c => c.companyName)));
@@ -58,6 +64,40 @@ export default function Contacts() {
     }
   };
 
+  // Modal handlers
+  const openAddModal = () => {
+    setModalMode('add');
+    setSelectedContact(null);
+    setIsModalOpen(true);
+  };
+
+  const openEditModal = (contact: Contact) => {
+    setModalMode('edit');
+    setSelectedContact(contact);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedContact(null);
+  };
+
+  const handleSaveContact = (contactData: Omit<Contact, 'id'> | Contact) => {
+    if (modalMode === 'add') {
+      const newContact: Contact = {
+        ...contactData as Omit<Contact, 'id'>,
+        id: `contact-${Date.now()}`,
+      };
+      setContacts(prev => [newContact, ...prev]);
+    } else if (modalMode === 'edit' && 'id' in contactData) {
+      setContacts(prev => 
+        prev.map(contact => 
+          contact.id === contactData.id ? contactData as Contact : contact
+        )
+      );
+    }
+  };
+
   return (
     <Layout>
       <div className="space-y-6">
@@ -72,7 +112,10 @@ export default function Contacts() {
             </p>
           </div>
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <button className="bimco-btn-primary flex items-center">
+            <button 
+              onClick={openAddModal}
+              className="bimco-btn-primary flex items-center"
+            >
               <PlusIcon className="h-4 w-4 mr-2" />
               Add Contact
             </button>
@@ -202,11 +245,12 @@ export default function Contacts() {
                             <EyeIcon className="h-4 w-4" />
                           </button>
                         </Link>
-                        <Link href={`/contacts/${contact.id}/edit`}>
-                          <button className="text-gray-600 hover:text-gray-900">
-                            <PencilIcon className="h-4 w-4" />
-                          </button>
-                        </Link>
+                        <button 
+                          onClick={() => openEditModal(contact)}
+                          className="text-gray-600 hover:text-gray-900"
+                        >
+                          <PencilIcon className="h-4 w-4" />
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -229,6 +273,15 @@ export default function Contacts() {
           <button className="bimco-btn-secondary">Export Excel</button>
         </div>
       </div>
+
+      {/* Contact Modal */}
+      <ContactModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onSave={handleSaveContact}
+        contact={selectedContact}
+        mode={modalMode}
+      />
     </Layout>
   );
 }
