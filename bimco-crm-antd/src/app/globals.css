@@ -1,0 +1,248 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* BIMCO Brand Colors */
+:root {
+  /* Primary Blues */
+  --bimco-blue: #00557e;
+  --bimco-light-blue: #04a1ce;
+  --bimco-dark-blue: #004460;
+  --bimco-navy: #002737;
+  
+  /* Secondary Colors */
+  --bimco-orange: #f08320;
+  --bimco-orange-hover: #e5740e;
+  --bimco-green: #48bb78;
+  --bimco-cream: #f6f3ec;
+  
+  /* Grays */
+  --bimco-gray: #768998;
+  --bimco-light-gray: #f2f4f5;
+  --bimco-dark-gray: #37515d;
+}
+
+/* Override Ant Design theme colors */
+.ant-layout-header {
+  background: var(--bimco-blue) !important;
+}
+
+.ant-menu-horizontal {
+  background: var(--bimco-blue) !important;
+  border-bottom: none;
+}
+
+.ant-menu-horizontal .ant-menu-item {
+  color: white !important;
+}
+
+.ant-menu-horizontal .ant-menu-item:hover {
+  color: var(--bimco-light-blue) !important;
+}
+
+/* Dashboard specific styles */
+.dashboard-stats .ant-card {
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.dashboard-stats .ant-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-stats .ant-statistic-title {
+  color: var(--bimco-blue);
+  font-weight: 600;
+}
+
+.dashboard-stats .ant-statistic-content {
+  color: var(--bimco-dark-blue);
+}
+
+/* Chart containers */
+.ant-card .ant-card-body {
+  padding: 16px;
+}
+
+.ant-card-head-title {
+  color: var(--bimco-blue);
+  font-weight: 600;
+}
+
+/* KPI Gauges styling */
+.ant-statistic-title {
+  font-size: 12px !important;
+  margin-top: 8px;
+}
+
+/* Chart tooltips */
+.g2-tooltip {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid var(--bimco-light-blue) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.ant-menu-horizontal .ant-menu-item-selected {
+  color: var(--bimco-light-blue) !important;
+  border-bottom-color: var(--bimco-light-blue) !important;
+}
+
+.ant-layout-sider {
+  background: #fff !important;
+}
+
+.bimco-logo {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 16px 24px;
+}
+
+.dashboard-stats .ant-card {
+  text-align: center;
+}
+
+.dashboard-stats .ant-statistic-title {
+  font-size: 14px;
+  color: var(--bimco-gray);
+}
+
+.dashboard-stats .ant-statistic-content {
+  color: var(--bimco-blue);
+}
+
+.dashboard-stats .ant-statistic-content .anticon {
+  color: var(--bimco-blue);
+}
+
+/* Custom button styles */
+.ant-btn-primary {
+  background-color: var(--bimco-blue);
+  border-color: var(--bimco-blue);
+}
+
+.ant-btn-primary:hover {
+  background-color: var(--bimco-light-blue);
+  border-color: var(--bimco-light-blue);
+}
+
+.ant-btn-primary:focus {
+  background-color: var(--bimco-light-blue);
+  border-color: var(--bimco-light-blue);
+}
+
+.ant-btn-primary:active {
+  background-color: var(--bimco-dark-blue);
+  border-color: var(--bimco-dark-blue);
+}
+
+/* Orange CTA buttons for special actions */
+.ant-btn-orange {
+  background-color: var(--bimco-orange);
+  border-color: var(--bimco-orange);
+  color: white;
+}
+
+.ant-btn-orange:hover,
+.ant-btn-orange:focus {
+  background-color: var(--bimco-orange-hover);
+  border-color: var(--bimco-orange-hover);
+  color: white;
+}
+
+.ant-btn-orange:active {
+  background-color: var(--bimco-orange-hover);
+  border-color: var(--bimco-orange-hover);
+  color: white;
+}
+
+/* Special styling for important action buttons */
+.bimco-cta-button {
+  background: linear-gradient(135deg, var(--bimco-orange) 0%, var(--bimco-orange-hover) 100%);
+  border: none;
+  box-shadow: 0 2px 4px rgba(240, 131, 32, 0.3);
+  transition: all 0.3s ease;
+}
+
+.bimco-cta-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(240, 131, 32, 0.4);
+}
+
+/* Table customization */
+.ant-table-thead > tr > th {
+  background-color: var(--bimco-light-gray);
+  font-weight: 600;
+  color: var(--bimco-dark-gray);
+}
+
+.ant-pagination-item-active {
+  border-color: var(--bimco-blue);
+}
+
+.ant-pagination-item-active a {
+  color: var(--bimco-blue);
+}
+
+/* Form styles */
+.ant-form-item-label > label {
+  font-weight: 600;
+  color: var(--bimco-dark-gray);
+}
+
+/* Card hover effect */
+.ant-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 63, 127, 0.15);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Status badges */
+.status-active {
+  color: #52c41a;
+  background-color: #f6ffed;
+  border: 1px solid #b7eb8f;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.status-inactive {
+  color: #ff4d4f;
+  background-color: #fff2f0;
+  border: 1px solid #ffb3b3;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.status-upcoming {
+  color: #1890ff;
+  background-color: #e6f7ff;
+  border: 1px solid #91d5ff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.status-completed {
+  color: #52c41a;
+  background-color: #f6ffed;
+  border: 1px solid #b7eb8f;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
