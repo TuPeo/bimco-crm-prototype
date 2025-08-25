@@ -83,14 +83,18 @@ export interface Fleet {
   id: string;
   name: string;
   type: string;
+  vesselType?: string; // Added for fleet management
   capacity: number;
   registration: string;
-  operationalStatus: 'Active' | 'Inactive' | 'Maintenance' | 'Decommissioned';
+  imoNumber?: string; // Added for fleet management
+  operationalStatus: 'Active' | 'Inactive' | 'Maintenance' | 'Decommissioned' | 'In Service' | 'Under Maintenance' | 'Dry Dock' | 'Laid Up' | 'Out of Service';
   companyId: string;
   companyName: string;
   ihsNumber?: string;
   yearBuilt?: number;
+  builtYear?: number; // Added for consistency
   flag: string;
+  classificationSociety?: string; // Added for fleet management
   grossTonnage?: number;
   deadweight?: number;
   length?: number;
