@@ -1,3 +1,35 @@
+// Re-export types from components to consolidate type definitions
+export type { 
+  Notification 
+} from '@/components/InternalNotificationCenter';
+
+export type { 
+  EmailTemplate, 
+  EmailCampaign, 
+  EmailAnalytics 
+} from '@/components/EmailManagement';
+
+export type { 
+  SmartContract, 
+  ContractParty, 
+  ContractTerm, 
+  ContractDocument, 
+  ContractMilestone 
+} from '@/components/SmartConManagement';
+
+export type { 
+  Segment, 
+  SegmentCriteria, 
+  SegmentPerformance 
+} from '@/components/EnhancedSegmentManagement';
+
+export type { 
+  Permission, 
+  Role, 
+  User as RBACUser, 
+  AccessLog 
+} from '@/components/RBACPermissionManager';
+
 export interface Company {
   id: string;
   registrationNumber: string;
@@ -306,42 +338,43 @@ export interface UserPermissions {
   allowedCompanyTypes?: string[];
 }
 
-export interface Segment {
-  id: string;
-  name: string;
-  description?: string;
-  criteria: SegmentCriteria;
-  memberCount: number;
-  status: 'Active' | 'Draft' | 'Archived';
-  createdBy: string;
-  dateCreated: string;
-  lastUpdated: string;
-  onHold: boolean;
-  readyForInvoice: boolean;
-}
+// Legacy segment interfaces - replaced by enhanced components
+// export interface Segment {
+//   id: string;
+//   name: string;
+//   description?: string;
+//   criteria: SegmentCriteria;
+//   memberCount: number;
+//   status: 'Active' | 'Draft' | 'Archived';
+//   createdBy: string;
+//   dateCreated: string;
+//   lastUpdated: string;
+//   onHold: boolean;
+//   readyForInvoice: boolean;
+// }
 
-export interface SegmentCriteria {
-  // Original criteria structure
-  companies?: {
-    statuses?: string[];
-    types?: string[];
-    countries?: string[];
-    registrationDateRange?: { start: string; end: string };
-  };
-  contacts?: {
-    classifications?: string[];
-    roles?: string[];
-    statuses?: string[];
-  };
-  courses?: {
-    categories?: string[];
-    dateRange?: { start: string; end: string };
-  };
-  // Extended criteria for search-based segments
-  searchQuery?: PowerSearchQuery;
-  includedItemIds?: string[];
-  createdFromSearch?: boolean;
-}
+// export interface SegmentCriteria {
+//   // Original criteria structure
+//   companies?: {
+//     statuses?: string[];
+//     types?: string[];
+//     countries?: string[];
+//     registrationDateRange?: { start: string; end: string };
+//   };
+//   contacts?: {
+//     classifications?: string[];
+//     roles?: string[];
+//     statuses?: string[];
+//   };
+//   courses?: {
+//     categories?: string[];
+//     dateRange?: { start: string; end: string };
+//   };
+//   // Extended criteria for search-based segments
+//   searchQuery?: PowerSearchQuery;
+//   includedItemIds?: string[];
+//   createdFromSearch?: boolean;
+// }
 
 export interface SegmentMember {
   id: string;

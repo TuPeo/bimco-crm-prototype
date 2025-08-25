@@ -13,7 +13,9 @@ import {
   MagnifyingGlassIcon,
   UserCircleIcon,
   TruckIcon,
-  RectangleGroupIcon
+  RectangleGroupIcon,
+  DocumentTextIcon,
+  ShieldCheckIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -30,6 +32,8 @@ const navigation = [
   { name: 'Courses & Events', href: '/courses', icon: AcademicCapIcon },
   { name: 'Search', href: '/search', icon: MagnifyingGlassIcon },
   { name: 'Segments', href: '/segments', icon: RectangleGroupIcon },
+  { name: 'SmartCon', href: '/contracts', icon: DocumentTextIcon },
+  { name: 'Permission', href: '/rbac', icon: ShieldCheckIcon },
   { name: 'Notifications', href: '/notifications', icon: BellIcon },
 ];
 
