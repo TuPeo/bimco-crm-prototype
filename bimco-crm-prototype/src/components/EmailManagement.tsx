@@ -2,35 +2,49 @@
 
 import { useState } from 'react';
 import { 
-  PaperAirplaneIcon,
-  DocumentIcon,
-  UserGroupIcon,
-  ClockIcon,
+  CloudIcon,
+  BellIcon,
+  CogIcon,
+  PlusIcon,
+  MagnifyingGlassIcon,
+  EyeIcon,
   PencilIcon,
   TrashIcon,
-  EyeIcon,
-  ChartBarIcon,
-  FolderIcon,
-  MagnifyingGlassIcon,
-  FunnelIcon,
   ArrowPathIcon,
-  CheckIcon,
-  XMarkIcon
+  CheckCircleIcon,
+  ExclamationTriangleIcon,
+  ClockIcon,
+  PauseIcon,
+  PlayIcon,
+  LinkIcon,
+  InformationCircleIcon,
+  XMarkIcon,
+  DocumentIcon,
+  PaperAirplaneIcon,
+  ChartBarIcon,
 } from '@heroicons/react/24/outline';
 
+import {
+  QueueListIcon,
+  ServerIcon,
+} from '@heroicons/react/24/outline';
+
+// Original EmailTemplate interface (for backward compatibility)
 export interface EmailTemplate {
   id: string;
   name: string;
   subject: string;
   content: string;
-  category: 'course' | 'marketing' | 'support' | 'newsletter' | 'event' | 'system';
+  category: 'course' | 'marketing' | 'support' | 'newsletter' | 'event' | 'system' | 'invoice' | 'certificate';
   variables: string[];
   createdAt: string;
   lastUsed?: string;
   usageCount: number;
   isActive: boolean;
+  dotdigitalTemplateId?: string;
 }
 
+// Original EmailCampaign interface (for backward compatibility)
 export interface EmailCampaign {
   id: string;
   name: string;
@@ -50,44 +64,163 @@ export interface EmailCampaign {
   createdBy: string;
 }
 
-export interface EmailAnalytics {
-  deliveryRate: number;
-  openRate: number;
-  clickRate: number;
-  bounceRate: number;
-  unsubscribeRate: number;
-  revenueGenerated?: number;
+// New Dotdigital Campaign Interface
+export interface DotdigitalCampaign {
+  id: string;
+  dotdigitalId: string;
+  name: string;
+  subject: string;
+  status: 'draft' | 'scheduled' | 'sending' | 'sent' | 'paused' | 'failed';
+  assignedArea: 'MyAccount' | 'SmartCon' | 'Business Central' | 'Course Management' | 'General';
+  triggerType: 'manual' | 'event' | 'scheduled' | 'api';
+  triggerEvents: string[];
+  totalRecipients: number;
+  sentCount: number;
+  deliveredCount: number;
+  openCount: number;
+  clickCount: number;
+  bounceCount: number;
+  unsubscribeCount: number;
+  scheduledAt?: string;
+  sentAt?: string;
+  createdAt: string;
+  lastSyncAt: string;
+  syncStatus: 'synced' | 'pending' | 'failed' | 'never';
+  dotdigitalUrl?: string;
+}
+
+// Trigger Event Interface
+export interface TriggerEvent {
+  id: string;
+  name: string;
+  description: string;
+  eventType: 'event_registration' | 'invoice_ready' | 'course_completion' | 'certificate_issued' | 'payment_received' | 'custom';
+  isActive: boolean;
+  associatedCampaigns: string[];
+  conditions: {
+    [key: string]: any;
+  };
+  notificationDelay: number; // in minutes
+  createdAt: string;
+}
+
+// Mail Queue Interface
+export interface EmailQueue {
+  id: string;
+  recipientEmail: string;
+  recipientName: string;
+  subject: string;
+  content: string;
+  templateId?: string;
+  campaignId?: string;
+  priority: 'high' | 'normal' | 'low';
+  status: 'queued' | 'processing' | 'sent' | 'failed' | 'scheduled';
+  scheduledAt?: string;
+  sentAt?: string;
+  failureReason?: string;
+  retryCount: number;
+  maxRetries: number;
+  deliveryMethod: 'direct' | 'dotdigital';
+  metadata: {
+    courseId?: string;
+    contactId?: string;
+    eventType?: 'course_registration' | 'enrollment_confirmation' | 'course_reminder' | 'invoice_ready' | 'certificate_issued';
+    invoiceId?: string;
+    [key: string]: any;
+  };
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface EmailManagementProps {
   templates: EmailTemplate[];
   campaigns: EmailCampaign[];
+  dotdigitalCampaigns?: DotdigitalCampaign[];
+  triggerEvents?: TriggerEvent[];
+  emailQueue?: EmailQueue[];
   onCreateTemplate: (template: Omit<EmailTemplate, 'id' | 'createdAt' | 'usageCount'>) => void;
   onUpdateTemplate: (templateId: string, template: Partial<EmailTemplate>) => void;
   onDeleteTemplate: (templateId: string) => void;
   onCreateCampaign: (campaign: Omit<EmailCampaign, 'id' | 'createdAt' | 'sentCount' | 'deliveredCount' | 'openCount' | 'clickCount' | 'bounceCount' | 'unsubscribeCount'>) => void;
   onUpdateCampaign: (campaignId: string, campaign: Partial<EmailCampaign>) => void;
   onDeleteCampaign: (campaignId: string) => void;
+  onSyncDotdigital?: () => Promise<void>;
+  onCreateTrigger?: (trigger: Omit<TriggerEvent, 'id' | 'createdAt'>) => void;
+  onUpdateTrigger?: (triggerId: string, updates: Partial<TriggerEvent>) => void;
+  onDeleteTrigger?: (triggerId: string) => void;
+  onProcessQueue?: (queueId: string) => void;
+  onRetryQueueItem?: (queueId: string) => void;
 }
 
 export default function EmailManagement({
   templates,
   campaigns,
+  dotdigitalCampaigns = [],
+  triggerEvents = [],
+  emailQueue = [],
   onCreateTemplate,
   onUpdateTemplate,
   onDeleteTemplate,
   onCreateCampaign,
   onUpdateCampaign,
-  onDeleteCampaign
+  onDeleteCampaign,
+  onSyncDotdigital,
+  onCreateTrigger,
+  onUpdateTrigger,
+  onDeleteTrigger,
+  onProcessQueue,
+  onRetryQueueItem
 }: EmailManagementProps) {
-  const [activeTab, setActiveTab] = useState<'templates' | 'campaigns' | 'analytics'>('templates');
+  const [activeTab, setActiveTab] = useState<'templates' | 'campaigns' | 'dotdigital' | 'queue' | 'triggers' | 'settings'>('templates');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedArea, setSelectedArea] = useState<string>('all');
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState<EmailTemplate | EmailCampaign | null>(null);
+  const [editingItem, setEditingItem] = useState<any>(null);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [lastSyncTime, setLastSyncTime] = useState<Date>(new Date());
 
-  // Template Management
-  const EmailTemplateManager = () => {
+  // Handle Dotdigital sync
+  const handleSync = async () => {
+    if (!onSyncDotdigital) return;
+    setIsSyncing(true);
+    try {
+      await onSyncDotdigital();
+      setLastSyncTime(new Date());
+    } catch (error) {
+      console.error('Sync failed:', error);
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  // Get area-specific styling
+  const getAreaColor = (area: string) => {
+    const colors: { [key: string]: string } = {
+      'MyAccount': 'bg-blue-100 text-blue-800',
+      'SmartCon': 'bg-purple-100 text-purple-800',
+      'Business Central': 'bg-green-100 text-green-800',
+      'Course Management': 'bg-orange-100 text-orange-800',
+      'General': 'bg-gray-100 text-gray-800'
+    };
+    return colors[area] || 'bg-gray-100 text-gray-800';
+  };
+
+  // Get status styling and icon
+  const getStatusInfo = (status: string) => {
+    const statusConfig: { [key: string]: { color: string; icon: any } } = {
+      'sent': { color: 'bg-green-100 text-green-800', icon: CheckCircleIcon },
+      'sending': { color: 'bg-blue-100 text-blue-800', icon: ArrowPathIcon },
+      'scheduled': { color: 'bg-yellow-100 text-yellow-800', icon: ClockIcon },
+      'paused': { color: 'bg-orange-100 text-orange-800', icon: PauseIcon },
+      'failed': { color: 'bg-red-100 text-red-800', icon: ExclamationTriangleIcon },
+      'draft': { color: 'bg-gray-100 text-gray-800', icon: PencilIcon }
+    };
+    return statusConfig[status] || statusConfig['draft'];
+  };
+
+  // Templates Tab Component
+  const TemplatesTab = () => {
     const [newTemplate, setNewTemplate] = useState<Partial<EmailTemplate>>({
       name: '',
       subject: '',
@@ -123,12 +256,17 @@ export default function EmailManagement({
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900">Email Templates</h2>
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">Email Templates</h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Create and manage email templates for various purposes
+            </p>
+          </div>
           <button
             onClick={() => setIsCreateModalOpen(true)}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
           >
-            <PencilIcon className="w-4 h-4" />
+            <PlusIcon className="w-4 h-4" />
             <span>Create Template</span>
           </button>
         </div>
@@ -314,37 +452,29 @@ export default function EmailManagement({
     );
   };
 
-  // Campaign Management
-  const EmailCampaignManager = () => {
-    const getStatusColor = (status: EmailCampaign['status']) => {
-      switch (status) {
-        case 'sent':
-          return 'bg-green-100 text-green-800';
-        case 'sending':
-          return 'bg-blue-100 text-blue-800';
-        case 'scheduled':
-          return 'bg-yellow-100 text-yellow-800';
-        case 'paused':
-          return 'bg-orange-100 text-orange-800';
-        case 'failed':
-          return 'bg-red-100 text-red-800';
-        default:
-          return 'bg-gray-100 text-gray-800';
-      }
+  // Campaigns Tab Component
+  const CampaignsTab = () => {
+    const getStatusColor = (status: string) => {
+      const colors: { [key: string]: string } = {
+        'sent': 'bg-green-100 text-green-800',
+        'sending': 'bg-blue-100 text-blue-800',
+        'scheduled': 'bg-yellow-100 text-yellow-800',
+        'paused': 'bg-orange-100 text-orange-800',
+        'failed': 'bg-red-100 text-red-800',
+        'draft': 'bg-gray-100 text-gray-800'
+      };
+      return colors[status] || 'bg-gray-100 text-gray-800';
     };
-
-    const calculateAnalytics = (campaign: EmailCampaign): EmailAnalytics => ({
-      deliveryRate: campaign.totalRecipients > 0 ? (campaign.deliveredCount / campaign.totalRecipients) * 100 : 0,
-      openRate: campaign.deliveredCount > 0 ? (campaign.openCount / campaign.deliveredCount) * 100 : 0,
-      clickRate: campaign.openCount > 0 ? (campaign.clickCount / campaign.openCount) * 100 : 0,
-      bounceRate: campaign.totalRecipients > 0 ? (campaign.bounceCount / campaign.totalRecipients) * 100 : 0,
-      unsubscribeRate: campaign.totalRecipients > 0 ? (campaign.unsubscribeCount / campaign.totalRecipients) * 100 : 0,
-    });
 
     return (
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900">Email Campaigns</h2>
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">Email Campaigns</h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Manage and monitor email campaigns
+            </p>
+          </div>
           <button
             onClick={() => setIsCreateModalOpen(true)}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
@@ -366,55 +496,484 @@ export default function EmailManagement({
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {campaigns.map((campaign) => {
-                const analytics = calculateAnalytics(campaign);
-                return (
-                  <tr key={campaign.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div>
-                        <div className="text-sm font-medium text-gray-900">{campaign.name}</div>
-                        <div className="text-sm text-gray-500">
-                          Created {new Date(campaign.createdAt).toLocaleDateString()}
-                        </div>
+              {campaigns.map((campaign) => (
+                <tr key={campaign.id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div>
+                      <div className="text-sm font-medium text-gray-900">{campaign.name}</div>
+                      <div className="text-sm text-gray-500">
+                        Created {new Date(campaign.createdAt).toLocaleDateString()}
                       </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(campaign.status)}`}>
-                        {campaign.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      <div>
-                        <div>{campaign.sentCount} / {campaign.totalRecipients} sent</div>
-                        <div className="text-xs text-gray-500">{campaign.deliveredCount} delivered</div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <div className="space-y-1">
-                        <div>Open: {analytics.openRate.toFixed(1)}%</div>
-                        <div>Click: {analytics.clickRate.toFixed(1)}%</div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                      <button className="text-blue-600 hover:text-blue-900">
-                        <EyeIcon className="w-4 h-4" />
-                      </button>
-                      <button className="text-gray-600 hover:text-gray-900">
-                        <PencilIcon className="w-4 h-4" />
-                      </button>
-                      <button 
-                        onClick={() => onDeleteCampaign(campaign.id)}
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        <TrashIcon className="w-4 h-4" />
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(campaign.status)}`}>
+                      {campaign.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <div>
+                      <div>{campaign.sentCount} / {campaign.totalRecipients} sent</div>
+                      <div className="text-xs text-gray-500">{campaign.deliveredCount} delivered</div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <div className="space-y-1">
+                      <div>Open: {campaign.deliveredCount > 0 ? Math.round((campaign.openCount / campaign.deliveredCount) * 100) : 0}%</div>
+                      <div>Click: {campaign.openCount > 0 ? Math.round((campaign.clickCount / campaign.openCount) * 100) : 0}%</div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                    <button className="text-blue-600 hover:text-blue-900">
+                      <EyeIcon className="w-4 h-4" />
+                    </button>
+                    <button className="text-gray-600 hover:text-gray-900">
+                      <PencilIcon className="w-4 h-4" />
+                    </button>
+                    <button 
+                      onClick={() => onDeleteCampaign(campaign.id)}
+                      className="text-red-600 hover:text-red-900"
+                    >
+                      <TrashIcon className="w-4 h-4" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
+      </div>
+    );
+  };
+
+  // Dotdigital Campaigns Tab Component (enhanced feature)
+  const DotdigitalTab = () => {
+    if (!onSyncDotdigital) {
+      return (
+        <div className="text-center py-12">
+          <CloudIcon className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Dotdigital Integration</h3>
+          <p className="text-gray-500">Dotdigital integration is not configured</p>
+        </div>
+      );
+    }
+
+    const filteredCampaigns = dotdigitalCampaigns.filter(campaign => {
+      const matchesSearch = campaign.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          campaign.subject.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesArea = selectedArea === 'all' || campaign.assignedArea === selectedArea;
+      return matchesSearch && matchesArea;
+    });
+
+    return (
+      <div className="space-y-6">
+        {/* Header with Sync */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">Dotdigital Campaigns</h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Manage email campaigns synchronized from Dotdigital platform
+            </p>
+          </div>
+          <div className="flex items-center space-x-3">
+            <div className="text-sm text-gray-500">
+              Last sync: {lastSyncTime.toLocaleTimeString()}
+            </div>
+            <button
+              onClick={handleSync}
+              disabled={isSyncing}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 disabled:opacity-50"
+            >
+              <CloudIcon className={`w-4 h-4 ${isSyncing ? 'animate-spin' : ''}`} />
+              <span>{isSyncing ? 'Syncing...' : 'Sync Now'}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Sync Status */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="flex items-center">
+            <InformationCircleIcon className="w-5 h-5 text-blue-600 mr-3" />
+            <div className="flex-1">
+              <h3 className="text-sm font-medium text-blue-900">Sync Status</h3>
+              <p className="text-sm text-blue-700 mt-1">
+                {dotdigitalCampaigns.filter(c => c.syncStatus === 'synced').length} campaigns synced, 
+                {dotdigitalCampaigns.filter(c => c.syncStatus === 'pending').length} pending, 
+                {dotdigitalCampaigns.filter(c => c.syncStatus === 'failed').length} failed
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div className="flex space-x-4">
+          <div className="relative flex-1">
+            <MagnifyingGlassIcon className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search campaigns..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <select
+            value={selectedArea}
+            onChange={(e) => setSelectedArea(e.target.value)}
+            className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="all">All Areas</option>
+            <option value="MyAccount">MyAccount</option>
+            <option value="SmartCon">SmartCon</option>
+            <option value="Business Central">Business Central</option>
+            <option value="Course Management">Course Management</option>
+            <option value="General">General</option>
+          </select>
+        </div>
+
+        {/* Campaigns Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+          {filteredCampaigns.map((campaign) => {
+            const statusInfo = getStatusInfo(campaign.status);
+            const StatusIcon = statusInfo.icon;
+
+            return (
+              <div key={campaign.id} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center space-x-2 flex-1">
+                    <StatusIcon className={`w-5 h-5 ${
+                      campaign.status === 'sending' ? 'animate-spin text-blue-600' : 'text-gray-600'
+                    }`} />
+                    <h3 className="font-semibold text-gray-900 truncate">{campaign.name}</h3>
+                  </div>
+                  <div className="flex space-x-2 ml-2">
+                    {campaign.dotdigitalUrl && (
+                      <a
+                        href={campaign.dotdigitalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-blue-600"
+                        title="Open in Dotdigital"
+                      >
+                        <LinkIcon className="w-4 h-4" />
+                      </a>
+                    )}
+                    <button
+                      onClick={() => setEditingItem(campaign)}
+                      className="text-gray-400 hover:text-blue-600"
+                    >
+                      <CogIcon className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <p className="text-sm text-gray-600 truncate">{campaign.subject}</p>
+                  
+                  <div className="flex items-center justify-between">
+                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getAreaColor(campaign.assignedArea)}`}>
+                      {campaign.assignedArea}
+                    </span>
+                    <span className={`text-xs px-2 py-1 rounded-full ${statusInfo.color}`}>
+                      {campaign.status}
+                    </span>
+                  </div>
+
+                  {/* Performance metrics */}
+                  {campaign.status === 'sent' && (
+                    <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
+                      <div className="bg-gray-50 p-2 rounded">
+                        <div className="font-medium">Delivered</div>
+                        <div>{campaign.deliveredCount}/{campaign.totalRecipients}</div>
+                      </div>
+                      <div className="bg-gray-50 p-2 rounded">
+                        <div className="font-medium">Opens</div>
+                        <div>{campaign.openCount} ({campaign.deliveredCount > 0 ? Math.round((campaign.openCount/campaign.deliveredCount)*100) : 0}%)</div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Sync status */}
+                  <div className="flex items-center justify-between text-xs text-gray-500">
+                    <span className={`flex items-center space-x-1 ${
+                      campaign.syncStatus === 'synced' ? 'text-green-600' :
+                      campaign.syncStatus === 'pending' ? 'text-yellow-600' :
+                      campaign.syncStatus === 'failed' ? 'text-red-600' :
+                      'text-gray-500'
+                    }`}>
+                      <div className={`w-2 h-2 rounded-full ${
+                        campaign.syncStatus === 'synced' ? 'bg-green-500' :
+                        campaign.syncStatus === 'pending' ? 'bg-yellow-500' :
+                        campaign.syncStatus === 'failed' ? 'bg-red-500' :
+                        'bg-gray-400'
+                      }`} />
+                      <span>{campaign.syncStatus}</span>
+                    </span>
+                    <span>
+                      Synced {new Date(campaign.lastSyncAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {filteredCampaigns.length === 0 && (
+          <div className="text-center py-12">
+            <CloudIcon className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No campaigns found</h3>
+            <p className="text-gray-500">Try syncing with Dotdigital or adjust your search filters</p>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // Mail Queue Tab Component
+  const MailQueueTab = () => {
+    const [queueFilter, setQueueFilter] = useState<'all' | 'queued' | 'processing' | 'sent' | 'failed' | 'scheduled'>('all');
+
+    const getStatusColor = (status: EmailQueue['status']) => {
+      const colors = {
+        'sent': 'bg-green-100 text-green-800',
+        'processing': 'bg-blue-100 text-blue-800',
+        'queued': 'bg-gray-100 text-gray-800',
+        'scheduled': 'bg-yellow-100 text-yellow-800',
+        'failed': 'bg-red-100 text-red-800'
+      };
+      return colors[status] || 'bg-gray-100 text-gray-800';
+    };
+
+    const getPriorityColor = (priority: EmailQueue['priority']) => {
+      const colors = {
+        'high': 'bg-red-50 text-red-700 border-red-200',
+        'normal': 'bg-blue-50 text-blue-700 border-blue-200',
+        'low': 'bg-gray-50 text-gray-700 border-gray-200'
+      };
+      return colors[priority];
+    };
+
+    const getEventTypeIcon = (eventType?: string) => {
+      switch (eventType) {
+        case 'course_registration':
+          return <DocumentIcon className="w-4 h-4 text-blue-600" />;
+        case 'enrollment_confirmation':
+          return <CheckCircleIcon className="w-4 h-4 text-green-600" />;
+        case 'course_reminder':
+          return <ClockIcon className="w-4 h-4 text-yellow-600" />;
+        case 'invoice_ready':
+          return <DocumentIcon className="w-4 h-4 text-orange-600" />;
+        case 'certificate_issued':
+          return <DocumentIcon className="w-4 h-4 text-purple-600" />;
+        default:
+          return <PaperAirplaneIcon className="w-4 h-4 text-gray-600" />;
+      }
+    };
+
+    const filteredQueue = emailQueue.filter(item => {
+      const matchesSearch = item.recipientEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          item.recipientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          item.subject.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesStatus = queueFilter === 'all' || item.status === queueFilter;
+      return matchesSearch && matchesStatus;
+    });
+
+    const queueStats = {
+      total: emailQueue.length,
+      queued: emailQueue.filter(item => item.status === 'queued').length,
+      processing: emailQueue.filter(item => item.status === 'processing').length,
+      sent: emailQueue.filter(item => item.status === 'sent').length,
+      failed: emailQueue.filter(item => item.status === 'failed').length,
+      scheduled: emailQueue.filter(item => item.status === 'scheduled').length
+    };
+
+    return (
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">Mail Queue Management</h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Monitor and manage scheduled and queued email deliveries
+            </p>
+          </div>
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={() => onProcessQueue?.('all')}
+              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2"
+            >
+              <PlayIcon className="w-4 h-4" />
+              <span>Process Queue</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Queue Statistics */}
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+          <div className="bg-gray-50 p-4 rounded-lg border">
+            <div className="text-2xl font-bold text-gray-900">{queueStats.total}</div>
+            <div className="text-sm text-gray-600">Total</div>
+          </div>
+          <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+            <div className="text-2xl font-bold text-yellow-800">{queueStats.queued}</div>
+            <div className="text-sm text-yellow-700">Queued</div>
+          </div>
+          <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+            <div className="text-2xl font-bold text-blue-800">{queueStats.processing}</div>
+            <div className="text-sm text-blue-700">Processing</div>
+          </div>
+          <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
+            <div className="text-2xl font-bold text-orange-800">{queueStats.scheduled}</div>
+            <div className="text-sm text-orange-700">Scheduled</div>
+          </div>
+          <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+            <div className="text-2xl font-bold text-green-800">{queueStats.sent}</div>
+            <div className="text-sm text-green-700">Sent</div>
+          </div>
+          <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+            <div className="text-2xl font-bold text-red-800">{queueStats.failed}</div>
+            <div className="text-sm text-red-700">Failed</div>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div className="flex space-x-4">
+          <div className="relative flex-1">
+            <MagnifyingGlassIcon className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search queue items..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <select
+            value={queueFilter}
+            onChange={(e) => setQueueFilter(e.target.value as typeof queueFilter)}
+            className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="all">All Status</option>
+            <option value="queued">Queued</option>
+            <option value="processing">Processing</option>
+            <option value="scheduled">Scheduled</option>
+            <option value="sent">Sent</option>
+            <option value="failed">Failed</option>
+          </select>
+        </div>
+
+        {/* Queue Items */}
+        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Recipient</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Method</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Scheduled</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {filteredQueue.map((item) => (
+                  <tr key={item.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        {getEventTypeIcon(item.metadata?.eventType)}
+                        <div className="ml-3">
+                          <div className="text-sm font-medium text-gray-900">{item.recipientName}</div>
+                          <div className="text-sm text-gray-500">{item.recipientEmail}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="text-sm text-gray-900 max-w-xs truncate">{item.subject}</div>
+                      {item.metadata?.courseId && (
+                        <div className="text-xs text-gray-500">Course: {item.metadata.courseId}</div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(item.status)}`}>
+                        {item.status}
+                      </span>
+                      {item.status === 'failed' && item.failureReason && (
+                        <div className="text-xs text-red-600 mt-1 max-w-xs truncate" title={item.failureReason}>
+                          {item.failureReason}
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`inline-flex items-center px-2 py-1 rounded border text-xs font-medium ${getPriorityColor(item.priority)}`}>
+                        {item.priority}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        {item.deliveryMethod === 'dotdigital' ? (
+                          <CloudIcon className="w-4 h-4 text-blue-600 mr-1" />
+                        ) : (
+                          <ServerIcon className="w-4 h-4 text-gray-600 mr-1" />
+                        )}
+                        <span className="text-sm text-gray-900">{item.deliveryMethod}</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {item.scheduledAt ? (
+                        <div>
+                          <div>{new Date(item.scheduledAt).toLocaleDateString()}</div>
+                          <div className="text-xs">{new Date(item.scheduledAt).toLocaleTimeString()}</div>
+                        </div>
+                      ) : (
+                        <span className="text-gray-400">Immediate</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div className="flex space-x-2">
+                        {item.status === 'failed' && (
+                          <button
+                            onClick={() => onRetryQueueItem?.(item.id)}
+                            className="text-green-600 hover:text-green-900"
+                            title="Retry sending"
+                          >
+                            <ArrowPathIcon className="w-4 h-4" />
+                          </button>
+                        )}
+                        {(item.status === 'queued' || item.status === 'scheduled') && (
+                          <button
+                            onClick={() => onProcessQueue?.(item.id)}
+                            className="text-blue-600 hover:text-blue-900"
+                            title="Process immediately"
+                          >
+                            <PlayIcon className="w-4 h-4" />
+                          </button>
+                        )}
+                        <button
+                          onClick={() => setEditingItem(item)}
+                          className="text-gray-600 hover:text-gray-900"
+                          title="View details"
+                        >
+                          <EyeIcon className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {filteredQueue.length === 0 && (
+          <div className="text-center py-12">
+            <QueueListIcon className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No queue items found</h3>
+            <p className="text-gray-500">No emails match the current filter criteria</p>
+          </div>
+        )}
       </div>
     );
   };
@@ -427,11 +986,14 @@ export default function EmailManagement({
           {[
             { id: 'templates', name: 'Templates', icon: DocumentIcon },
             { id: 'campaigns', name: 'Campaigns', icon: PaperAirplaneIcon },
-            { id: 'analytics', name: 'Analytics', icon: ChartBarIcon },
+            ...(onSyncDotdigital ? [{ id: 'dotdigital', name: 'Dotdigital', icon: CloudIcon }] : []),
+            { id: 'queue', name: 'Mail Queue', icon: QueueListIcon },
+            ...(onCreateTrigger ? [{ id: 'triggers', name: 'Triggers', icon: BellIcon }] : []),
+            { id: 'settings', name: 'Settings', icon: CogIcon },
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as 'templates' | 'campaigns' | 'analytics')}
+              onClick={() => setActiveTab(tab.id as typeof activeTab)}
               className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm ${
                 activeTab === tab.id
                   ? 'border-blue-500 text-blue-600'
@@ -446,13 +1008,22 @@ export default function EmailManagement({
       </div>
 
       {/* Tab Content */}
-      {activeTab === 'templates' && <EmailTemplateManager />}
-      {activeTab === 'campaigns' && <EmailCampaignManager />}
-      {activeTab === 'analytics' && (
+      {activeTab === 'templates' && <TemplatesTab />}
+      {activeTab === 'campaigns' && <CampaignsTab />}
+      {activeTab === 'dotdigital' && <DotdigitalTab />}
+      {activeTab === 'queue' && <MailQueueTab />}
+      {activeTab === 'triggers' && (
         <div className="text-center py-12">
-          <ChartBarIcon className="w-16 h-16 mx-auto text-gray-300 mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Email Analytics</h3>
-          <p className="text-gray-500">Detailed analytics dashboard coming soon</p>
+          <BellIcon className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Trigger Events</h3>
+          <p className="text-gray-500">Trigger-based notifications feature coming soon</p>
+        </div>
+      )}
+      {activeTab === 'settings' && (
+        <div className="text-center py-12">
+          <CogIcon className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Email Settings</h3>
+          <p className="text-gray-500">Email management settings coming soon</p>
         </div>
       )}
     </div>
