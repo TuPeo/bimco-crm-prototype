@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Layout from '@/components/Layout';
 import PowerSearchPanel from '@/components/PowerSearchPanel';
 import SavedSearchManager from '@/components/SavedSearchManager';
@@ -19,10 +20,28 @@ import {
 } from '@heroicons/react/24/outline';
 
 export default function SearchPage() {
+  const searchParams = useSearchParams();
+  const globalQuery = searchParams.get('q') || '';
+  
   const [currentQuery, setCurrentQuery] = useState<PowerSearchQuery | null>(null);
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [activeTab, setActiveTab] = useState('search');
+
+  // Initialize with global search query if present
+  useEffect(() => {
+    if (globalQuery) {
+      const initialQuery: PowerSearchQuery = {
+        query: globalQuery,
+        filters: {
+          entityTypes: ['company', 'contact', 'course', 'fleet']
+        },
+        sorting: { field: 'relevance', direction: 'desc' },
+        pagination: { page: 1, limit: 50 }
+      };
+      handleSearch(initialQuery);
+    }
+  }, [globalQuery]);
 
   // Mock user permissions - in real app, this would come from auth context
   const userPermissions: UserPermissions = {
@@ -281,6 +300,8 @@ export default function SearchPage() {
               onSearch={handleSearch}
               userPermissions={userPermissions}
               isLoading={isSearching}
+              initialQuery={globalQuery}
+              initialFilters={{ entityTypes: ['company', 'contact', 'course', 'fleet'] }}
             />
 
             {/* Search Results */}
