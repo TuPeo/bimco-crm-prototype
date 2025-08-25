@@ -964,61 +964,113 @@ export const mockSegments: Segment[] = [
     id: '1',
     name: 'Nordic Shipping Companies',
     description: 'Active shipping companies in Nordic countries',
-    criteria: {
-      companies: {
-        statuses: ['Active', 'M1'],
-        types: ['Member'],
-        countries: ['Denmark', 'Norway', 'Sweden', 'Finland'],
-        registrationDateRange: { start: '2020-01-01', end: '2024-12-31' }
+    criteria: [
+      {
+        id: 'nordic_companies_status',
+        field: 'company_status',
+        operator: 'in',
+        value: ['Active', 'M1'],
+        logicalOperator: undefined
+      },
+      {
+        id: 'nordic_companies_type',
+        field: 'company_type',
+        operator: 'equals',
+        value: 'Member',
+        logicalOperator: 'AND'
+      },
+      {
+        id: 'nordic_companies_country',
+        field: 'company_country',
+        operator: 'in',
+        value: ['Denmark', 'Norway', 'Sweden', 'Finland'],
+        logicalOperator: 'AND'
       }
-    },
-    memberCount: 156,
-    status: 'Active',
-    createdBy: 'admin@bimco.org',
-    dateCreated: '2024-06-01T10:00:00Z',
+    ],
+    contactCount: 156,
     lastUpdated: '2024-08-15T14:30:00Z',
-    onHold: false,
-    readyForInvoice: true
+    createdAt: '2024-06-01T10:00:00Z',
+    createdBy: 'admin@bimco.org',
+    status: 'active',
+    type: 'geographic',
+    tags: ['nordic', 'shipping', 'member'],
+    autoRefresh: true,
+    refreshInterval: 24,
+    lastRefreshAt: '2024-08-15T14:30:00Z',
+    estimatedReach: 160,
+    conversionRate: 12.5,
+    revenue: 285000,
+    campaigns: ['nordic_campaign_2024']
   },
   {
     id: '2',
     name: 'Maritime Training Prospects',
     description: 'Contacts interested in maritime training courses',
-    criteria: {
-      contacts: {
-        classifications: ['BI-BD', 'BI-BS'],
-        roles: ['Fleet Manager', 'Technical Director'],
-        statuses: ['Active']
+    criteria: [
+      {
+        id: 'training_prospects_classification',
+        field: 'contact_classification',
+        operator: 'in',
+        value: ['BI-BD', 'BI-BS'],
+        logicalOperator: undefined
       },
-      courses: {
-        categories: ['Maritime Training', 'Safety'],
-        dateRange: { start: '2024-01-01', end: '2024-12-31' }
+      {
+        id: 'training_prospects_role',
+        field: 'contact_role',
+        operator: 'in',
+        value: ['Fleet Manager', 'Technical Director'],
+        logicalOperator: 'AND'
+      },
+      {
+        id: 'training_prospects_status',
+        field: 'contact_status',
+        operator: 'equals',
+        value: 'Active',
+        logicalOperator: 'AND'
       }
-    },
-    memberCount: 234,
-    status: 'Active',
-    createdBy: 'training@bimco.org',
-    dateCreated: '2024-07-10T09:00:00Z',
+    ],
+    contactCount: 234,
     lastUpdated: '2024-08-18T16:45:00Z',
-    onHold: false,
-    readyForInvoice: false
+    createdAt: '2024-07-10T09:00:00Z',
+    createdBy: 'training@bimco.org',
+    status: 'active',
+    type: 'behavioral',
+    tags: ['training', 'prospects', 'maritime'],
+    autoRefresh: false,
+    estimatedReach: 250,
+    conversionRate: 18.3,
+    revenue: 145000,
+    campaigns: ['training_campaign_q3']
   },
   {
     id: '3',
     name: 'Asia-Pacific Fleet Owners',
     description: 'Companies with fleet operations in Asia-Pacific',
-    criteria: {
-      companies: {
-        statuses: ['Active'],
-        countries: ['Singapore', 'Hong Kong', 'Japan', 'South Korea']
+    criteria: [
+      {
+        id: 'apac_companies_status',
+        field: 'company_status',
+        operator: 'equals',
+        value: 'Active',
+        logicalOperator: undefined
+      },
+      {
+        id: 'apac_companies_country',
+        field: 'company_country',
+        operator: 'in',
+        value: ['Singapore', 'Hong Kong', 'Japan', 'South Korea'],
+        logicalOperator: 'AND'
       }
-    },
-    memberCount: 89,
-    status: 'Draft',
-    createdBy: 'regional@bimco.org',
-    dateCreated: '2024-08-01T11:30:00Z',
+    ],
+    contactCount: 89,
     lastUpdated: '2024-08-19T10:15:00Z',
-    onHold: true,
-    readyForInvoice: false
+    createdAt: '2024-08-01T11:30:00Z',
+    createdBy: 'regional@bimco.org',
+    status: 'draft',
+    type: 'geographic',
+    tags: ['apac', 'fleet', 'owners'],
+    autoRefresh: false,
+    estimatedReach: 95,
+    campaigns: []
   }
 ];

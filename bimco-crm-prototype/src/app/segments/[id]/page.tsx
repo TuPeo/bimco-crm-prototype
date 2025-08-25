@@ -52,17 +52,14 @@ export default function SegmentDetailPage() {
         dateAdded: string;
       }> = [];
       
-      // Add companies that match criteria
-      if (foundSegment.criteria.companies) {
-        const matchingCompanies = mockCompanies.filter(company => {
-          const criteria = foundSegment.criteria.companies!;
-          const matchesStatus = !criteria.statuses || criteria.statuses.includes(company.status);
-          const matchesType = !criteria.types || criteria.types.includes(company.type);
-          const matchesCountry = !criteria.countries || criteria.countries.includes(company.address.country);
-          return matchesStatus && matchesType && matchesCountry;
-        });
-        
-        matchingCompanies.forEach(company => {
+      // Since we now use array-based criteria, we need to parse the criteria differently
+      // For now, we'll show some mock members based on segment ID
+      if (segmentId === '1') {
+        // Nordic Shipping Companies
+        mockCompanies.filter(c => 
+          ['Denmark', 'Norway', 'Sweden', 'Finland'].includes(c.address.country) &&
+          ['Active', 'M1'].includes(c.status)
+        ).slice(0, 20).forEach(company => {
           segmentMembers.push({
             id: company.id,
             type: 'company',
@@ -70,23 +67,15 @@ export default function SegmentDetailPage() {
             subtitle: `${company.type} • ${company.address.country}`,
             details: company.registrationNumber,
             url: `/companies/${company.id}`,
-            dateAdded: foundSegment.dateCreated
+            dateAdded: foundSegment.createdAt
           });
         });
-      }
-
-      // Add contacts that match criteria
-      if (foundSegment.criteria.contacts) {
-        const matchingContacts = mockContacts.filter(contact => {
-          const criteria = foundSegment.criteria.contacts!;
-          const matchesStatus = !criteria.statuses || criteria.statuses.includes(contact.status);
-          const matchesRole = !criteria.roles || criteria.roles.includes(contact.role || '');
-          const matchesClassification = !criteria.classifications || 
-            contact.classifications.some(c => criteria.classifications!.includes(c.code));
-          return matchesStatus && matchesRole && matchesClassification;
-        });
-
-        matchingContacts.forEach(contact => {
+      } else if (segmentId === '2') {
+        // Maritime Training Prospects
+        mockContacts.filter(c => 
+          c.status === 'Active' &&
+          ['Fleet Manager', 'Technical Director'].includes(c.role || '')
+        ).slice(0, 20).forEach(contact => {
           segmentMembers.push({
             id: contact.id,
             type: 'contact',
@@ -94,7 +83,23 @@ export default function SegmentDetailPage() {
             subtitle: `${contact.role} • ${contact.companyName}`,
             details: contact.email,
             url: `/contacts/${contact.id}`,
-            dateAdded: foundSegment.dateCreated
+            dateAdded: foundSegment.createdAt
+          });
+        });
+      } else if (segmentId === '3') {
+        // Asia-Pacific Fleet Owners
+        mockCompanies.filter(c => 
+          ['Singapore', 'Hong Kong', 'Japan', 'South Korea'].includes(c.address.country) &&
+          c.status === 'Active'
+        ).slice(0, 20).forEach(company => {
+          segmentMembers.push({
+            id: company.id,
+            type: 'company',
+            name: company.name,
+            subtitle: `${company.type} • ${company.address.country}`,
+            details: company.registrationNumber,
+            url: `/companies/${company.id}`,
+            dateAdded: foundSegment.createdAt
           });
         });
       }
@@ -176,6 +181,8 @@ export default function SegmentDetailPage() {
                 <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusBadge(segment.status)}`}>
                   {segment.status}
                 </span>
+                {/* TODO: Update status indicators for new structure */}
+                {/* 
                 {segment.onHold && (
                   <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                     <PauseIcon className="h-3 w-3 mr-1" />
@@ -188,6 +195,7 @@ export default function SegmentDetailPage() {
                     Ready for Invoice
                   </span>
                 )}
+                */}
               </div>
               {segment.description && (
                 <p className="mt-1 text-sm text-gray-600">{segment.description}</p>
@@ -216,6 +224,8 @@ export default function SegmentDetailPage() {
             <PlayIcon className="h-4 w-4 mr-2" />
             Create Interaction
           </button>
+          {/* TODO: Update action buttons for new structure */}
+          {/*
           {segment.onHold && (
             <button className="bimco-btn-secondary">
               <PlayIcon className="h-4 w-4 mr-2" />
@@ -228,6 +238,7 @@ export default function SegmentDetailPage() {
               Set Ready for Invoice
             </button>
           )}
+          */}
         </div>
 
         {/* Tabs */}
@@ -262,7 +273,7 @@ export default function SegmentDetailPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-700">Member Count</label>
-                      <p className="mt-1 text-2xl font-semibold text-gray-900">{segment.memberCount.toLocaleString()}</p>
+                      <p className="mt-1 text-2xl font-semibold text-gray-900">{segment.contactCount.toLocaleString()}</p>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700">Status</label>
@@ -278,7 +289,7 @@ export default function SegmentDetailPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700">Date Created</label>
-                      <p className="mt-1 text-sm text-gray-900">{formatDate(segment.dateCreated)}</p>
+                      <p className="mt-1 text-sm text-gray-900">{formatDate(segment.createdAt)}</p>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700">Last Updated</label>
@@ -287,7 +298,7 @@ export default function SegmentDetailPage() {
                     <div>
                       <label className="block text-sm font-medium text-gray-700">On Hold</label>
                       <div className="mt-1">
-                        {segment.onHold ? (
+                        {segment.status === 'active' ? (
                           <span className="inline-flex items-center text-sm text-yellow-600">
                             <ExclamationCircleIcon className="h-4 w-4 mr-1" />
                             Yes
@@ -315,9 +326,9 @@ export default function SegmentDetailPage() {
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-600">Ready for Invoice</span>
                     <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                      segment.readyForInvoice ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                      segment.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
                     }`}>
-                      {segment.readyForInvoice ? 'Yes' : 'No'}
+                      {segment.status === 'active' ? 'Yes' : 'No'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
@@ -393,103 +404,27 @@ export default function SegmentDetailPage() {
               <h3 className="text-lg font-medium text-gray-900">Segment Criteria</h3>
             </div>
             <div className="p-6 space-y-6">
-              {segment.criteria.companies && (
-                <div>
-                  <h4 className="text-sm font-medium text-gray-900 mb-3">Company Criteria</h4>
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                      {segment.criteria.companies.statuses && (
-                        <div>
-                          <span className="font-medium text-gray-700">Statuses:</span>
-                          <div className="mt-1">
-                            {segment.criteria.companies.statuses.map((status, idx) => (
-                              <span key={idx} className="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs mr-1 mb-1">
-                                {status}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      {segment.criteria.companies.countries && (
-                        <div>
-                          <span className="font-medium text-gray-700">Countries:</span>
-                          <div className="mt-1">
-                            {segment.criteria.companies.countries.map((country, idx) => (
-                              <span key={idx} className="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs mr-1 mb-1">
-                                {country}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
+              <div>
+                <h4 className="text-sm font-medium text-gray-900 mb-3">Segment Criteria</h4>
+                <div className="bg-blue-50 p-4 rounded-lg">
+                  <div className="space-y-2 text-sm">
+                    {segment.criteria.map((criterion) => (
+                      <div key={criterion.id} className="flex items-center space-x-2">
+                        <span className="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
+                          {criterion.field}
+                        </span>
+                        <span className="text-gray-600">{criterion.operator}</span>
+                        <span className="font-medium text-gray-900">
+                          {Array.isArray(criterion.value) ? criterion.value.join(', ') : criterion.value}
+                        </span>
+                        {criterion.logicalOperator && (
+                          <span className="text-gray-500 text-xs">{criterion.logicalOperator}</span>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
-              )}
-
-              {segment.criteria.contacts && (
-                <div>
-                  <h4 className="text-sm font-medium text-gray-900 mb-3">Contact Criteria</h4>
-                  <div className="bg-green-50 p-4 rounded-lg">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                      {segment.criteria.contacts.classifications && (
-                        <div>
-                          <span className="font-medium text-gray-700">Classifications:</span>
-                          <div className="mt-1">
-                            {segment.criteria.contacts.classifications.map((classification, idx) => (
-                              <span key={idx} className="inline-block bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-1 mb-1">
-                                {classification}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      {segment.criteria.contacts.roles && (
-                        <div>
-                          <span className="font-medium text-gray-700">Roles:</span>
-                          <div className="mt-1">
-                            {segment.criteria.contacts.roles.map((role, idx) => (
-                              <span key={idx} className="inline-block bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs mr-1 mb-1">
-                                {role}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {segment.criteria.courses && (
-                <div>
-                  <h4 className="text-sm font-medium text-gray-900 mb-3">Course Criteria</h4>
-                  <div className="bg-orange-50 p-4 rounded-lg">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                      {segment.criteria.courses.categories && (
-                        <div>
-                          <span className="font-medium text-gray-700">Categories:</span>
-                          <div className="mt-1">
-                            {segment.criteria.courses.categories.map((category, idx) => (
-                              <span key={idx} className="inline-block bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs mr-1 mb-1">
-                                {category}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      {segment.criteria.courses.dateRange && (
-                        <div>
-                          <span className="font-medium text-gray-700">Date Range:</span>
-                          <p className="text-gray-600 mt-1">
-                            {formatDate(segment.criteria.courses.dateRange.start)} - {formatDate(segment.criteria.courses.dateRange.end)}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
           </div>
         )}

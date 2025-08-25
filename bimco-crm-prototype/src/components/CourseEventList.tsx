@@ -49,7 +49,7 @@ export default function CourseEventList({
 
   // Filter and sort courses
   const filteredAndSortedCourses = useMemo(() => {
-    let filtered = courses.filter(course => {
+    const filtered = courses.filter(course => {
       const matchesSearch = 
         course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         course.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -63,7 +63,7 @@ export default function CourseEventList({
 
     // Sort courses
     return filtered.sort((a, b) => {
-      let aValue: any, bValue: any;
+      let aValue: string | number, bValue: string | number;
 
       switch (sortField) {
         case 'revenue':
@@ -75,8 +75,8 @@ export default function CourseEventList({
           bValue = b.participants.length;
           break;
         default:
-          aValue = a[sortField];
-          bValue = b[sortField];
+          aValue = (a[sortField as keyof typeof a] as string | number) || '';
+          bValue = (b[sortField as keyof typeof b] as string | number) || '';
       }
 
       if (aValue == null && bValue == null) return 0;

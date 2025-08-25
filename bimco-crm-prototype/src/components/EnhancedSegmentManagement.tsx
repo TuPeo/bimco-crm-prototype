@@ -46,7 +46,7 @@ export interface SegmentCriteria {
   id: string;
   field: string;
   operator: 'equals' | 'not_equals' | 'contains' | 'not_contains' | 'greater_than' | 'less_than' | 'between' | 'in' | 'not_in' | 'is_null' | 'is_not_null';
-  value: any;
+  value: string | number | string[] | number[];
   logicalOperator?: 'AND' | 'OR';
 }
 
@@ -533,7 +533,7 @@ export default function EnhancedSegmentManagement({
 
                     <select
                       value={criteria.operator}
-                      onChange={(e) => updateCriteria(criteria.id, { operator: e.target.value as any })}
+                      onChange={(e) => updateCriteria(criteria.id, { operator: e.target.value as SegmentCriteria['operator'] })}
                       className="border border-gray-300 rounded px-2 py-1 text-sm"
                     >
                       <option value="equals">equals</option>
@@ -551,7 +551,7 @@ export default function EnhancedSegmentManagement({
 
                     <input
                       type="text"
-                      value={criteria.value || ''}
+                      value={Array.isArray(criteria.value) ? criteria.value.join(', ') : criteria.value?.toString() || ''}
                       onChange={(e) => updateCriteria(criteria.id, { value: e.target.value })}
                       className="border border-gray-300 rounded px-2 py-1 text-sm flex-1"
                       placeholder="Value"
@@ -703,7 +703,7 @@ export default function EnhancedSegmentManagement({
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => setActiveTab(tab.id as 'segments' | 'builder' | 'analytics')}
               className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm ${
                 activeTab === tab.id
                   ? 'border-blue-500 text-blue-600'

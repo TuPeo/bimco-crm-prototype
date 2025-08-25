@@ -163,16 +163,24 @@ export default function SearchToSegmentConverter({
     const newSegment: Omit<Segment, 'id' | 'dateCreated' | 'lastUpdated'> = {
       name: customSegmentName.trim(),
       description: customDescription.trim(),
-      criteria: {
-        searchQuery: searchQuery!,
-        includedItemIds: selectedItems,
-        createdFromSearch: true
-      },
-      memberCount: selectedItems.length,
-      status: 'Active',
+      criteria: [
+        {
+          id: 'search_criteria_1',
+          field: 'search_query',
+          operator: 'contains',
+          value: JSON.stringify(searchQuery!),
+          logicalOperator: undefined
+        }
+      ],
+      contactCount: selectedItems.length,
+      createdAt: new Date().toISOString(),
       createdBy: 'current-user',
-      onHold: false,
-      readyForInvoice: false
+      status: 'active',
+      type: 'behavioral',
+      tags: ['search-based'],
+      autoRefresh: false,
+      estimatedReach: selectedItems.length,
+      campaigns: []
     };
 
     onCreateSegment(newSegment);

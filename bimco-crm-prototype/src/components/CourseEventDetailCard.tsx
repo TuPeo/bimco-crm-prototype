@@ -307,7 +307,7 @@ export default function CourseEventDetailCard({
               onChange={(e) => updateCourse({ 
                 recurrence: { 
                   ...editedCourse.recurrence, 
-                  type: e.target.value as any,
+                  type: e.target.value as 'none' | 'daily' | 'weekly' | 'monthly' | 'yearly',
                   interval: 1
                 } 
               })}

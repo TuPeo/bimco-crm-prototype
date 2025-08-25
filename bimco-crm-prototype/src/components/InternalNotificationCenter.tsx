@@ -28,7 +28,7 @@ export interface Notification {
   metadata?: {
     entityId?: string;
     entityType?: string;
-    [key: string]: any;
+    [key: string]: string | number | boolean | undefined;
   };
 }
 
@@ -170,7 +170,7 @@ export default function InternalNotificationCenter({
               <div className="flex space-x-2 mt-3">
                 <select
                   value={filter}
-                  onChange={(e) => setFilter(e.target.value as any)}
+                  onChange={(e) => setFilter(e.target.value as typeof filter)}
                   className="text-sm border border-gray-300 rounded px-2 py-1"
                 >
                   <option value="all">All</option>
@@ -184,7 +184,7 @@ export default function InternalNotificationCenter({
                 </select>
                 <select
                   value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as any)}
+                  onChange={(e) => setSortBy(e.target.value as 'date' | 'priority' | 'type')}
                   className="text-sm border border-gray-300 rounded px-2 py-1"
                 >
                   <option value="date">Date</option>

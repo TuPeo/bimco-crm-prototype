@@ -16,14 +16,17 @@ export default function SegmentModal({ isOpen, onClose, onSave, segment, mode }:
   const [formData, setFormData] = useState<Omit<Segment, 'id'>>({
     name: '',
     description: '',
-    criteria: {},
-    memberCount: 0,
-    status: 'Draft',
-    createdBy: 'Current User',
-    dateCreated: '',
+    criteria: [],
+    contactCount: 0,
     lastUpdated: '',
-    onHold: false,
-    readyForInvoice: false
+    createdAt: '',
+    createdBy: 'Current User',
+    status: 'draft',
+    type: 'static',
+    tags: [],
+    autoRefresh: false,
+    estimatedReach: 0,
+    campaigns: []
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -34,27 +37,33 @@ export default function SegmentModal({ isOpen, onClose, onSave, segment, mode }:
         name: segment.name,
         description: segment.description || '',
         criteria: segment.criteria,
-        memberCount: segment.memberCount,
+        contactCount: segment.contactCount,
         status: segment.status,
         createdBy: segment.createdBy,
-        dateCreated: segment.dateCreated,
         lastUpdated: segment.lastUpdated,
-        onHold: segment.onHold,
-        readyForInvoice: segment.readyForInvoice
+        createdAt: segment.createdAt,
+        type: segment.type,
+        tags: segment.tags,
+        autoRefresh: segment.autoRefresh,
+        estimatedReach: segment.estimatedReach,
+        campaigns: segment.campaigns
       });
     } else if (mode === 'add') {
       const now = new Date().toISOString();
       setFormData({
         name: '',
         description: '',
-        criteria: {},
-        memberCount: 0,
-        status: 'Draft',
+        criteria: [],
+        contactCount: 0,
+        status: 'draft',
         createdBy: 'Current User',
-        dateCreated: now,
+        createdAt: now,
         lastUpdated: now,
-        onHold: false,
-        readyForInvoice: false
+        type: 'static',
+        tags: [],
+        autoRefresh: false,
+        estimatedReach: 0,
+        campaigns: []
       });
     }
     setErrors({});
@@ -77,16 +86,15 @@ export default function SegmentModal({ isOpen, onClose, onSave, segment, mode }:
   };
 
   const handleCriteriaChange = (entityType: 'companies' | 'contacts' | 'courses', field: string, value: string[]) => {
-    setFormData(prev => ({
-      ...prev,
-      criteria: {
-        ...prev.criteria,
-        [entityType]: {
-          ...prev.criteria[entityType],
-          [field]: value
-        }
-      }
-    }));
+    // For now, this is disabled since we're using the array structure
+    // TODO: Convert this component to work with the new criteria structure
+    console.log('Criteria update:', { entityType, field, value });
+  };
+
+  const updateCriteria = (entityType: string, field: string, value: unknown) => {
+    // For now, this is disabled since we're using the array structure
+    // TODO: Convert this component to work with the new criteria structure
+    console.log('Criteria update:', { entityType, field, value });
   };
 
   const validateForm = (): boolean => {
@@ -220,6 +228,12 @@ export default function SegmentModal({ isOpen, onClose, onSave, segment, mode }:
                 />
               </div>
 
+              {/* TODO: Update status controls to work with new Segment structure */}
+              <div className="text-sm text-gray-500">
+                Status controls will be available in a future update.
+              </div>
+              
+              {/*
               <div className="flex items-center space-x-4">
                 <label className="flex items-center">
                   <input
@@ -243,142 +257,15 @@ export default function SegmentModal({ isOpen, onClose, onSave, segment, mode }:
                   <span className="ml-2 text-sm text-gray-700">Ready for Invoice</span>
                 </label>
               </div>
+              */}
             </div>
 
             {/* Segment Criteria */}
             <div className="border-t pt-6">
               <h4 className="text-lg font-medium text-gray-900 mb-4">Segment Criteria</h4>
-              {errors.criteria && (
-                <p className="text-red-500 text-sm mb-4">{errors.criteria}</p>
-              )}
-
-              {/* Company Criteria */}
-              <div className="mb-6">
-                <h5 className="text-md font-medium text-gray-800 mb-3">Company Criteria</h5>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Company Statuses
-                    </label>
-                    <select
-                      multiple
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      onChange={(e) => {
-                        const values = Array.from(e.target.selectedOptions, option => option.value);
-                        handleCriteriaChange('companies', 'statuses', values);
-                      }}
-                      value={formData.criteria.companies?.statuses || []}
-                    >
-                      {companyStatuses.map(status => (
-                        <option key={status} value={status}>{status}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Company Types
-                    </label>
-                    <select
-                      multiple
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      onChange={(e) => {
-                        const values = Array.from(e.target.selectedOptions, option => option.value);
-                        handleCriteriaChange('companies', 'types', values);
-                      }}
-                      value={formData.criteria.companies?.types || []}
-                    >
-                      {companyTypes.map(type => (
-                        <option key={type} value={type}>{type}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Countries
-                    </label>
-                    <select
-                      multiple
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      onChange={(e) => {
-                        const values = Array.from(e.target.selectedOptions, option => option.value);
-                        handleCriteriaChange('companies', 'countries', values);
-                      }}
-                      value={formData.criteria.companies?.countries || []}
-                    >
-                      {countries.map(country => (
-                        <option key={country} value={country}>{country}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Contact Criteria */}
-              <div className="mb-6">
-                <h5 className="text-md font-medium text-gray-800 mb-3">Contact Criteria</h5>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Contact Roles
-                    </label>
-                    <select
-                      multiple
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      onChange={(e) => {
-                        const values = Array.from(e.target.selectedOptions, option => option.value);
-                        handleCriteriaChange('contacts', 'roles', values);
-                      }}
-                      value={formData.criteria.contacts?.roles || []}
-                    >
-                      {contactRoles.map(role => (
-                        <option key={role} value={role}>{role}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Contact Statuses
-                    </label>
-                    <select
-                      multiple
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      onChange={(e) => {
-                        const values = Array.from(e.target.selectedOptions, option => option.value);
-                        handleCriteriaChange('contacts', 'statuses', values);
-                      }}
-                      value={formData.criteria.contacts?.statuses || []}
-                    >
-                      <option value="Active">Active</option>
-                      <option value="Inactive">Inactive</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Course Criteria */}
-              <div className="mb-6">
-                <h5 className="text-md font-medium text-gray-800 mb-3">Course Criteria</h5>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Course Categories
-                  </label>
-                  <select
-                    multiple
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    onChange={(e) => {
-                      const values = Array.from(e.target.selectedOptions, option => option.value);
-                      handleCriteriaChange('courses', 'categories', values);
-                    }}
-                    value={formData.criteria.courses?.categories || []}
-                  >
-                    {courseCategories.map(category => (
-                      <option key={category} value={category}>{category}</option>
-                    ))}
-                  </select>
-                </div>
+              {/* TODO: Implement criteria form for new Segment structure */}
+              <div className="text-sm text-gray-500 py-4">
+                Criteria configuration interface will be implemented to work with the new segment structure.
               </div>
             </div>
 

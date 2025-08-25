@@ -132,7 +132,7 @@ export default function Courses() {
               <CourseCalendar
                 courses={courses}
                 onSelectSlot={(slotInfo) => handleDateSelect(slotInfo.start)}
-                onSelectEvent={(event: any) => {
+                onSelectEvent={(event: { id: string }) => {
                   const course = courses.find(c => c.id === event.id);
                   if (course) setViewingCourse(course);
                 }}

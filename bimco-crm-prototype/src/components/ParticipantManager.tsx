@@ -48,7 +48,7 @@ export default function ParticipantManager({
 
   // Filter and sort participants
   const filteredAndSortedParticipants = useMemo(() => {
-    let filtered = participants.filter(participant => {
+    const filtered = participants.filter(participant => {
       const matchesSearch = 
         participant.contactName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         participant.email.toLowerCase().includes(searchTerm.toLowerCase());
@@ -60,7 +60,7 @@ export default function ParticipantManager({
     });
 
     return filtered.sort((a, b) => {
-      let aValue: any, bValue: any;
+      let aValue: string | number | Date, bValue: string | number | Date;
 
       switch (sortField) {
         case 'contactName':
