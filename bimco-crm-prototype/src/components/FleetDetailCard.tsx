@@ -66,7 +66,7 @@ export default function FleetDetailCard({
     }
   };
 
-  const getMaintenanceStatus = (record: any) => {
+  const getMaintenanceStatus = (record: { status: string }) => {
     const colors: Record<string, { color: string; bg: string }> = {
       'Completed': { color: 'text-green-600', bg: 'bg-green-50' },
       'In Progress': { color: 'text-blue-600', bg: 'bg-blue-50' },

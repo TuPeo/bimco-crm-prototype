@@ -771,27 +771,55 @@ export const mockSearchResults: SearchResult[] = [
 export const mockSavedSearches: SavedSearch[] = [
   {
     id: '1',
-    name: 'Active Danish Companies',
+    title: 'Active Danish Companies',
     description: 'All active companies based in Denmark',
-    searchQuery: 'status:active AND country:Denmark',
-    filters: { status: ['active'], country: ['Denmark'] },
-    entityTypes: ['company'],
+    query: {
+      query: 'status:active AND country:Denmark',
+      filters: { 
+        status: ['active'], 
+        countries: ['Denmark'],
+        entityTypes: ['company']
+      },
+      sorting: {
+        field: 'name',
+        direction: 'asc'
+      },
+      pagination: {
+        page: 1,
+        limit: 50
+      }
+    },
     userId: 'user1',
     isPublic: false,
-    dateCreated: '2024-07-15T10:00:00Z',
-    lastUsed: '2024-08-18T14:30:00Z'
+    createdAt: new Date('2024-07-15T10:00:00Z'),
+    updatedAt: new Date('2024-08-18T14:30:00Z'),
+    resultCount: 25
   },
   {
     id: '2',
-    name: 'Upcoming Maritime Courses',
+    title: 'Upcoming Maritime Courses',
     description: 'All upcoming courses in maritime categories',
-    searchQuery: 'category:maritime AND status:upcoming',
-    filters: { category: ['maritime'], status: ['upcoming'] },
-    entityTypes: ['course'],
+    query: {
+      query: 'category:maritime AND status:upcoming',
+      filters: { 
+        categories: ['maritime'], 
+        status: ['upcoming'],
+        entityTypes: ['course']
+      },
+      sorting: {
+        field: 'startDate',
+        direction: 'asc'
+      },
+      pagination: {
+        page: 1,
+        limit: 50
+      }
+    },
     userId: 'user1',
     isPublic: true,
-    dateCreated: '2024-06-20T09:15:00Z',
-    lastUsed: '2024-08-19T08:00:00Z'
+    createdAt: new Date('2024-06-20T09:15:00Z'),
+    updatedAt: new Date('2024-08-19T08:00:00Z'),
+    resultCount: 12
   }
 ];
 

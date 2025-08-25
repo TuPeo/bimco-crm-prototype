@@ -148,7 +148,7 @@ export default function SearchPage() {
       if (entityTypes.includes('fleet')) {
         mockFleets
           .filter(fleet => {
-            let matches = !searchTerm ||
+            const matches = !searchTerm ||
               fleet.name.toLowerCase().includes(searchTerm) ||
               fleet.id.toLowerCase().includes(searchTerm);
 
@@ -195,7 +195,7 @@ export default function SearchPage() {
     setActiveTab('search');
   };
 
-  const handleCreateSegment = (segment: Omit<Segment, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const handleCreateSegment = (segment: Omit<Segment, 'id' | 'dateCreated' | 'lastUpdated'>) => {
     console.log('Creating segment:', segment);
     // In real app, this would call an API to create the segment
     alert(`Segment "${segment.name}" created successfully!`);

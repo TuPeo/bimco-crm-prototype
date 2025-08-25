@@ -22,6 +22,7 @@ import {
 interface FleetListViewProps {
   fleets: Fleet[];
   onFleetSelect?: (fleet: Fleet) => void;
+  onScheduleMaintenance?: (fleet: Fleet) => void;
   showComparison?: boolean;
 }
 
@@ -178,7 +179,6 @@ export default function FleetListView({
       <VesselComparisonTool
         vessels={selectedFleetData}
         onClose={() => setShowComparisonTool(false)}
-        onFleetSelect={onFleetSelect}
       />
     );
   }
@@ -366,7 +366,7 @@ export default function FleetListView({
               <div className="flex space-x-2">
                 <select
                   value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as any)}
+                  onChange={(e) => setSortBy(e.target.value as "name" | "type" | "age" | "status")}
                   className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
                   <option value="name">Name</option>

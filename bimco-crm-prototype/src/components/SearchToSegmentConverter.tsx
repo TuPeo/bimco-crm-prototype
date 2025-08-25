@@ -1,7 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { PowerSearchQuery, UserPermissions, Segment, Company, Contact } from '@/types';
+import {
+  PowerSearchQuery,
+  SearchFilters,
+  UserPermissions,
+  Segment,
+  Company,
+  Contact,
+  Fleet,
+  Course,
+  SearchResult
+} from '../types';
 import {
   RectangleStackIcon,
   UserGroupIcon,
@@ -17,9 +27,9 @@ import {
 
 interface SearchToSegmentConverterProps {
   searchQuery: PowerSearchQuery | null;
-  searchResults: any[];
+  searchResults: SearchResult[];
   userPermissions: UserPermissions;
-  onCreateSegment: (segment: Omit<Segment, 'id' | 'createdAt' | 'updatedAt'>) => void;
+  onCreateSegment: (segment: Omit<Segment, 'id' | 'dateCreated' | 'lastUpdated'>) => void;
   isLoading?: boolean;
 }
 
@@ -123,7 +133,7 @@ export default function SearchToSegmentConverter({
     const preview: SegmentPreview = {
       name: generateSegmentName(),
       description: `Segment created from search results on ${new Date().toLocaleDateString()}`,
-      entityType: primaryEntityType as any,
+      entityType: primaryEntityType as 'company' | 'contact' | 'course' | 'fleet',
       criteria: generateCriteria(),
       estimatedCount: searchResults.length,
       selectedItems: searchResults.slice(0, 100).map(item => item.id) // Limit to first 100 items
@@ -150,19 +160,19 @@ export default function SearchToSegmentConverter({
   const handleCreateSegment = () => {
     if (!segmentPreview || !userPermissions.canCreateSegments) return;
 
-    const newSegment: Omit<Segment, 'id' | 'createdAt' | 'updatedAt'> = {
+    const newSegment: Omit<Segment, 'id' | 'dateCreated' | 'lastUpdated'> = {
       name: customSegmentName.trim(),
       description: customDescription.trim(),
-      type: selectedEntityType as any,
       criteria: {
         searchQuery: searchQuery!,
         includedItemIds: selectedItems,
         createdFromSearch: true
       },
-      count: selectedItems.length,
-      isActive: true,
-      lastUsed: new Date(),
-      tags: []
+      memberCount: selectedItems.length,
+      status: 'Active',
+      createdBy: 'current-user',
+      onHold: false,
+      readyForInvoice: false
     };
 
     onCreateSegment(newSegment);

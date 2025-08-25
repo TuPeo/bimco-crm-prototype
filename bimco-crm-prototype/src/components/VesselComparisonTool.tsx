@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Fleet } from '../types';
 import {
   XMarkIcon,
@@ -15,8 +15,18 @@ interface VesselComparisonToolProps {
   onClose: () => void;
 }
 
+interface ComparisonCategory {
+  category: string;
+  fields: {
+    key: string;
+    label: string;
+    unit?: string;
+    values: string[];
+  }[];
+}
+
 export default function VesselComparisonTool({ vessels, onClose }: VesselComparisonToolProps) {
-  const [comparisonData, setComparisonData] = useState<any[]>([]);
+  const [comparisonData, setComparisonData] = useState<ComparisonCategory[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
     'basic',
     'specifications',
@@ -24,12 +34,8 @@ export default function VesselComparisonTool({ vessels, onClose }: VesselCompari
     'maintenance'
   ]);
 
-  useEffect(() => {
-    generateComparisonData();
-  }, [vessels, selectedCategories]);
-
-  const generateComparisonData = () => {
-    const categories: any = {
+  const generateComparisonData = useCallback(() => {
+    const categories: Record<string, { title: string; fields: { key: string; label: string; unit?: string }[] }> = {
       basic: {
         title: 'Basic Information',
         fields: [
@@ -78,7 +84,7 @@ export default function VesselComparisonTool({ vessels, onClose }: VesselCompari
         const category = categories[categoryKey];
         return {
           category: category.title,
-          fields: category.fields.map((field: any) => ({
+          fields: category.fields.map((field: { key: string; label: string; unit?: string }) => ({
             ...field,
             values: vessels.map(vessel => {
               let value = vessel[field.key as keyof Fleet];
@@ -122,14 +128,18 @@ export default function VesselComparisonTool({ vessels, onClose }: VesselCompari
                 return `${value.toLocaleString()} ${field.unit}`;
               }
               
-              return value || 'N/A';
+              return String(value || 'N/A');
             })
           }))
         };
       });
 
     setComparisonData(data);
-  };
+  }, [vessels, selectedCategories]);
+
+  useEffect(() => {
+    generateComparisonData();
+  }, [generateComparisonData]);
 
   const handleCategoryToggle = (category: string) => {
     setSelectedCategories(prev => 
@@ -154,7 +164,7 @@ export default function VesselComparisonTool({ vessels, onClose }: VesselCompari
     let csv = 'Category,Field,' + vessels.map(v => v.name).join(',') + '\n';
     
     comparisonData.forEach(category => {
-      category.fields.forEach((field: any) => {
+      category.fields.forEach((field) => {
         csv += `${category.category},${field.label},${field.values.join(',')}\n`;
       });
     });
@@ -301,10 +311,10 @@ export default function VesselComparisonTool({ vessels, onClose }: VesselCompari
                       </tr>
                     </thead>
                     <tbody>
-                      {category.fields.map((field: any, fieldIndex: number) => (
+                      {category.fields.map((field, fieldIndex: number) => (
                         <tr key={fieldIndex} className="border-b hover:bg-gray-50">
                           <td className="p-4 font-medium text-gray-900">{field.label}</td>
-                          {field.values.map((value: any, valueIndex: number) => (
+                          {field.values.map((value, valueIndex: number) => (
                             <td key={valueIndex} className="p-4 text-gray-700">
                               {value}
                             </td>

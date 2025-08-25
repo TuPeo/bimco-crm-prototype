@@ -49,7 +49,7 @@ export default function PowerSearchPanel({
     }
   };
 
-  const updateFilter = (key: keyof SearchFilters, value: any) => {
+  const updateFilter = (key: keyof SearchFilters, value: string | string[] | { start?: string; end?: string } | undefined) => {
     setFilters(prev => ({
       ...prev,
       [key]: value

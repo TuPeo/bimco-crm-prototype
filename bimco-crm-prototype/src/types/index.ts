@@ -138,7 +138,7 @@ export interface SearchResult {
   url: string;
   relevanceScore: number;
   matchedFields: string[];
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface SavedSearch {
@@ -173,7 +173,7 @@ export interface SearchFilters {
   vesselTypes?: string[];
   operationalStatus?: string[];
   // Advanced filters
-  customFields?: Record<string, any>;
+  customFields?: Record<string, unknown>;
 }
 
 export interface PowerSearchQuery {

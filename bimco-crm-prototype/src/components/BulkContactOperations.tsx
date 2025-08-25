@@ -110,7 +110,7 @@ export default function BulkContactOperations({
       const contact: Partial<Contact> = {};
       headers.forEach((header, index) => {
         if (expectedHeaders.includes(header)) {
-          (contact as any)[header] = values[index] || '';
+          (contact as Record<string, unknown>)[header] = values[index] || '';
         }
       });
 

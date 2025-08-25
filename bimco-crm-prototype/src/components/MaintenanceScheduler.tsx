@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Fleet, MaintenanceRecord } from '../types';
 import {
   CalendarIcon,
@@ -44,11 +44,7 @@ export default function MaintenanceScheduler({
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
 
-  useEffect(() => {
-    generateCalendarEvents();
-  }, [fleet.maintenanceRecords]);
-
-  const generateCalendarEvents = () => {
+  const generateCalendarEvents = useCallback(() => {
     const calendarEvents: CalendarEvent[] = [];
 
     // Convert maintenance records to calendar events
@@ -58,7 +54,7 @@ export default function MaintenanceScheduler({
         title: record.type,
         date: new Date(record.scheduledDate),
         type: 'maintenance',
-        status: record.status.toLowerCase() as any,
+        status: record.status.toLowerCase() as 'scheduled' | 'in-progress' | 'completed' | 'overdue',
         priority: getPriorityFromType(record.type),
         record
       });
@@ -87,7 +83,11 @@ export default function MaintenanceScheduler({
     });
 
     setEvents(calendarEvents.sort((a, b) => a.date.getTime() - b.date.getTime()));
-  };
+  }, [fleet.maintenanceRecords]);
+
+  useEffect(() => {
+    generateCalendarEvents();
+  }, [generateCalendarEvents]);
 
   const getPriorityFromType = (type: string): 'low' | 'medium' | 'high' | 'critical' => {
     const highPriorityTypes = ['engine', 'safety', 'structural'];
@@ -312,7 +312,14 @@ export default function MaintenanceScheduler({
     return Math.ceil(diff / (1000 * 3600 * 24));
   };
 
-  const handleScheduleNew = (eventData: any) => {
+  const handleScheduleNew = (eventData: {
+    type: string;
+    description: string;
+    scheduledDate: string;
+    vendor?: string;
+    cost?: string;
+    notes?: string;
+  }) => {
     const newMaintenance: Partial<MaintenanceRecord> = {
       type: eventData.type,
       description: eventData.description,

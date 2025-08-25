@@ -71,8 +71,17 @@ export default function Companies() {
           return sortDirection === 'asc' ? result : -result;
         }
         
-        if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
-        if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+        // Type guard for non-null values
+        if (aValue != null && bValue != null) {
+          if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+          if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+        }
+        
+        // Handle null/undefined cases
+        if (aValue == null && bValue == null) return 0;
+        if (aValue == null) return sortDirection === 'asc' ? -1 : 1;
+        if (bValue == null) return sortDirection === 'asc' ? 1 : -1;
+        
         return 0;
       });
     }
@@ -85,10 +94,17 @@ export default function Companies() {
         let result = 0;
         if (typeof aValue === 'string' && typeof bValue === 'string') {
           result = aValue.localeCompare(bValue);
-        } else if (aValue < bValue) {
-          result = -1;
-        } else if (aValue > bValue) {
-          result = 1;
+        } else if (aValue != null && bValue != null) {
+          if (aValue < bValue) {
+            result = -1;
+          } else if (aValue > bValue) {
+            result = 1;
+          }
+        } else {
+          // Handle null/undefined cases
+          if (aValue == null && bValue == null) result = 0;
+          else if (aValue == null) result = -1;
+          else if (bValue == null) result = 1;
         }
         
         if (result !== 0) {

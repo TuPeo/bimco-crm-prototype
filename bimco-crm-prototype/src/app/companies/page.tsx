@@ -71,8 +71,10 @@ export default function Companies() {
           return sortDirection === 'asc' ? result : -result;
         }
         
-        if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
-        if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+        if (typeof aValue === 'number' && typeof bValue === 'number') {
+          if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+          if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+        }
         return 0;
       });
     }
@@ -85,10 +87,12 @@ export default function Companies() {
         let result = 0;
         if (typeof aValue === 'string' && typeof bValue === 'string') {
           result = aValue.localeCompare(bValue);
-        } else if (aValue < bValue) {
-          result = -1;
-        } else if (aValue > bValue) {
-          result = 1;
+        } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+          if (aValue < bValue) {
+            result = -1;
+          } else if (aValue > bValue) {
+            result = 1;
+          }
         }
         
         if (result !== 0) {
