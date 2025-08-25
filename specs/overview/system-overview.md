@@ -91,7 +91,7 @@ These same permissions/permission-sets would then also be applied to the modules
   * Country/Country Code  
   * Email  
   * Number of Employees (Contacts will be described below)  
-* Some screen we need:  
+* Some screens we need:  
   * Company List View  
     * Purpose:  
       * Show a searchable & filterable list of companies. Clicking a row opens the Company Card.  
@@ -104,19 +104,19 @@ These same permissions/permission-sets would then also be applied to the modules
         * Sorted by Registration Number (ascending) by default.     
       * Interactive Sorting:  
         * Each column header clickable.  
-  * Small arrow icon shows sort direction.  
-  * Multiple sorts allowed (e.g., by Country then Name).  
-* Search & Filter Logic:  
-  * Search bar applies across all searchable fields.  
-  * Filters refine the dataset in real time.  
-  * Search applies only within currently filtered results.  
-* Empty State:  
-  * If no results → replace table with: "No results found. Try adjusting your search criteria or filters.”  
-* Loading State:  
-  * Show centered spinner overlay on table while fetching data.  
-* Export:  
-  * Exports only current filtered dataset.   
-  * User selects CSV or Excel.  
+    * Small arrow icon shows sort direction.  
+    * Multiple sorts allowed (e.g., by Country then Name).  
+    * Search & Filter Logic:  
+      * Search bar applies across all searchable fields.  
+      * Filters refine the dataset in real time.  
+      * Search applies only within currently filtered results.  
+    * Empty State:  
+      * If no results → replace table with: "No results found. Try adjusting your search criteria or filters.”  
+    * Loading State:  
+      * Show centered spinner overlay on table while fetching data.  
+    * Export:  
+      * Exports only current filtered dataset.   
+      * User selects CSV or Excel.  
   * Company Card  
     * Purpose:  
       * Display and edit full company details in tabs.	  
@@ -146,7 +146,32 @@ These same permissions/permission-sets would then also be applied to the modules
         * Email  
         * Phone  
         * Add Contact button (opens new contact form linked to company)  
-        * Remove Contact action (confirmation required)  
+        * Remove Contact action (confirmation required)
+      * Contact Management Tab
+        * Purpose: Manage company contacts (employees).  
+        * Layout: 
+          * Initial View: A searchable list of all contacts linked to the company. 
+            * Fields: Contact Name (clickable), Role, Email, Phone. 
+          * Actions: 
+            * Add Contact: Opens new contact form linked to the company.  
+            * Edit Contact: Opens contact detail card in edit mode.  
+            * Remove Contact: Requires confirmation dialog.    
+          * Contact Detail Card (upon click): 
+            * Shows full contact profile (name, role, email, phone, etc.). 
+            * Editable according to role permissions. 
+
+      * Fleet Management Tab
+        * Purpose: Manage company vessels (fleet).  
+        * Layout: 
+          * Initial View: A searchable list of all vessels linked to the company. 
+            * Fields: BIMCO Registration Number, IMO Number, BIMCO DWT, IHS DWT. 
+          * Actions: 
+            * Add Vessel: Opens new fleet entry form linked to the company.  
+            * Edit Vessel: Opens vessel detail card in edit mode.  
+            * Remove Vessel: Requires confirmation dialog.    
+          * Fleet Detail Card (upon click): 
+            * Shows full vessel details. 
+            * Editable according to role permissions. 
       * Actions  
         * Edit – switch form fields from read-only to editable mode   
         * Save – validate and commit changes to database   
@@ -162,6 +187,12 @@ These same permissions/permission-sets would then also be applied to the modules
           * Email – must be valid format  
           * Country – required  
         * Status changes trigger an audit log entry (User, Date, Change)
+      * User / Staff Story
+        * Staff will enter the Companies Module to view and manage companies
+          * Within a specific company’s detail card, staff will: Manage contacts (employees) via the Contact Management Tab (Contact has been described below)
+          * Manage fleet records (vessels) via the Fleet Management Tab (Fleet has been described below)
+        * Each company has its own set of details and sub-tabs, allowing staff to drill down into company-specific operations.
+
 
 ### Contact
 
@@ -189,24 +220,24 @@ These same permissions/permission-sets would then also be applied to the modules
       * Admin, Manager, Staff → Can view list, search, filter.   
     * Display Fields  
       * Contact number (CompanyRegistrationNumber\_ContactNumber) (XXXXXX\_YYYY)  
-* Contact Name (First \+ Last)  
-* Contact Classification (fill from master data: BI-ADM,BIAS BI-ASIA, BI-BD, BI-BS, ...)  
-* Email  
-* Phone  
-* Associated Company (clickable link → Company Card)  
-* Status (Active / Inactive)  
-* Date Created  
-* Last Updated  
-  * User Experience & Behavior  
-* Initial View: Loads with all contacts, sorted alphabetically by Contact number.   
-* Interactive Sorting: Column headers clickable with ascending/descending arrows.   
-* Search & Filter:  
-  * Search applies across all searchable fields.  
-  * Filters (Role, Status, Company).  
-  * Search works within filtered dataset.  
-* Empty State: If no results then show: "No contacts found. Try adjusting your search or filters.”  
-* Loading State: Table overlay with spinner while fetching.   
-* Export: CSV/Excel export of currently filtered list.   
+    * Contact Name (First \+ Last)  
+    * Contact Classification (fill from master data: BI-ADM,BIAS BI-ASIA, BI-BD, BI-BS, ...)  
+    * Email  
+    * Phone  
+    * Associated Company (clickable link → Company Card)  
+    * Status (Active / Inactive)  
+    * Date Created  
+    * Last Updated  
+      * User Experience & Behavior  
+    * Initial View: Loads with all contacts, sorted alphabetically by Contact number.   
+    * Interactive Sorting: Column headers clickable with ascending/descending arrows.   
+    * Search & Filter:  
+      * Search applies across all searchable fields.  
+      * Filters (Role, Status, Company).  
+      * Search works within filtered dataset.  
+    * Empty State: If no results then show: "No contacts found. Try adjusting your search or filters.”  
+    * Loading State: Table overlay with spinner while fetching.   
+    * Export: CSV/Excel export of currently filtered list.   
   * Contact Card  
     * Purpose  
       * Display and edit detailed information about a contact.  
@@ -238,9 +269,9 @@ These same permissions/permission-sets would then also be applied to the modules
     * Actions  
       * Edit → Switches form to editable mode.   
       * Save → Validates fields and commits. Disabled until changes exist.   
-* Deactivate → Sets Status \= Inactive (Admin only, confirmation required).   
-* Cancel → Reverts unsaved changes.   
-* Navigate Back → Returns to Contact List View.  
+      * Deactivate → Sets Status \= Inactive (Admin only, confirmation required).   
+      * Cancel → Reverts unsaved changes.   
+      * Navigate Back → Returns to Contact List View.  
   * Behavior & Rules  
     * Validation:  
       * First/Last Name → Required.  
@@ -262,12 +293,26 @@ These same permissions/permission-sets would then also be applied to the modules
 ## Courses and Events Management
 
 * Create & schedule courses/events with date, time, location, and format (online/offline)  
-* Event registration & participant tracking  
-* Manage course materials, resources, and certificates  
-* Attendance recording & reporting  
-* Link participants to contacts and companies  
-* Post-event feedback and evaluation forms  
-* Payment process?  
+* Define BIMCO legal entity as part of course creation (e.g., Training course = BIMCO Informatique; DC meeting = BIMCO) 
+* Manage event registration & participant tracking 
+* Prepare course information and marketing materials (image URL, Zoom link, ICS file, etc. — for Dotdigital templates) 
+* Record attendance & generate reports 
+* Link participants to contacts and companies (course line) 
+* Collect post-event feedback and evaluation forms 
+* Retrieve and display revenue data 
+* Manage payment processes: ticket types, product codes, payment methods (credit card, invoice), discount codes, seat allocations 
+* Facilitate invoice creation from BC product pricing 
+* TBC by Kim Steensgaard - change approach to purchasing of seats, and naming of seats either at point of sale or a later date. Will require additional templates for unassigned seats.
+* Manage event-related emails and notifications (enrolment confirmations, reminders, follow-ups) via mail queue with action-based and scheduled triggers
+* Business Central synchronosation
+  * Data Synchronisation 
+    * Ensure all company and contact information in CRM is synchronised with Business Central (BC) 
+    * Maintain consistency for invoicing processes, fleet totals, and related financial activities 
+    * Manage BIMCO Clock information to keep it ready for Business Central integration 
+  * Develop webhooks to listen for BC events (payment, registration, invoice, credit notes)
+  * Process Readiness
+    * Synchronisation workflows to ensure CRM data is “invoice-ready” before transfer to BC 
+    * Handle reconciliation between CRM and BC (e.g., mismatched records, failed syncs, retries) 
 * Some screens we need:  
   * Courses & Events List View  
     * Purpose  
@@ -277,97 +322,127 @@ These same permissions/permission-sets would then also be applied to the modules
       * Edit rights depend on RBAC.  
     * Display Fields (List Table)  
       * Event/Course ID (read-only, system-generated).  
-* Title (clickable → opens detail card).  
-* Category (Training, Webinar, Conference, Internal, etc.).  
-* Group (15 \+ 15, GM, EVENT, ...)  
-* Start Date – End Date.  
-* Location (City, Country or “Online”).  
-* Status (Upcoming, Ongoing, Completed, Cancelled).  
-* Number of Participants (linked to contacts).  
-* Finance  
+      * Title (clickable → opens detail card).  
+      * Category (Training, Webinar, Conference, Internal, etc.).  
+      * Group (15 \+ 15, GM, EVENT, ...)  
+      * Start Date – End Date.  
+      * Location (City, Country or “Online”).  
+      * Status (Upcoming, Ongoing, Completed, Cancelled).  
+      * Number of Participants (linked to contacts).  
+      * Finance  
   * User Experience (UX) & Behavior  
-* Initial View: Loads all upcoming events/courses first, sorted by Start Date (soonest first).   
-* Interactive Sorting: Columns sortable (Title, Type, Date, Status).  
-* Search & Filter Logic: Works like Company List (search bar \+ filters). Filters:  
-  * Type (Course, Event, All).  
-  * Date Range.  
-  * Status.  
-  * Location.  
-* Row Interaction: Clicking a row → opens Course/Event Card.   
-* Empty State: "No courses or events match your criteria.”  
-* Loading State: Spinner overlay while fetching data.   
-* Export: CSV/Excel export of filtered list.
+    * Initial View: Loads all upcoming events/courses first, sorted by Start Date (soonest first).   
+    * Interactive Sorting: Columns sortable (Title, Type, Date, Status).  
+    * Search & Filter Logic: Works like Company List (search bar \+ filters). Filters:  
+      * Type (Course, Event, All).  
+      * Date Range.  
+      * Status.  
+      * Location.  
+    * Row Interaction: Clicking a row → opens Course/Event Card.   
+    * Empty State: "No courses or events match your criteria.”  
+    * Loading State: Spinner overlay while fetching data.   
+    * Export: CSV/Excel export of filtered list.
 
   * Course & Event Detail (Card)  
     * Purpose  
       * Display and edit full details of a course or event in tabbed view.  
     * User Roles with Access  
-* Admin – Full create, edit, save, deactivate rights.   
-* Manager – Edit rights per RBAC rules.   
-* Staff – View-only unless granted edit via RBAC.  
+      * Admin – Full create, edit, save, deactivate rights.   
+      * Manager – Edit rights per RBAC rules.   
+      * Staff – View-only unless granted edit via RBAC.  
   * Layout  
-* Header Section:  
-  * Title  
-  * Type (Course/Event)  
-  * Status (Upcoming, Ongoing, Completed, Cancelled)  
-  * Actions (Edit, Save, Deactivate, Cancel, Navigate Back)  
-    * Tabs:  
-      * General Info Tab  
-        * ID (read-only).  
-          * Title (required).  
-          * Type (dropdown: Course, Event).  
-          * Category (dropdown).  
-          * Status (dropdown: Upcoming, Ongoing, Completed, Cancelled).  
-          * Date Created (read-only).  
-          * Last Updated (read-only).  
-        * Schedule Tab  
-          * Start Date / End Date.  
-          * Time Zone.  
-          * Recurrence (One-time / Weekly / Monthly).  
-          * Location (dropdown: Online / Physical address).  
-        * Content / Program Tab  
-          * Agenda / Program (rich text or file upload).  
-          * Materials (file upload list).  
-          * Description (long text).  
-        * Participants Tab  
-          * Linked Contacts list:  
-            * Contact Name (clickable → Contact Card).  
-            * Role (Attendee, Instructor, Organizer).  
-            * Email, Phone.  
-          * Add Participant button (search contacts).  
-          * Remove Participant (confirmation required).  
-        * Logistics Tab  
-          * Venue details (if physical).  
-          * Catering / Facilities (optional).  
-          * Costs (optional).
+    * Header Section:  
+      * Title  
+      * Type (Course/Event)  
+      * Status (Upcoming, Ongoing, Completed, Cancelled)  
+      * Actions (Edit, Save, Deactivate, Cancel, Navigate Back)  
+        * Tabs:  
+          * General Info Tab  
+            * ID (read-only).  
+              * Title (required).  
+              * Type (dropdown: Course, Event).  
+              * Category (dropdown).  
+              * Status (dropdown: Upcoming, Ongoing, Completed, Cancelled).  
+              * Date Created (read-only).  
+              * Last Updated (read-only).  
+            * Schedule Tab  
+              * Start Date / End Date.  
+              * Time Zone.  
+              * Recurrence (One-time / Weekly / Monthly).  
+              * Location (dropdown: Online / Physical address).  
+            * Content / Program Tab  
+              * Agenda / Program (rich text or file upload).  
+              * Materials (file upload list).  
+              * Description (long text).  
+            * Participants Tab  
+              * Linked Contacts list:  
+                * Contact Name (clickable → Contact Card).  
+                * Role (Attendee, Instructor, Organizer).  
+                * Email, Phone.  
+              * Add Participant button (search contacts).  
+              * Remove Participant (confirmation required).  
+            * Logistics Tab  
+              * Venue details (if physical).  
+              * Catering / Facilities (optional).  
+              * Costs (optional).
 
 ## Search Management
 
-* Global search across all modules (companies, contacts, fleets, events, etc.)  
-* Advanced filters and sorting options  
-* Saved searches for quick access  
-* Search result export to Excel/CSV/PDF  
-* Search access restricted by user role and permissions  
-* Create segment from search list
+* Quick Search
+  * Free-text global search across all modules (companies, contacts, fleets, events, etc.)
+  * Designed for fast access to specific records without complex filtering
+* Advanced Search (Power Search)
+  * Multiple filter options across modules (e.g., status, classification, event type, ownership) 
+  * Save search queries for future reuse
+  * Search access restricted by user role and permissions
+  * Create segment from search list
 
 ## Segment Management
 
-* Create Event  
-* Create Interation  
-* Remove on Hold  
-* Set ready for invoice
+* Create segments from selected records from power search (e.g., contacts, companies, event participants)  
+* Use segments to trigger actions, such as:
+  * Create events from a segment 
+  * Create interactions from a segment 
+  * Remove records from "On Hold" status 
+  * Set records as ready for invoicing
+* Manage segment lifecycle, including creation, editing, reusing, and archiving
+* Permission-controlled access to segments (e.g., private, team, or global lists)
 
-## Notification Management
+## Email management
 
-* Dotdigital Integration:  
-  * Synchronize and fetch campaigns from Dotdigital.  
-  * Replicate campaigns to CRM for visibility.  
-  * Assign campaigns to relevant areas (MyAccount, SmartCon, Business Central, etc.).  
-* Mail Queue Management:  
-  * Store and process scheduled emails in a restricted area.  
-  * Handle course registration notifications and enrollment confirmations.  
-  * Deliver messages directly or via Dotdigital.  
-* Trigger-Based Notifications: Automatically send alerts for key events (e.g., event registration, invoice readiness).
+* Dotdigital Integration: 
+  * Synchronize and fetch triggered email campaigns from Dotdigital and store in CRM
+  * Replicate and display campaigns to CRM for visibility.
+  * Setup and edit campain
+  * Assign campaigns to relevant areas (MyAccount, SmartCon, Business Central, etc.).
+  * Trigger-Based Notifications: Automatically send alerts for key events (e.g., event registration, invoice readiness).
+* Mail Queue Management:
+  * Store and process scheduled emails in a restricted area. 
+  * Handle course registration notifications and enrollment confirmations emails.  (as a log) 
+  * Deliver messages directly or via Dotdigital.
+
+## Internal notifications (Inbox)
+
+* Centralized notification inbox for CRM staff  for user or team/group related
+* Role & department-based notification management
+* System-generated notifications from integrated platforms (e.g., BC, MyAccount, SmartCon)
+  * Example: new company membership registration 
+  * Example: company updates number of ships 
+  * Example: company registers for a course or event 
+* CRM application reminders (e.g., pending tasks, follow-ups, expiring contracts, invoices due)
+* Notification lifecycle management:  mark as read, assign, snooze, resolve, or archive
+* Filtering & prioritization: filter by type, department, or urgency  
+* Audit trail: log notification delivery, handling actions, and resolution
+
+
+## SmartCon Management
+
+* Create SmartCon company / delete / edit
+* Manage seats and permissions (company profiles)
+* Payment tier
+* Prepare a deployment to work with new CRM data
+* Authentication process
+
 
 ## Landing page
 
