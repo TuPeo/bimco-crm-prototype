@@ -5,8 +5,10 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
 import ContactModal from '@/components/ContactModal';
+import ContactClassificationManager from '@/components/ContactClassificationManager';
+import CommunicationHistoryTracker from '@/components/CommunicationHistoryTracker';
 import { mockContacts } from '@/data/mockData';
-import { Contact } from '@/types';
+import { Contact, ContactClassification, CommunicationRecord } from '@/types';
 import { 
   PencilIcon,
   ArrowLeftIcon,
@@ -15,7 +17,9 @@ import {
   EnvelopeIcon,
   PhoneIcon,
   CalendarIcon,
-  TagIcon
+  TagIcon,
+  ChatBubbleLeftRightIcon,
+  ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
 
 export default function ContactDetail() {
@@ -43,6 +47,32 @@ export default function ContactDetail() {
     }
   };
 
+  // Classification handlers
+  const handleUpdateClassifications = (classifications: ContactClassification[]) => {
+    if (contact) {
+      const updatedContact = {
+        ...contact,
+        classifications,
+        lastUpdated: new Date().toISOString().split('T')[0]
+      };
+      setContactData(updatedContact);
+    }
+  };
+
+  // Communication history handlers
+  const handleUpdateCommunicationHistory = (history: CommunicationRecord[]) => {
+    if (contact) {
+      const updatedContact = {
+        ...contact,
+        communicationHistory: history,
+        lastUpdated: new Date().toISOString().split('T')[0]
+      };
+      setContactData(updatedContact);
+    }
+  };
+
+  const isOrphaned = !contact?.companyId || !contact?.companyName;
+
   if (!contact) {
     return (
       <Layout>
@@ -61,7 +91,7 @@ export default function ContactDetail() {
   const tabs = [
     { id: 'general', name: 'General Info', icon: UserIcon },
     { id: 'classifications', name: 'Classifications', icon: TagIcon },
-    { id: 'history', name: 'History', icon: CalendarIcon },
+    { id: 'history', name: 'Communication History', icon: ChatBubbleLeftRightIcon },
   ];
 
   return (
@@ -91,7 +121,7 @@ export default function ContactDetail() {
           </div>
         </div>
 
-        {/* Status Badge */}
+        {/* Status Badges */}
         <div className="flex items-center space-x-4">
           <span className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${
             contact.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
@@ -101,6 +131,12 @@ export default function ContactDetail() {
           {contact.role && (
             <span className="inline-flex px-3 py-1 text-sm font-semibold rounded-full bg-blue-100 text-blue-800">
               Role: {contact.role}
+            </span>
+          )}
+          {isOrphaned && (
+            <span className="inline-flex items-center px-3 py-1 text-sm font-semibold rounded-full bg-amber-100 text-amber-800">
+              <ExclamationTriangleIcon className="h-4 w-4 mr-1" />
+              Orphaned Contact
             </span>
           )}
         </div>
@@ -149,6 +185,11 @@ export default function ContactDetail() {
                     {contact.classifications.length}
                   </span>
                 )}
+                {tab.id === 'history' && (
+                  <span className="ml-2 bg-gray-100 text-gray-900 py-0.5 px-2.5 rounded-full text-xs font-medium">
+                    {contact.communicationHistory?.length || 0}
+                  </span>
+                )}
               </button>
             ))}
           </nav>
@@ -163,7 +204,7 @@ export default function ContactDetail() {
                 <dl className="space-y-4">
                   <div>
                     <dt className="text-sm font-medium text-gray-500">Contact Number</dt>
-                    <dd className="mt-1 text-sm text-gray-900">{contact.contactNumber}</dd>
+                    <dd className="mt-1 text-sm text-gray-900 font-mono">{contact.contactNumber}</dd>
                   </div>
                   <div>
                     <dt className="text-sm font-medium text-gray-500">First Name</dt>
@@ -207,9 +248,13 @@ export default function ContactDetail() {
                     <dt className="text-sm font-medium text-gray-500">Primary Company</dt>
                     <dd className="mt-1 text-sm text-gray-900 flex items-center">
                       <BuildingOfficeIcon className="h-4 w-4 mr-2 text-gray-400" />
-                      <Link href={`/companies/${contact.companyId}`} className="text-blue-600 hover:text-blue-500">
-                        {contact.companyName}
-                      </Link>
+                      {contact.companyName ? (
+                        <Link href={`/companies/${contact.companyId}`} className="text-blue-600 hover:text-blue-500">
+                          {contact.companyName}
+                        </Link>
+                      ) : (
+                        <span className="text-amber-600 font-medium">No company assigned (Orphaned)</span>
+                      )}
                     </dd>
                   </div>
                   <div>
@@ -227,107 +272,48 @@ export default function ContactDetail() {
                     </dd>
                   </div>
                 </dl>
+
+                {/* Quick Stats */}
+                <div className="mt-6 border-t border-gray-200 pt-6">
+                  <h4 className="text-sm font-medium text-gray-900 mb-3">Quick Stats</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-blue-600">
+                        {contact.classifications.length}
+                      </div>
+                      <div className="text-xs text-gray-500">Classifications</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-green-600">
+                        {contact.communicationHistory?.length || 0}
+                      </div>
+                      <div className="text-xs text-gray-500">Communications</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
 
           {activeTab === 'classifications' && (
             <div className="bimco-card">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-medium text-gray-900">Contact Classifications</h3>
-                <button className="bimco-btn-primary text-sm">Add Classification</button>
-              </div>
-              
-              {contact.classifications.length > 0 ? (
-                <div className="overflow-x-auto">
-                  <table className="bimco-table">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th scope="col">Code</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Date Added</th>
-                        <th scope="col">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {contact.classifications.map((classification, index) => (
-                        <tr key={index} className="hover:bg-gray-50">
-                          <td className="font-medium text-gray-900">{classification.code}</td>
-                          <td className="text-gray-500">{classification.description}</td>
-                          <td className="text-gray-500">{new Date(classification.date).toLocaleDateString()}</td>
-                          <td>
-                            <button className="text-red-600 hover:text-red-900 text-sm">Remove</button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                <div className="text-center py-8">
-                  <TagIcon className="mx-auto h-12 w-12 text-gray-400" />
-                  <h3 className="mt-2 text-sm font-medium text-gray-900">No classifications</h3>
-                  <p className="mt-1 text-sm text-gray-500">
-                    No classifications have been assigned to this contact yet.
-                  </p>
-                  <div className="mt-6">
-                    <button className="bimco-btn-primary">Add Classification</button>
-                  </div>
-                </div>
-              )}
+              <ContactClassificationManager
+                classifications={contact.classifications}
+                onUpdate={handleUpdateClassifications}
+                readOnly={false}
+              />
             </div>
           )}
 
           {activeTab === 'history' && (
             <div className="bimco-card">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Activity History</h3>
-              <div className="flow-root">
-                <ul className="-mb-8">
-                  <li>
-                    <div className="relative pb-8">
-                      <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"></span>
-                      <div className="relative flex space-x-3">
-                        <div>
-                          <span className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white">
-                            <UserIcon className="h-4 w-4 text-white" />
-                          </span>
-                        </div>
-                        <div className="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
-                          <div>
-                            <p className="text-sm text-gray-500">
-                              Contact created with email <span className="font-medium text-gray-900">{contact.email}</span>
-                            </p>
-                          </div>
-                          <div className="whitespace-nowrap text-right text-sm text-gray-500">
-                            <time>{new Date(contact.dateCreated).toLocaleDateString()}</time>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="relative pb-8">
-                      <div className="relative flex space-x-3">
-                        <div>
-                          <span className="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
-                            <TagIcon className="h-4 w-4 text-white" />
-                          </span>
-                        </div>
-                        <div className="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
-                          <div>
-                            <p className="text-sm text-gray-500">
-                              Classifications assigned: {contact.classifications.map(c => c.code).join(', ')}
-                            </p>
-                          </div>
-                          <div className="whitespace-nowrap text-right text-sm text-gray-500">
-                            <time>{new Date(contact.lastUpdated).toLocaleDateString()}</time>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+              <CommunicationHistoryTracker
+                contactId={contact.id}
+                contactName={`${contact.firstName} ${contact.lastName}`}
+                history={contact.communicationHistory || []}
+                onUpdate={handleUpdateCommunicationHistory}
+                readOnly={false}
+              />
             </div>
           )}
         </div>

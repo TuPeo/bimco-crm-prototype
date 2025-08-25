@@ -212,6 +212,32 @@ export const mockContacts: Contact[] = [
       { code: 'BI-ADM', description: 'BIMCO Administrator', date: '2023-01-15' },
       { code: 'BI-ASIA', description: 'BIMCO Asia Representative', date: '2023-06-20' }
     ],
+    communicationHistory: [
+      {
+        id: 'comm-1',
+        type: 'email',
+        subject: 'Contract Review Meeting',
+        description: 'Discussed new charter party terms and BIMCO clauses implementation',
+        date: '2024-08-20',
+        direction: 'outbound',
+        participants: ['Maria Rodriguez', 'Legal Team'],
+        tags: ['contract', 'charter-party'],
+        createdBy: 'Current User',
+        createdAt: '2024-08-20T10:30:00Z'
+      },
+      {
+        id: 'comm-2',
+        type: 'phone',
+        subject: 'Fleet Maintenance Discussion',
+        description: 'Coordinated maintenance schedule for Q4',
+        date: '2024-08-18',
+        direction: 'inbound',
+        participants: ['Technical Team'],
+        tags: ['maintenance', 'fleet'],
+        createdBy: 'Current User',
+        createdAt: '2024-08-18T14:15:00Z'
+      }
+    ],
     dateCreated: '2023-01-15',
     lastUpdated: '2024-08-15'
   },
@@ -228,6 +254,20 @@ export const mockContacts: Contact[] = [
     status: 'Active',
     classifications: [
       { code: 'BI-BD', description: 'BIMCO Board Member', date: '2023-03-20' }
+    ],
+    communicationHistory: [
+      {
+        id: 'comm-3',
+        type: 'meeting',
+        subject: 'Board Meeting Preparation',
+        description: 'Prepared agenda items for upcoming BIMCO board meeting',
+        date: '2024-08-19',
+        direction: 'outbound',
+        participants: ['Board Members'],
+        tags: ['board', 'meeting'],
+        createdBy: 'Current User',
+        createdAt: '2024-08-19T16:00:00Z'
+      }
     ],
     dateCreated: '2023-03-20',
     lastUpdated: '2024-08-10'
@@ -246,6 +286,20 @@ export const mockContacts: Contact[] = [
     classifications: [
       { code: 'BI-BS', description: 'BIMCO Business Support', date: '2023-02-10' }
     ],
+    communicationHistory: [
+      {
+        id: 'comm-4',
+        type: 'video_call',
+        subject: 'Technical Standards Review',
+        description: 'Reviewed new environmental compliance standards',
+        date: '2024-08-17',
+        direction: 'outbound',
+        participants: ['Technical Committee'],
+        tags: ['technical', 'compliance'],
+        createdBy: 'Current User',
+        createdAt: '2024-08-17T11:00:00Z'
+      }
+    ],
     dateCreated: '2023-02-10',
     lastUpdated: '2024-08-12'
   },
@@ -263,6 +317,7 @@ export const mockContacts: Contact[] = [
     classifications: [
       { code: 'BI-ASIA', description: 'BIMCO Asia Representative', date: '2023-05-15' }
     ],
+    communicationHistory: [],
     dateCreated: '2023-05-15',
     lastUpdated: '2024-08-08'
   },
@@ -280,8 +335,56 @@ export const mockContacts: Contact[] = [
     classifications: [
       { code: 'BI-ADM', description: 'BIMCO Administrator', date: '2023-04-08' }
     ],
+    communicationHistory: [
+      {
+        id: 'comm-5',
+        type: 'note',
+        subject: 'Status Change Note',
+        description: 'Contact became inactive due to role change within company',
+        date: '2024-08-01',
+        direction: 'outbound',
+        participants: [],
+        tags: ['status-change', 'internal'],
+        createdBy: 'System',
+        createdAt: '2024-08-01T12:00:00Z'
+      }
+    ],
     dateCreated: '2023-04-08',
     lastUpdated: '2024-08-14'
+  },
+  {
+    id: '6',
+    contactNumber: 'ORPHANED_001',
+    firstName: 'Sarah',
+    lastName: 'Thompson',
+    email: 'sarah.thompson@orphaned.com',
+    phone: '+1 555 123 4567',
+    companyId: '',
+    companyName: '',
+    role: 'Unknown',
+    status: 'Active',
+    classifications: [],
+    communicationHistory: [],
+    dateCreated: '2024-01-15',
+    lastUpdated: '2024-01-15'
+  },
+  {
+    id: '7',
+    contactNumber: 'ORPHANED_002',
+    firstName: 'Ahmed',
+    lastName: 'Hassan',
+    email: 'ahmed.hassan@freelance.com',
+    phone: '+971 4 123 4567',
+    companyId: '',
+    companyName: '',
+    role: 'Consultant',
+    status: 'Active',
+    classifications: [
+      { code: 'BI-MED', description: 'BIMCO Mediterranean Representative', date: '2024-02-01' }
+    ],
+    communicationHistory: [],
+    dateCreated: '2024-02-01',
+    lastUpdated: '2024-02-01'
   }
 ];
 

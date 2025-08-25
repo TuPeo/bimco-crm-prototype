@@ -32,6 +32,7 @@ export interface Contact {
   companyName: string;
   status: 'Active' | 'Inactive';
   classifications: ContactClassification[];
+  communicationHistory?: CommunicationRecord[];
   dateCreated: string;
   lastUpdated: string;
 }
@@ -40,6 +41,20 @@ export interface ContactClassification {
   code: string;
   description: string;
   date: string;
+}
+
+export interface CommunicationRecord {
+  id: string;
+  type: 'email' | 'phone' | 'meeting' | 'video_call' | 'note';
+  subject: string;
+  description: string;
+  date: string;
+  direction: 'inbound' | 'outbound';
+  participants: string[];
+  attachments?: string[];
+  tags?: string[];
+  createdBy: string;
+  createdAt: string;
 }
 
 export interface Course {
@@ -119,19 +134,66 @@ export interface SearchResult {
   url: string;
   relevanceScore: number;
   matchedFields: string[];
+  metadata?: Record<string, any>;
 }
 
 export interface SavedSearch {
   id: string;
-  name: string;
+  title: string; // Changed from 'name' to 'title'
   description?: string;
-  searchQuery: string;
-  filters: Record<string, string | string[] | boolean | number>;
-  entityTypes: string[];
+  query: PowerSearchQuery; // Changed from searchQuery and filters to a complete query object
   userId: string;
   isPublic: boolean;
-  dateCreated: string;
-  lastUsed: string;
+  isStarred?: boolean; // Added for favorites functionality
+  category?: string; // Added for categorization
+  tags?: string[]; // Added for tagging
+  createdAt: Date; // Changed from dateCreated string to Date
+  updatedAt: Date; // Added for tracking modifications
+  resultCount?: number;
+}
+
+export interface SearchFilters {
+  entityTypes?: string[];
+  status?: string[];
+  dateRange?: { start: string; end: string };
+  // Company specific
+  companyTypes?: string[];
+  countries?: string[];
+  // Contact specific
+  classifications?: string[];
+  roles?: string[];
+  // Course specific
+  categories?: string[];
+  locations?: string[];
+  // Fleet specific
+  vesselTypes?: string[];
+  operationalStatus?: string[];
+  // Advanced filters
+  customFields?: Record<string, any>;
+}
+
+export interface PowerSearchQuery {
+  query: string;
+  filters: SearchFilters;
+  sorting: {
+    field: string;
+    direction: 'asc' | 'desc';
+  };
+  pagination: {
+    page: number;
+    limit: number;
+  };
+}
+
+export interface UserPermissions {
+  canViewAllCompanies: boolean;
+  canViewAllContacts: boolean;
+  canViewAllFleets: boolean;
+  canViewAllCourses: boolean;
+  canCreateSegments: boolean;
+  canSaveSearches: boolean;
+  allowedCountries?: string[];
+  allowedCompanyTypes?: string[];
 }
 
 export interface Segment {
@@ -149,6 +211,7 @@ export interface Segment {
 }
 
 export interface SegmentCriteria {
+  // Original criteria structure
   companies?: {
     statuses?: string[];
     types?: string[];
@@ -164,6 +227,10 @@ export interface SegmentCriteria {
     categories?: string[];
     dateRange?: { start: string; end: string };
   };
+  // Extended criteria for search-based segments
+  searchQuery?: PowerSearchQuery;
+  includedItemIds?: string[];
+  createdFromSearch?: boolean;
 }
 
 export interface SegmentMember {
