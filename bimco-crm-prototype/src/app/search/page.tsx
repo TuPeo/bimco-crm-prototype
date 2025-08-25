@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Layout from '@/components/Layout';
 import PowerSearchPanel from '@/components/PowerSearchPanel';
@@ -19,7 +19,7 @@ import {
   DocumentArrowDownIcon
 } from '@heroicons/react/24/outline';
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const globalQuery = searchParams.get('q') || '';
   
@@ -402,5 +402,19 @@ export default function SearchPage() {
         )}
       </div>
     </Layout>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <Layout>
+        <div className="flex justify-center items-center h-64">
+          <div className="text-gray-500">Loading search...</div>
+        </div>
+      </Layout>
+    }>
+      <SearchContent />
+    </Suspense>
   );
 }

@@ -1012,7 +1012,8 @@ export default function CourseEventDetailCard({
                                           ...editedCourse.logistics,
                                           catering: {
                                             ...editedCourse.logistics?.catering,
-                                            type: e.target.value as any
+                                            type: e.target.value as "breakfast" | "lunch" | "dinner" | "coffee" | "full",
+                                            included: editedCourse.logistics?.catering?.included ?? false
                                           }
                                         }
                                       })}
@@ -1041,6 +1042,9 @@ export default function CourseEventDetailCard({
                                           logistics: {
                                             ...editedCourse.logistics,
                                             catering: {
+                                              included: editedCourse.logistics?.catering?.included ?? false,
+                                              type: editedCourse.logistics?.catering?.type,
+                                              dietaryRestrictions: editedCourse.logistics?.catering?.dietaryRestrictions,
                                               ...editedCourse.logistics?.catering,
                                               cost: parseFloat(e.target.value) || 0
                                             }
@@ -1072,6 +1076,9 @@ export default function CourseEventDetailCard({
                                               logistics: {
                                                 ...editedCourse.logistics,
                                                 catering: {
+                                                  included: editedCourse.logistics?.catering?.included ?? false,
+                                                  type: editedCourse.logistics?.catering?.type,
+                                                  cost: editedCourse.logistics?.catering?.cost,
                                                   ...editedCourse.logistics?.catering,
                                                   dietaryRestrictions: newRestrictions
                                                 }

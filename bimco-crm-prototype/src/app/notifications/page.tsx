@@ -1,11 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Layout from '@/components/Layout';
 import InternalNotificationCenter from '@/components/InternalNotificationCenter';
 import { 
   BellIcon, 
-  EnvelopeIcon, 
   ExclamationTriangleIcon, 
   UserGroupIcon,
   BuildingOfficeIcon,
@@ -25,22 +24,14 @@ import {
   ArrowPathIcon,
   UserPlusIcon,
   ClipboardDocumentListIcon,
-  ChatBubbleLeftRightIcon,
-  BoltIcon,
-  ShieldCheckIcon,
   ExclamationCircleIcon,
-  PlayIcon,
-  PauseIcon,
-  ForwardIcon,
   TagIcon,
-  DocumentDuplicateIcon,
   LinkIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline';
 import { 
   CheckCircleIcon as CheckCircleIconSolid,
-  ExclamationTriangleIcon as ExclamationTriangleIconSolid,
-  InformationCircleIcon as InformationCircleIconSolid
+  ExclamationTriangleIcon as ExclamationTriangleIconSolid
 } from '@heroicons/react/24/solid';
 
 // Notification interfaces
@@ -579,24 +570,24 @@ export default function Notifications() {
     ));
   };
 
-  const handleForwardNotification = (notificationId: string, targetDepartment: string) => {
-    setNotifications(prev => prev.map(n => 
-      n.id === notificationId 
-        ? { 
-            ...n, 
-            department: targetDepartment as any,
-            status: 'new' as const,
-            assignedTo: undefined,
-            auditTrail: [...n.auditTrail, {
-              timestamp: new Date().toISOString(),
-              action: 'created',
-              user: 'Current User',
-              details: `Forwarded to ${targetDepartment} department`
-            }]
-          } 
-        : n
-    ));
-  };
+  // const handleForwardNotification = (notificationId: string, targetDepartment: string) => {
+  //   setNotifications(prev => prev.map(n => 
+  //     n.id === notificationId 
+  //       ? { 
+  //           ...n, 
+  //           department: targetDepartment as 'sales' | 'marketing' | 'customer_service' | 'training' | 'finance' | 'technical',
+  //           status: 'new' as const,
+  //           assignedTo: undefined,
+  //           auditTrail: [...n.auditTrail, {
+  //             timestamp: new Date().toISOString(),
+  //             action: 'created',
+  //             user: 'Current User',
+  //             details: `Forwarded to ${targetDepartment} department`
+  //           }]
+  //         } 
+  //       : n
+  //   ));
+  // };
 
   const handleMarkAsRead = (notificationId: string) => {
     setNotifications(prev => prev.map(n => 
@@ -673,7 +664,7 @@ export default function Notifications() {
       if (selectedNotifications.includes(n.id)) {
         const newAuditEntry = {
           timestamp: currentTime,
-          action: action as any,
+          action: action as 'created' | 'read' | 'assigned' | 'snoozed' | 'resolved' | 'archived',
           user: 'Current User'
         };
 

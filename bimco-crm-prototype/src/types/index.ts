@@ -5,8 +5,7 @@ export type {
 
 export type { 
   EmailTemplate, 
-  EmailCampaign, 
-  EmailAnalytics 
+  EmailCampaign
 } from '@/components/EmailManagement';
 
 export type { 
