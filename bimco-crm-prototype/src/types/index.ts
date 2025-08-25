@@ -69,6 +69,107 @@ export interface Course {
   participants: CourseParticipant[];
   description?: string;
   maxParticipants?: number;
+  // Enhanced fields
+  bimcoLegalEntity?: string;
+  timezone?: string;
+  recurrence?: CourseRecurrence;
+  content?: CourseContent;
+  logistics?: CourseLogistics;
+  revenue?: CourseRevenue;
+  paymentSettings?: CoursePaymentSettings;
+}
+
+export interface CourseRecurrence {
+  type: 'none' | 'daily' | 'weekly' | 'monthly' | 'yearly';
+  interval: number;
+  endDate?: string;
+  daysOfWeek?: number[]; // 0-6, Sunday = 0
+}
+
+export interface CourseContent {
+  program?: string; // Rich text content
+  materials?: CourseFile[];
+  objectives?: string[];
+  prerequisites?: string[];
+}
+
+export interface CourseFile {
+  id: string;
+  name: string;
+  url: string;
+  type: string;
+  size: number;
+  uploadedBy: string;
+  uploadedAt: string;
+}
+
+export interface CourseLogistics {
+  venue?: CourseVenue;
+  catering?: CourseCatering;
+  costs?: CourseCosts;
+  equipment?: string[];
+}
+
+export interface CourseVenue {
+  name: string;
+  address: string;
+  capacity: number;
+  facilities: string[];
+  contactInfo?: string;
+}
+
+export interface CourseCatering {
+  included: boolean;
+  type?: 'breakfast' | 'lunch' | 'dinner' | 'coffee' | 'full';
+  dietaryRestrictions?: string[];
+  cost?: number;
+}
+
+export interface CourseCosts {
+  venue: number;
+  catering: number;
+  materials: number;
+  instructor: number;
+  other: number;
+  total: number;
+}
+
+export interface CourseRevenue {
+  totalRevenue: number;
+  paidAmount: number;
+  pendingAmount: number;
+  refundedAmount: number;
+  ticketsSold: number;
+  ticketsAvailable: number;
+}
+
+export interface CoursePaymentSettings {
+  ticketTypes: TicketType[];
+  discountCodes: DiscountCode[];
+  paymentMethods: string[];
+  refundPolicy?: string;
+}
+
+export interface TicketType {
+  id: string;
+  name: string;
+  price: number;
+  description?: string;
+  maxQuantity?: number;
+  soldQuantity: number;
+  availability: 'available' | 'limited' | 'sold_out' | 'coming_soon';
+}
+
+export interface DiscountCode {
+  id: string;
+  code: string;
+  type: 'percentage' | 'fixed';
+  value: number;
+  maxUses?: number;
+  usedCount: number;
+  validFrom: string;
+  validUntil: string;
+  applicableTicketTypes?: string[];
 }
 
 export interface CourseParticipant {
@@ -77,6 +178,11 @@ export interface CourseParticipant {
   email: string;
   role: 'Attendee' | 'Instructor' | 'Organizer' | 'Speaker';
   registrationDate: string;
+  ticketType?: string;
+  paymentStatus: 'pending' | 'paid' | 'refunded' | 'cancelled' | 'complimentary';
+  amountPaid?: number;
+  discountApplied?: string;
+  specialRequirements?: string[];
 }
 
 export interface Fleet {

@@ -401,20 +401,123 @@ export const mockCourses: Course[] = [
     status: 'Upcoming',
     maxParticipants: 25,
     description: 'Comprehensive training on BIMCO laytime definitions and their practical application in chartering operations.',
+    bimcoLegalEntity: 'BIMCO Copenhagen',
+    timezone: 'Europe/Copenhagen',
+    recurrence: {
+      type: 'none',
+      interval: 1
+    },
+    content: {
+      program: 'Day 1: Introduction to Laytime Definitions\nDay 2: Practical Applications\nDay 3: Case Studies and Q&A',
+      materials: [
+        {
+          id: 'file1',
+          name: 'BIMCO Laytime Handbook.pdf',
+          url: '/files/laytime-handbook.pdf',
+          type: 'application/pdf',
+          size: 2500000,
+          uploadedBy: 'Course Admin',
+          uploadedAt: '2025-08-01T10:00:00Z'
+        }
+      ],
+      objectives: [
+        'Understand BIMCO laytime definitions',
+        'Apply definitions in real scenarios',
+        'Master dispute resolution processes'
+      ],
+      prerequisites: ['Basic chartering knowledge', 'Commercial shipping experience']
+    },
+    logistics: {
+      venue: {
+        name: 'BIMCO Conference Center',
+        address: 'Bagsvaerdvej 161, 2880 Bagsvaerd, Denmark',
+        capacity: 50,
+        facilities: ['WiFi', 'Projector', 'Coffee Station', 'Parking'],
+        contactInfo: 'events@bimco.org'
+      },
+      catering: {
+        included: true,
+        type: 'lunch',
+        dietaryRestrictions: ['Vegetarian', 'Halal'],
+        cost: 150
+      },
+      costs: {
+        venue: 5000,
+        catering: 3750,
+        materials: 1250,
+        instructor: 7500,
+        other: 500,
+        total: 18000
+      }
+    },
+    revenue: {
+      totalRevenue: 37500,
+      paidAmount: 30000,
+      pendingAmount: 7500,
+      refundedAmount: 0,
+      ticketsSold: 15,
+      ticketsAvailable: 10
+    },
+    paymentSettings: {
+      ticketTypes: [
+        {
+          id: 'early-bird',
+          name: 'Early Bird',
+          price: 1200,
+          description: 'Special price for early registration',
+          maxQuantity: 10,
+          soldQuantity: 8,
+          availability: 'limited'
+        },
+        {
+          id: 'regular',
+          name: 'Regular',
+          price: 1500,
+          description: 'Standard registration fee',
+          maxQuantity: 15,
+          soldQuantity: 7,
+          availability: 'available'
+        }
+      ],
+      discountCodes: [
+        {
+          id: 'member10',
+          code: 'MEMBER10',
+          type: 'percentage',
+          value: 10,
+          maxUses: 20,
+          usedCount: 5,
+          validFrom: '2025-07-01T00:00:00Z',
+          validUntil: '2025-09-14T23:59:59Z',
+          applicableTicketTypes: ['early-bird', 'regular']
+        }
+      ],
+      paymentMethods: ['Credit Card', 'Bank Transfer', 'Invoice'],
+      refundPolicy: 'Full refund until 14 days before course start. 50% refund until 7 days before. No refund after.'
+    },
     participants: [
       {
         contactId: '1',
         contactName: 'John Hansen',
         email: 'john.hansen@maersk.com',
         role: 'Attendee',
-        registrationDate: '2025-08-01'
+        registrationDate: '2025-08-01',
+        ticketType: 'early-bird',
+        paymentStatus: 'paid',
+        amountPaid: 1080,
+        discountApplied: 'MEMBER10',
+        specialRequirements: ['Vegetarian meal']
       },
       {
         contactId: '2',
         contactName: 'Maria Rodriguez',
         email: 'maria.rodriguez@msc.com',
         role: 'Attendee',
-        registrationDate: '2025-08-03'
+        registrationDate: '2025-08-03',
+        ticketType: 'regular',
+        paymentStatus: 'pending',
+        amountPaid: 0,
+        specialRequirements: []
       }
     ]
   },
@@ -435,14 +538,22 @@ export const mockCourses: Course[] = [
         contactName: 'Pierre Dubois',
         email: 'pierre.dubois@cma-cgm.com',
         role: 'Attendee',
-        registrationDate: '2025-08-05'
+        registrationDate: '2025-08-05',
+        ticketType: 'regular',
+        paymentStatus: 'paid',
+        amountPaid: 1200,
+        specialRequirements: []
       },
       {
         contactId: '4',
         contactName: 'Li Wei',
         email: 'li.wei@cosco.com.cn',
         role: 'Speaker',
-        registrationDate: '2025-07-20'
+        registrationDate: '2025-07-20',
+        ticketType: 'speaker',
+        paymentStatus: 'complimentary',
+        amountPaid: 0,
+        specialRequirements: ['Presentation setup']
       }
     ]
   },
@@ -463,14 +574,22 @@ export const mockCourses: Course[] = [
         contactName: 'John Hansen',
         email: 'john.hansen@maersk.com',
         role: 'Attendee',
-        registrationDate: '2025-06-15'
+        registrationDate: '2025-06-15',
+        ticketType: 'early-bird',
+        paymentStatus: 'paid',
+        amountPaid: 800,
+        specialRequirements: []
       },
       {
         contactId: '5',
         contactName: 'Klaus Mueller',
         email: 'klaus.mueller@hapag-lloyd.com',
         role: 'Organizer',
-        registrationDate: '2025-06-10'
+        registrationDate: '2025-06-10',
+        ticketType: 'staff',
+        paymentStatus: 'complimentary',
+        amountPaid: 0,
+        specialRequirements: []
       }
     ]
   },
@@ -491,7 +610,11 @@ export const mockCourses: Course[] = [
         contactName: 'Maria Rodriguez',
         email: 'maria.rodriguez@msc.com',
         role: 'Attendee',
-        registrationDate: '2025-08-01'
+        registrationDate: '2025-08-01',
+        ticketType: 'regular',
+        paymentStatus: 'pending',
+        amountPaid: 0,
+        specialRequirements: []
       }
     ]
   },
@@ -512,14 +635,22 @@ export const mockCourses: Course[] = [
         contactName: 'Pierre Dubois',
         email: 'pierre.dubois@cma-cgm.com',
         role: 'Speaker',
-        registrationDate: '2025-07-15'
+        registrationDate: '2025-07-15',
+        ticketType: 'speaker',
+        paymentStatus: 'complimentary',
+        amountPaid: 0,
+        specialRequirements: ['Keynote presentation setup']
       },
       {
         contactId: '4',
         contactName: 'Li Wei',
         email: 'li.wei@cosco.com.cn',
         role: 'Attendee',
-        registrationDate: '2025-07-20'
+        registrationDate: '2025-07-20',
+        ticketType: 'regular',
+        paymentStatus: 'paid',
+        amountPaid: 350,
+        specialRequirements: []
       }
     ]
   },
@@ -540,7 +671,11 @@ export const mockCourses: Course[] = [
         contactName: 'Klaus Mueller',
         email: 'klaus.mueller@hapag-lloyd.com',
         role: 'Attendee',
-        registrationDate: '2025-08-01'
+        registrationDate: '2025-08-01',
+        ticketType: 'premium',
+        paymentStatus: 'paid',
+        amountPaid: 2500,
+        specialRequirements: ['Executive accommodation']
       }
     ]
   },
