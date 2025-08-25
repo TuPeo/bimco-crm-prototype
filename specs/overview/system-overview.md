@@ -350,41 +350,41 @@ These same permissions/permission-sets would then also be applied to the modules
       * Admin – Full create, edit, save, deactivate rights.   
       * Manager – Edit rights per RBAC rules.   
       * Staff – View-only unless granted edit via RBAC.  
-  * Layout  
-    * Header Section:  
-      * Title  
-      * Type (Course/Event)  
-      * Status (Upcoming, Ongoing, Completed, Cancelled)  
-      * Actions (Edit, Save, Deactivate, Cancel, Navigate Back)  
-        * Tabs:  
-          * General Info Tab  
-            * ID (read-only).  
-              * Title (required).  
-              * Type (dropdown: Course, Event).  
-              * Category (dropdown).  
-              * Status (dropdown: Upcoming, Ongoing, Completed, Cancelled).  
-              * Date Created (read-only).  
-              * Last Updated (read-only).  
-            * Schedule Tab  
-              * Start Date / End Date.  
-              * Time Zone.  
-              * Recurrence (One-time / Weekly / Monthly).  
-              * Location (dropdown: Online / Physical address).  
-            * Content / Program Tab  
-              * Agenda / Program (rich text or file upload).  
-              * Materials (file upload list).  
-              * Description (long text).  
-            * Participants Tab  
-              * Linked Contacts list:  
-                * Contact Name (clickable → Contact Card).  
-                * Role (Attendee, Instructor, Organizer).  
-                * Email, Phone.  
-              * Add Participant button (search contacts).  
-              * Remove Participant (confirmation required).  
-            * Logistics Tab  
-              * Venue details (if physical).  
-              * Catering / Facilities (optional).  
-              * Costs (optional).
+    * Layout  
+      * Header Section:  
+        * Title  
+        * Type (Course/Event)  
+        * Status (Upcoming, Ongoing, Completed, Cancelled)  
+        * Actions (Edit, Save, Deactivate, Cancel, Navigate Back)  
+          * Tabs:  
+            * General Info Tab  
+              * ID (read-only).  
+                * Title (required).  
+                * Type (dropdown: Course, Event).  
+                * Category (dropdown).  
+                * Status (dropdown: Upcoming, Ongoing, Completed, Cancelled).  
+                * Date Created (read-only).  
+                * Last Updated (read-only).  
+              * Schedule Tab  
+                * Start Date / End Date.  
+                * Time Zone.  
+                * Recurrence (One-time / Weekly / Monthly).  
+                * Location (dropdown: Online / Physical address).  
+              * Content / Program Tab  
+                * Agenda / Program (rich text or file upload).  
+                * Materials (file upload list).  
+                * Description (long text).  
+              * Participants Tab  
+                * Linked Contacts list:  
+                  * Contact Name (clickable → Contact Card).  
+                  * Role (Attendee, Instructor, Organizer).  
+                  * Email, Phone.  
+                * Add Participant button (search contacts).  
+                * Remove Participant (confirmation required).  
+              * Logistics Tab  
+                * Venue details (if physical).  
+                * Catering / Facilities (optional).  
+                * Costs (optional).
 
 ## Search Management
 
