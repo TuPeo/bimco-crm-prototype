@@ -17,7 +17,6 @@ import {
   BuildingOfficeIcon,
   MapPinIcon,
   UsersIcon,
-  TruckIcon,
   PlusIcon,
   TrashIcon,
   EyeIcon,
@@ -26,14 +25,18 @@ import {
   FunnelIcon,
   WrenchScrewdriverIcon,
   DocumentTextIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  RocketLaunchIcon,
+  BanknotesIcon,
+  ClockIcon,
+  ShareIcon
 } from '@heroicons/react/24/outline';
 
 export default function CompanyDetail() {
   const params = useParams();
   const companyId = params?.id as string;
   
-  const [activeTab, setActiveTab] = useState<'general' | 'address' | 'contacts' | 'fleets'>('general');
+  const [activeTab, setActiveTab] = useState<'general' | 'address' | 'contacts' | 'fleets' | 'organization' | 'membership' | 'log'>('general');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contactSearchTerm, setContactSearchTerm] = useState('');
   const [contactStatusFilter, setContactStatusFilter] = useState('all');
@@ -212,8 +215,11 @@ export default function CompanyDetail() {
   const tabs = [
     { id: 'general', name: 'General', icon: BuildingOfficeIcon },
     { id: 'address', name: 'Address', icon: MapPinIcon },
-    { id: 'contacts', name: 'Contact Management', icon: UsersIcon },
-    { id: 'fleets', name: 'Fleet Management', icon: TruckIcon },
+    { id: 'contacts', name: 'Contact', icon: UsersIcon },
+    { id: 'fleets', name: 'Fleet', icon: RocketLaunchIcon },
+    { id: 'organization', name: 'Organization', icon: ShareIcon },
+    { id: 'membership', name: 'Membership', icon: BanknotesIcon },
+    { id: 'log', name: 'Log', icon: ClockIcon },
   ];
 
   return (
@@ -263,7 +269,7 @@ export default function CompanyDetail() {
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as 'general' | 'address' | 'contacts' | 'fleets')}
+                onClick={() => setActiveTab(tab.id as 'general' | 'address' | 'contacts' | 'fleets' | 'organization' | 'membership' | 'log')}
                 className={`group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm ${
                   activeTab === tab.id
                     ? 'border-blue-500 text-blue-600'
@@ -579,7 +585,7 @@ export default function CompanyDetail() {
                 <div className="divide-y divide-gray-200">
                   {filteredFleets.length === 0 ? (
                     <div className="px-6 py-12 text-center">
-                      <TruckIcon className="mx-auto h-12 w-12 text-gray-400" />
+                      <RocketLaunchIcon className="mx-auto h-12 w-12 text-gray-400" />
                       <h3 className="mt-2 text-sm font-medium text-gray-900">No vessels found</h3>
                       <p className="mt-1 text-sm text-gray-500">
                         {fleetSearchTerm ? 'No vessels found matching your criteria.' : 'No vessels have been registered for this company yet.'}
@@ -605,24 +611,16 @@ export default function CompanyDetail() {
                             <div className="flex items-center gap-3">
                               <div className="flex-1">
                                 <div className="flex items-center gap-2">
-                                  <Link
-                                    href={`/fleets/${fleet.id}`}
-                                    className="text-lg font-medium text-gray-900 hover:text-blue-600 transition-colors"
-                                  >
+                                  <h3 className="text-lg font-medium text-gray-900">
                                     {fleet.name}
-                                  </Link>
+                                  </h3>
                                   <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusBadge(fleet.operationalStatus)}`}>
                                     {fleet.operationalStatus}
                                   </span>
                                 </div>
-                                <div className="mt-1 text-sm text-gray-500">
-                                  {fleet.type} • IMO {fleet.registration} • {company.name}
-                                </div>
-                                <div className="mt-1 text-xs text-gray-400 flex items-center gap-4">
-                                  <span>Flag: {fleet.flag}</span>
-                                  <span>Built: {fleet.yearBuilt}</span>
+                                <div className="mt-1 text-sm text-gray-500 flex items-center gap-4">
+                                  <span>IMO Number: {fleet.registration}</span>
                                   <span>DWT: {formatNumber(fleet.deadweight)} MT</span>
-                                  <span>GT: {formatNumber(fleet.grossTonnage)} GT</span>
                                 </div>
                               </div>
                             </div>
@@ -646,13 +644,6 @@ export default function CompanyDetail() {
                             >
                               <WrenchScrewdriverIcon className="h-4 w-4" />
                             </button>
-                            <Link
-                              href={`/fleets/${fleet.id}`}
-                              className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
-                              title="View Details"
-                            >
-                              <EyeIcon className="h-4 w-4" />
-                            </Link>
                             <button
                               onClick={() => openEditFleetModal(fleet)}
                               className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
@@ -757,6 +748,260 @@ export default function CompanyDetail() {
                   </div>
                 </div>
               )}
+            </div>
+          )}
+
+          {/* Organization Tab */}
+          {activeTab === 'organization' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Parent Companies */}
+                <div className="bimco-card">
+                  <div className="p-6">
+                    <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center">
+                      <ShareIcon className="w-5 h-5 mr-2 text-gray-400" />
+                      Parent Companies
+                    </h3>
+                    <div className="space-y-3">
+                      {/* Mock parent companies */}
+                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                          <Link 
+                            href="/companies/parent-1" 
+                            className="text-sm font-medium text-blue-600 hover:text-blue-800"
+                          >
+                            BIMCO Holdings Ltd.
+                          </Link>
+                          <p className="text-xs text-gray-500">Registration: 123456</p>
+                        </div>
+                        <ChevronRightIcon className="w-4 h-4 text-gray-400" />
+                      </div>
+                      <div className="text-center py-6 text-sm text-gray-500">
+                        No parent companies found
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Child Companies */}
+                <div className="bimco-card">
+                  <div className="p-6">
+                    <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center">
+                      <ShareIcon className="w-5 h-5 mr-2 text-gray-400" />
+                      Child Companies
+                    </h3>
+                    <div className="space-y-3">
+                      {/* Mock child companies */}
+                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                          <Link 
+                            href="/companies/child-1" 
+                            className="text-sm font-medium text-blue-600 hover:text-blue-800"
+                          >
+                            BIMCO Subsidiary A/S
+                          </Link>
+                          <p className="text-xs text-gray-500">Registration: 789012</p>
+                        </div>
+                        <ChevronRightIcon className="w-4 h-4 text-gray-400" />
+                      </div>
+                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                          <Link 
+                            href="/companies/child-2" 
+                            className="text-sm font-medium text-blue-600 hover:text-blue-800"
+                          >
+                            BIMCO Maritime Services
+                          </Link>
+                          <p className="text-xs text-gray-500">Registration: 345678</p>
+                        </div>
+                        <ChevronRightIcon className="w-4 h-4 text-gray-400" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Membership Tab */}
+          {activeTab === 'membership' && (
+            <div className="space-y-6">
+              <div className="bimco-card">
+                <div className="p-6">
+                  <h3 className="text-lg font-medium text-gray-900 mb-6 flex items-center">
+                    <BanknotesIcon className="w-5 h-5 mr-2 text-gray-400" />
+                    Membership Information
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Member Start Date
+                      </label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-3 rounded-md">
+                        January 15, 2020
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Formation Date
+                      </label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-3 rounded-md">
+                        March 10, 2019
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Withdrew On Date
+                      </label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-3 rounded-md">
+                        Not applicable
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Latest Member Interaction
+                      </label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-3 rounded-md">
+                        August 20, 2025 - Course Registration
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Membership Status */}
+                  <div className="mt-6 pt-6 border-t border-gray-200">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="text-md font-medium text-gray-900">Membership Status</h4>
+                        <p className="text-sm text-gray-500">Current membership tier and benefits</p>
+                      </div>
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                        Active Member
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Log Tab */}
+          {activeTab === 'log' && (
+            <div className="space-y-6">
+              <div className="bimco-card">
+                <div className="p-6">
+                  <h3 className="text-lg font-medium text-gray-900 mb-6 flex items-center">
+                    <ClockIcon className="w-5 h-5 mr-2 text-gray-400" />
+                    Company Activity Log
+                  </h3>
+                  
+                  {/* Log Filters */}
+                  <div className="mb-6 flex flex-wrap gap-4">
+                    <select className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+                      <option value="all">All Changes</option>
+                      <option value="status">Status Changes</option>
+                      <option value="address">Address Changes</option>
+                      <option value="general">General Updates</option>
+                    </select>
+                    <select className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+                      <option value="30">Last 30 days</option>
+                      <option value="90">Last 90 days</option>
+                      <option value="365">Last year</option>
+                      <option value="all">All time</option>
+                    </select>
+                  </div>
+
+                  {/* Activity Log */}
+                  <div className="space-y-4">
+                    {/* Mock log entries */}
+                    <div className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg">
+                      <div className="flex-shrink-0">
+                        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                          <BuildingOfficeIcon className="w-4 h-4 text-blue-600" />
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900">
+                          Company status changed from M0 to M1
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Updated by John Admin • August 15, 2025 at 10:30 AM
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg">
+                      <div className="flex-shrink-0">
+                        <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                          <MapPinIcon className="w-4 h-4 text-green-600" />
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900">
+                          Address updated - New postal code: 2100
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Updated by Jane Manager • August 10, 2025 at 2:15 PM
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg">
+                      <div className="flex-shrink-0">
+                        <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                          <UsersIcon className="w-4 h-4 text-yellow-600" />
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900">
+                          New contact added: Lars Nielsen
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Updated by Bob Staff • August 5, 2025 at 11:45 AM
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg">
+                      <div className="flex-shrink-0">
+                        <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                          <RocketLaunchIcon className="w-4 h-4 text-purple-600" />
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900">
+                          Fleet vessel added: MV Nordic Explorer
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Updated by Alice Admin • July 28, 2025 at 4:20 PM
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg">
+                      <div className="flex-shrink-0">
+                        <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                          <PencilIcon className="w-4 h-4 text-red-600" />
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900">
+                          Company name updated from "Old Name Ltd." to "{company.name}"
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Updated by System Admin • July 20, 2025 at 9:00 AM
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Load More */}
+                  <div className="mt-6 text-center">
+                    <button className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                      Load More Entries
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>

@@ -16,7 +16,8 @@ import {
   RectangleGroupIcon,
   DocumentTextIcon,
   ShieldCheckIcon,
-  EnvelopeIcon
+  EnvelopeIcon,
+  CogIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -37,6 +38,7 @@ const navigation = [
   { name: 'Email', href: '/email', icon: EnvelopeIcon },
   { name: 'Notifications', href: '/notifications', icon: BellIcon },
   { name: 'Permission', href: '/rbac', icon: ShieldCheckIcon },
+  { name: 'Setup', href: '/setup', icon: CogIcon },
 ];
 
 interface LayoutProps {

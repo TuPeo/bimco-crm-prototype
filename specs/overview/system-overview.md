@@ -147,7 +147,7 @@ These same permissions/permission-sets would then also be applied to the modules
         * Phone  
         * Add Contact button (opens new contact form linked to company)  
         * Remove Contact action (confirmation required)
-      * Contact Management Tab
+      * Contact Tab
         * Purpose: Manage company contacts (employees).  
         * Layout: 
           * Initial View: A searchable list of all contacts linked to the company. 
@@ -159,19 +159,30 @@ These same permissions/permission-sets would then also be applied to the modules
           * Contact Detail Card (upon click): 
             * Shows full contact profile (name, role, email, phone, etc.). 
             * Editable according to role permissions. 
-
-      * Fleet Management Tab
+      * Fleet Tab
         * Purpose: Manage company vessels (fleet).  
         * Layout: 
           * Initial View: A searchable list of all vessels linked to the company. 
-            * Fields: BIMCO Registration Number, IMO Number, BIMCO DWT, IHS DWT. 
+            * Fields: BIMCO Registration Number, IMO Number, BIMCO DWT. 
           * Actions: 
             * Add Vessel: Opens new fleet entry form linked to the company.  
             * Edit Vessel: Opens vessel detail card in edit mode.  
             * Remove Vessel: Requires confirmation dialog.    
-          * Fleet Detail Card (upon click): 
-            * Shows full vessel details. 
-            * Editable according to role permissions. 
+      * Organization Tab
+        * Purpose: Manage company hierarchy (parent / child companies) with two list
+          * Parent Company (if exists)  
+          * Child Company (if exists)
+        * Actions: Clicking on an item will redirect to the target company’s detail card
+      * Membership Tab       
+        * Member Start Date 
+        * Formation Date 
+        * Withdrew On Date 
+        * Latest Member Interaction
+      * Log Tab
+        * Purpose: Provide a historical record of key changes made to the company.          
+          * Status Change Log: Records all updates to the company’s status
+          * Address Change Log: Records all modifications to company addresses.  
+          * Update Log: Captures general edits across company details (e.g., name changes, type updates, contact/fleet edits)
       * Actions  
         * Edit – switch form fields from read-only to editable mode   
         * Save – validate and commit changes to database   
@@ -280,15 +291,6 @@ These same permissions/permission-sets would then also be applied to the modules
       * Audit Log:  
         * Log changes in Status, Role, Company association.  
       * Unsaved Changes Warning: "You have unsaved changes. Do you want to save before leaving?”
-
-## Fleets Management
-
-* Store fleet details (name, type, capacity, registration, operational status)  
-* Manage IHS information  
-* Maintenance schedule & history tracking  
-* Upload fleet-related documents (certificates, manuals)  
-* Link fleets to events, contracts, and operational data  
-* Compare vessels
 
 ## Courses and Events Management
 
@@ -442,6 +444,71 @@ These same permissions/permission-sets would then also be applied to the modules
 * Payment tier
 * Prepare a deployment to work with new CRM data
 * Authentication process
+
+## Setup
+
+* Centralize configuration of master data and system codes that are used across CRM modules (e.g., Companies, Contacts, Fleets, Events). This ensures consistency and reusability of data values.
+* Some screens we need:
+  * Country tab
+    * Purpose: Manage the list of countries that can be assigned to companies, contacts, fleets, and events.
+    * User Roles with Access:
+      * Admin → Full CRUD (create, edit, deactivate, audit)  
+      * Manager → Add/edit countries, cannot deactivate if in use  
+      * Staff → View/search country list only  
+    * Layout
+      * Country List View (table): 
+        * Columns: Country Code, Country Name, Status (Active/Inactive), Last Modified, Modified By  
+        * Search & filter by name/code/status
+      * Country Form (create/edit): 
+        * Fields: 
+          * Country Code 
+          * Country Name 
+          * Status (Active/Inactive) 
+        * Features:
+          * Validation: No duplicate codes, must follow ISO format 
+          * Cannot delete if country is in use → only deactivate 
+          * Audit log for create/edit/deactivate actions 
+        * Action
+          * View country details  
+          * Edit country information  
+          * Deactivate country (if not in use)  
+          * Audit Trail – view history of changes
+  * Region tab
+    * Purpose: Manage regional groupings of countries (e.g., “Asia-Pacific”, “Northern Europe”), used for reporting, segmentation, and company assignments.
+    * User Roles with Access:
+      * Admin → Full CRUD (create, edit, deactivate, audit)  
+      * Manager → Add/edit regions  
+      * Staff → View/search region list only  
+      * Layout:
+        * Region List View (table): 
+          * Columns: 
+            * Region Code
+            * Region Name
+            * Countries Assigned
+            * Status
+            * Last Modified
+            * Modified By          
+          * Search & filter by name/code/status 
+        * Region Form (create/edit): 
+          * Fields: 
+            * Region Code (unique short code) 
+            * Region Name 
+            * Assigned Countries (multi-select from Country List) 
+            * Status (Active/Inactive) 
+        * Features:
+          * Validation: unique region codes, must contain at least 1 country
+          * Cannot delete if region is in use by companies → only deactivate 
+          * Audit log for all changes
+        * Action
+          * View region details  
+          * Edit region information  
+          * Deactivate country (if not in use)  
+          * Audit Trail – view history of changes
+
+
+
+
+
 
 
 ## Landing page
