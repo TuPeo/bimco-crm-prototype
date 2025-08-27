@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Layout from '@/components/Layout';
 import CompanyModal from '@/components/CompanyModal';
 import { mockCompanies } from '@/data/mockData';
+import { getCountryName, getActiveCountries } from '@/data/countries';
 import { Company } from '@/types';
 import { 
   MagnifyingGlassIcon,
@@ -57,7 +58,9 @@ export default function Companies() {
   // Get unique values for filters
   const uniqueStatuses = [...new Set(companies.map(c => c.status))];
   const uniqueTypes = [...new Set(companies.map(c => c.type))];
-  const uniqueCountries = [...new Set(companies.map(c => c.address.country))];
+  // Get unique countries from setup data instead of companies data
+  const availableCountries = getActiveCountries();
+  const uniqueCountries = availableCountries.map(c => c.countryName);
 
   // Multi-field sorting function
   const sortCompanies = (companiesList: Company[]) => {
@@ -111,7 +114,7 @@ export default function Companies() {
       
       const matchesStatus = statusFilter === 'all' || company.status === statusFilter;
       const matchesType = typeFilter === 'all' || company.type === typeFilter;
-      const matchesCountry = countryFilter === 'all' || company.address.country === countryFilter;
+      const matchesCountry = countryFilter === 'all' || getCountryName(company.address.countryCode) === countryFilter;
       
       return matchesSearch && matchesStatus && matchesType && matchesCountry;
     })
@@ -221,7 +224,7 @@ export default function Companies() {
       company.name,
       company.status,
       company.type,
-      company.address.country,
+      getCountryName(company.address.countryCode),
       company.email,
       company.numberOfEmployees.toString(),
       company.dateCreated
@@ -256,7 +259,7 @@ export default function Companies() {
       company.type,
       company.address.line1,
       company.address.postCode,
-      company.address.country,
+      getCountryName(company.address.countryCode),
       company.email,
       company.numberOfEmployees.toString(),
       company.dateCreated
@@ -522,7 +525,9 @@ export default function Companies() {
                           {company.type}
                         </span>
                       </td>
-                      <td className="text-sm text-gray-900">{company.address.country}</td>
+                      <td className="text-sm text-gray-900">
+                        {getCountryName(company.address.countryCode)}
+                      </td>
                       <td className="text-sm text-gray-500">
                         {new Date(company.dateCreated).toLocaleDateString()}
                       </td>

@@ -14,6 +14,7 @@ import {
   Check,
   AlertCircle
 } from 'lucide-react';
+import { masterCountries, getAllCountries, Country as CountryData } from '@/data/countries';
 
 interface Country {
   id: string;
@@ -30,53 +31,7 @@ interface CountryTabProps {
 }
 
 const CountryTab: React.FC<CountryTabProps> = ({ userRole }) => {
-  const [countries, setCountries] = useState<Country[]>([
-    {
-      id: '1',
-      countryCode: 'DK',
-      countryName: 'Denmark',
-      status: 'Active',
-      lastModified: '2025-08-15',
-      modifiedBy: 'John Admin',
-      createdDate: '2025-01-15'
-    },
-    {
-      id: '2',
-      countryCode: 'NO',
-      countryName: 'Norway',
-      status: 'Active',
-      lastModified: '2025-08-10',
-      modifiedBy: 'Jane Manager',
-      createdDate: '2025-01-20'
-    },
-    {
-      id: '3',
-      countryCode: 'SE',
-      countryName: 'Sweden',
-      status: 'Active',
-      lastModified: '2025-08-05',
-      modifiedBy: 'Bob Staff',
-      createdDate: '2025-02-01'
-    },
-    {
-      id: '4',
-      countryCode: 'DE',
-      countryName: 'Germany',
-      status: 'Inactive',
-      lastModified: '2025-07-20',
-      modifiedBy: 'Alice Admin',
-      createdDate: '2025-01-10'
-    },
-    {
-      id: '5',
-      countryCode: 'UK',
-      countryName: 'United Kingdom',
-      status: 'Active',
-      lastModified: '2025-08-01',
-      modifiedBy: 'Mike Manager',
-      createdDate: '2025-01-05'
-    }
-  ]);
+  const [countries, setCountries] = useState<Country[]>(getAllCountries());
 
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('All');

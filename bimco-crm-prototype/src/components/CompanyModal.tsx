@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Company } from '@/types';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { getActiveCountries, getCountryByCode } from '@/data/countries';
 
 interface CompanyModalProps {
   isOpen: boolean;
@@ -99,6 +100,31 @@ export default function CompanyModal({ isOpen, onClose, onSave, company, mode }:
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle country selection - automatically update country code
+  const handleCountryChange = (countryName: string) => {
+    const selectedCountry = getActiveCountries().find(c => c.countryName === countryName);
+    if (selectedCountry) {
+      setFormData(prev => ({
+        ...prev,
+        address: {
+          ...prev.address,
+          country: countryName,
+          countryCode: selectedCountry.countryCode
+        }
+      }));
+    } else {
+      // Handle manual input or clear
+      setFormData(prev => ({
+        ...prev,
+        address: {
+          ...prev.address,
+          country: countryName,
+          countryCode: ''
+        }
+      }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -396,18 +422,23 @@ export default function CompanyModal({ isOpen, onClose, onSave, company, mode }:
                         <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">
                           Country *
                         </label>
-                        <input
-                          type="text"
+                        <select
                           id="country"
                           value={formData.address.country}
-                          onChange={(e) => handleInputChange('address.country', e.target.value)}
+                          onChange={(e) => handleCountryChange(e.target.value)}
                           className={`block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-1 sm:text-sm ${
                             errors.country 
                               ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
                               : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
                           }`}
-                          placeholder="Enter country"
-                        />
+                        >
+                          <option value="">Select a country</option>
+                          {getActiveCountries().map((country) => (
+                            <option key={country.id} value={country.countryName}>
+                              {country.countryName}
+                            </option>
+                          ))}
+                        </select>
                         {errors.country && (
                           <p className="mt-1 text-sm text-red-600">{errors.country}</p>
                         )}
@@ -422,17 +453,18 @@ export default function CompanyModal({ isOpen, onClose, onSave, company, mode }:
                           id="countryCode"
                           maxLength={2}
                           value={formData.address.countryCode}
-                          onChange={(e) => handleInputChange('address.countryCode', e.target.value.toUpperCase())}
-                          className={`block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-1 sm:text-sm ${
+                          readOnly
+                          className={`block w-full px-3 py-2 border rounded-md shadow-sm bg-gray-50 text-gray-600 sm:text-sm ${
                             errors.countryCode 
-                              ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
-                              : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+                              ? 'border-red-300' 
+                              : 'border-gray-300'
                           }`}
-                          placeholder="DK"
+                          placeholder="Auto-filled"
                         />
                         {errors.countryCode && (
                           <p className="mt-1 text-sm text-red-600">{errors.countryCode}</p>
                         )}
+                        <p className="mt-1 text-xs text-gray-500">Auto-filled based on country selection</p>
                       </div>
                     </div>
                   </div>

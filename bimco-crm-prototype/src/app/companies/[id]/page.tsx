@@ -10,6 +10,7 @@ import FleetModal from '@/components/FleetModal';
 import CertificatesModal from '@/components/CertificatesModal';
 import MaintenanceModal from '@/components/MaintenanceModal';
 import { mockCompanies, mockContacts, mockFleets } from '@/data/mockData';
+import { getCountryName } from '@/data/countries';
 import { Company, Contact, Fleet } from '@/types';
 import { 
   PencilIcon,
@@ -381,7 +382,7 @@ export default function CompanyDetail() {
                 </div>
                 <div>
                   <dt className="text-sm font-medium text-gray-500">Country</dt>
-                  <dd className="mt-1 text-sm text-gray-900">{company.address.country}</dd>
+                  <dd className="mt-1 text-sm text-gray-900">{getCountryName(company.address.countryCode)}</dd>
                 </div>
                 <div>
                   <dt className="text-sm font-medium text-gray-500">Country Code</dt>

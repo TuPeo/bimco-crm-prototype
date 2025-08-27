@@ -13,6 +13,7 @@ import {
   Check,
   AlertCircle
 } from 'lucide-react';
+import { getActiveCountries } from '@/data/countries';
 
 interface Region {
   id: string;
@@ -36,19 +37,11 @@ interface RegionTabProps {
 }
 
 const RegionTab: React.FC<RegionTabProps> = ({ userRole }) => {
-  // Mock countries data
-  const availableCountries: Country[] = [
-    { code: 'DK', name: 'Denmark' },
-    { code: 'NO', name: 'Norway' },
-    { code: 'SE', name: 'Sweden' },
-    { code: 'DE', name: 'Germany' },
-    { code: 'UK', name: 'United Kingdom' },
-    { code: 'FR', name: 'France' },
-    { code: 'ES', name: 'Spain' },
-    { code: 'IT', name: 'Italy' },
-    { code: 'NL', name: 'Netherlands' },
-    { code: 'BE', name: 'Belgium' }
-  ];
+  // Use countries from the shared data source
+  const availableCountries: Country[] = getActiveCountries().map(c => ({
+    code: c.countryCode,
+    name: c.countryName
+  }));
 
   const [regions, setRegions] = useState<Region[]>([
     {
